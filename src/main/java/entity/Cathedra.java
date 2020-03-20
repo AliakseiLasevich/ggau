@@ -14,6 +14,7 @@ public class Cathedra {
 
     @Id
     @Column(name = "id_cathedra")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(name = "name")
@@ -23,7 +24,7 @@ public class Cathedra {
     private List<Teacher> teachers;
 
     @ManyToOne
-    @JoinColumn(name = "cathedras")
+    @JoinColumn(name = "faculty")
     private Faculty faculty;
 
 }

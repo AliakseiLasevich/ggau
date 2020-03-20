@@ -15,6 +15,7 @@ public class StudentGroup {
 
     @Id
     @Column(name = "id_group")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @OneToMany(mappedBy = "studentGroup")

@@ -14,7 +14,12 @@ public class Faculty {
 
     @Id
     @Column(name = "id_faculty")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Column(name = "name")
+    private String name;
+
 
     @OneToMany(mappedBy = "faculty")
     private List<Cathedra> cathedras;

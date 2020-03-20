@@ -7,13 +7,14 @@ package entity;
         import java.util.List;
 
 @Entity
-@Table(name = "faculty")
+@Table(name = "specialty")
 @Getter
 @Setter
 public class Specialty {
 
     @Id
     @Column(name = "id_specialty")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @OneToMany(mappedBy = "specialty")
