@@ -15,7 +15,7 @@ public class Cathedra {
     @Id
     @Column(name = "id_cathedra")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @Column(name = "name")
     private String name;

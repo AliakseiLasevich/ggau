@@ -15,7 +15,7 @@ public class Building {
     @Id
     @Column(name = "id_building")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @Column(name = "name")
     private String name;

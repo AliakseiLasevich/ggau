@@ -1,5 +1,6 @@
 package entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,17 +16,18 @@ public class Faculty {
     @Id
     @Column(name = "id_faculty")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @Column(name = "name")
     private String name;
 
 
-    @OneToMany(mappedBy = "faculty")
+    @JsonIgnore
+    @OneToMany(mappedBy = "faculty", fetch = FetchType.LAZY)
     private List<Cathedra> cathedras;
 
-
-    @OneToMany(mappedBy = "faculty")
+    @JsonIgnore
+    @OneToMany(mappedBy = "faculty", fetch = FetchType.LAZY)
     private List<Specialty> specialties;
 
 }

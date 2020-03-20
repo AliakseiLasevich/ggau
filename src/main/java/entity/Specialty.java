@@ -15,7 +15,10 @@ public class Specialty {
     @Id
     @Column(name = "id_specialty")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
+
+    @Column(name = "name")
+    private String name;
 
     @OneToMany(mappedBy = "specialty")
     private List<StudentCourse> studentCourses;

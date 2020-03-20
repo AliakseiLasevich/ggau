@@ -16,7 +16,10 @@ public class StudentGroup {
     @Id
     @Column(name = "id_group")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
+
+    @Column(name = "number")
+    private int number;
 
     @OneToMany(mappedBy = "studentGroup")
     private List<StudentSubgroup> studentSubgroups;

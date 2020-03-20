@@ -1,22 +1,31 @@
 package config;
 
 import org.apache.commons.dbcp.BasicDataSource;
+import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import javax.sql.DataSource;
 import java.util.Properties;
 
+@EnableWebMvc
 @Configuration
-@PropertySource("classpath:persistence-mysql.properties")
 @EnableTransactionManagement
+@ComponentScan(basePackages = {"config", "controller", "entity", "service", "dao"})
+@PropertySource("classpath:persistence-mysql.properties")
+@EnableJpaRepositories(basePackages = "dao", entityManagerFactoryRef = "entityManagerFactory")
 public class DataSourceConfig {
 
     @Autowired
@@ -31,12 +40,11 @@ public class DataSourceConfig {
         dataSource.setPassword(env.getProperty("jdbc.password"));
         dataSource.setInitialSize(3);
         dataSource.setMaxActive(10);
-
         return dataSource;
     }
 
     @Bean
-    public PlatformTransactionManager hibernateTransactionManager() {
+    public PlatformTransactionManager transactionManager() {
         HibernateTransactionManager transactionManager
                 = new HibernateTransactionManager();
         transactionManager.setSessionFactory(sessionFactory().getObject());
@@ -61,4 +69,17 @@ public class DataSourceConfig {
         sessionFactory.setHibernateProperties(hibernateProperties());
         return sessionFactory;
     }
+
+    /*for Spring Data */
+    @Bean
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
+        LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
+        em.setDataSource(dataSource());
+        em.setPersistenceProviderClass(HibernatePersistenceProvider.class);
+        em.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
+        em.setJpaProperties(hibernateProperties());
+        em.setPackagesToScan("entity");
+        return em;
+    }
+
 }

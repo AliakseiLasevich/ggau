@@ -15,7 +15,10 @@ public class Cabinet {
     @Id
     @Column(name = "id_cabinet")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
+
+    @Column(name = "number")
+    private int number;
 
     @ManyToOne
     @JoinColumn(name = "building")
