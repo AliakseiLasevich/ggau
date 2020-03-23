@@ -28,4 +28,10 @@ public class StudentGroup {
     @JoinColumn(name = "student_course")
     private StudentCourse studentCourse;
 
+    @ManyToMany
+    @JoinTable(name = "lesson_studentsubgroup",
+            joinColumns = @JoinColumn(name = "id_subgroup"),
+            inverseJoinColumns = @JoinColumn(name = "id_lesson"))
+    private List<Lesson> lessons;
+
 }
