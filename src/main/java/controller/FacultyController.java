@@ -15,14 +15,14 @@ import service.interfaces.FacultyService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/faculties")
+@RequestMapping("/rest/faculties")
 public class FacultyController {
 
     @Autowired
     private FacultyService facultyService;
 
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
-    public List<Faculty> faculties() {
+    public List<Faculty> findAllFaculties() {
         return facultyService.findAll();
     }
 

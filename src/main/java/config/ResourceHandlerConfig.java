@@ -11,7 +11,7 @@ public class ResourceHandlerConfig implements WebMvcConfigurer {
 
         //add webapp resources path: css and other to war
         registry
-                .addResourceHandler("/static/**")
-                .addResourceLocations("/static/");
+                .addResourceHandler("/**")
+                .addResourceLocations("/");
     }
 }
