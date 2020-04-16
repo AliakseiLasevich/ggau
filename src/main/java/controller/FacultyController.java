@@ -1,29 +1,56 @@
 package controller;
 
+import dto.FacultyDto;
 import entity.Faculty;
+import exception.ErrorMessages;
+import exception.FacultyException;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
-import service.FacultyService;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
+import request.FacultyRequestModel;
+import response.FacultyRest;
+import service.FacultyServiceImpl;
+import service.interfaces.FacultyService;
 
 
 import java.util.List;
 
 @RestController
+@RequestMapping("/faculties")
 public class FacultyController {
 
     @Autowired
     private FacultyService facultyService;
 
-    @GetMapping("/faculties")
+    @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
     public List<Faculty> faculties() {
         return facultyService.findAll();
     }
 
-    @GetMapping("/faculty/{id}")
-    public Faculty faculty(@PathVariable("id") Long id) {
-        return facultyService.findById(id).orElse(new Faculty());
+    @GetMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public Faculty getFaculty(@PathVariable("id") Long id) {
+        return facultyService.findById(id);
+    }
+
+    @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE})
+    public FacultyRest createFaculty(@RequestBody FacultyRequestModel facultyRequestModel) {
+        if (facultyRequestModel.getName().isEmpty()) {
+            throw new FacultyException(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
+        }
+
+        ModelMapper modelMapper = new ModelMapper();
+        FacultyDto facultyDto = modelMapper.map(facultyRequestModel, FacultyDto.class);
+
+        FacultyDto createdFaculty = facultyService.createFaculty(facultyDto);
+        FacultyRest returnValue = modelMapper.map(createdFaculty, FacultyRest.class);
+
+        return returnValue;
+    }
+
+    @PutMapping("/{id}")
+    public void putFaculty() {
     }
 
 

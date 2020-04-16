@@ -1,19 +1,22 @@
 package entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
 @Table(name = "lesson")
 @Getter
 @Setter
-public class Lesson {
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
+public class Lesson implements Serializable {
 
     @Id
     @Column(name = "id_lesson")
@@ -24,13 +27,14 @@ public class Lesson {
     @JoinColumn(name = "discipline")
     private Discipline discipline;
 
+
     @OneToOne
     @JoinColumn(name = "teacher")
     private Teacher teacher;
 
-    @OneToOne
-    @JoinColumn(name = "building")
-    private Building building;
+//    @OneToOne
+//    @JoinColumn(name = "building")
+//    private Building building;
 
     @OneToOne
     @JoinColumn(name = "cabinet")

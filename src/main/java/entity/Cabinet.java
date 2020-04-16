@@ -1,16 +1,22 @@
 package entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
 @Table(name = "cabinet")
 @Getter
 @Setter
-public class Cabinet {
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
+public class Cabinet  implements Serializable {
 
     @Id
     @Column(name = "id_cabinet")
@@ -19,6 +25,12 @@ public class Cabinet {
 
     @Column(name = "number")
     private int number;
+
+    @Column(name = "max_students")
+    private int maxStudents;
+
+    @Column(name = "type")
+    private String type;
 
     @ManyToOne
     @JoinColumn(name = "building")

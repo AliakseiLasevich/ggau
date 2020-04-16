@@ -1,9 +1,12 @@
 package entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 
@@ -11,7 +14,12 @@ import java.util.List;
 @Table(name = "students_subgroup")
 @Getter
 @Setter
-public class StudentSubgroup {
+
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
+
+public class StudentSubgroup implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,6 +28,7 @@ public class StudentSubgroup {
 
     @Column(name = "name")
     private String name;
+
 
     @ManyToOne
     @JoinColumn(name = "student_group")
