@@ -10,9 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import request.FacultyRequestModel;
 import response.FacultyRest;
-import service.FacultyServiceImpl;
 import service.interfaces.FacultyService;
-
 
 import java.util.List;
 
@@ -50,8 +48,9 @@ public class FacultyController {
     }
 
     @PutMapping("/{id}")
-    public void putFaculty() {
+    public void updateFaculty() {
     }
+
 
 
 }
