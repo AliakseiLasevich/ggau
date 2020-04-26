@@ -25,12 +25,14 @@ public class FacultyController {
 
 
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<List<Faculty>> findAllFaculties() {
+    public ResponseEntity<List<Faculty>> findAllFaculties(@RequestParam(value = "page", defaultValue = "0") int page,
+                                                          @RequestParam(value = "limit", defaultValue = "5") int limit) {
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.set("Access-Control-Allow-Origin", "*");
+
         return ResponseEntity.ok()
                 .headers(responseHeaders)
-                .body(facultyService.findAll());
+                .body(facultyService.findAll(page, limit));
     }
 
     @GetMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})

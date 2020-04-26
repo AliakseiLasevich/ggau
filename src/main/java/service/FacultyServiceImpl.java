@@ -7,10 +7,14 @@ import exception.ErrorMessages;
 import exception.FacultyException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import service.interfaces.FacultyService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -20,8 +24,15 @@ public class FacultyServiceImpl implements FacultyService {
     private FacultyRepository facultyRepository;
 
     @Transactional
-    public List<Faculty> findAll() {
-        return facultyRepository.findAll();
+    public List<Faculty> findAll(int page, int limit) {
+        List<Faculty> returnValue = new ArrayList<>();
+
+        Pageable pageableRequest = PageRequest.of(page, limit);
+
+        Page<Faculty> facultiesPage = facultyRepository.findAll(pageableRequest);
+        List<Faculty> faculties = facultiesPage.getContent();
+
+        return faculties;
     }
 
     @Transactional
