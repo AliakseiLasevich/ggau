@@ -27,6 +27,7 @@ public class FacultyServiceImpl implements FacultyService {
     public List<Faculty> findAll(int page, int limit) {
         List<Faculty> returnValue = new ArrayList<>();
 
+        if(page>0) page-=1;
         Pageable pageableRequest = PageRequest.of(page, limit);
 
         Page<Faculty> facultiesPage = facultyRepository.findAll(pageableRequest);

@@ -26,7 +26,7 @@ public class FacultyController {
 
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<List<Faculty>> findAllFaculties(@RequestParam(value = "page", defaultValue = "0") int page,
-                                                          @RequestParam(value = "limit", defaultValue = "5") int limit) {
+                                                          @RequestParam(value = "limit", defaultValue = "10") int limit) {
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.set("Access-Control-Allow-Origin", "*");
 
