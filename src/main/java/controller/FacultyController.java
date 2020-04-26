@@ -6,7 +6,9 @@ import exception.ErrorMessages;
 import exception.FacultyException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import request.FacultyRequestModel;
 import response.FacultyRest;
@@ -21,9 +23,14 @@ public class FacultyController {
     @Autowired
     private FacultyService facultyService;
 
+
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
-    public List<Faculty> findAllFaculties() {
-        return facultyService.findAll();
+    public ResponseEntity<List<Faculty>> findAllFaculties() {
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.set("Access-Control-Allow-Origin", "*");
+        return ResponseEntity.ok()
+                .headers(responseHeaders)
+                .body(facultyService.findAll());
     }
 
     @GetMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
@@ -50,7 +57,6 @@ public class FacultyController {
     @PutMapping("/{id}")
     public void updateFaculty() {
     }
-
 
 
 }

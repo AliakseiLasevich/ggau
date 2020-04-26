@@ -10,9 +10,7 @@ let message = {
     failure: "Oops. Something goes wrong."
 };
 
-
 facultyForm.addEventListener("submit", function (event) {
-
     event.preventDefault(); //Не перегружает страницу при сабмите
     facultyForm.appendChild(statusMessage); //Добавляет под формой результат операции
     // let request = new XMLHttpRequest(); //объект request-а
@@ -69,7 +67,10 @@ function createTableFromJSON(json) {
     }
 
     //additional columns:
-    col.push("status");
+    // col.push("status");
+    // col.push("action");
+    // col.push("action");
+    // col.push("action");
     col.push("action");
 
 
@@ -91,18 +92,17 @@ function createTableFromJSON(json) {
 
         tr = table.insertRow(-1);
 
-        for (let j = 0; j < col.length-2; j++) {
+        for (let j = 0; j < col.length-1; j++) {
 
             let tabCell = tr.insertCell(-1);
             console.log(json[i][col[j]]);
             tabCell.innerHTML = json[i][col[j]];
         }
 
-        let tabCell = tr.insertCell(-1);
-        tabCell.innerHTML="status";
-
+        //Колонка редактирования
         let tabCell2 = tr.insertCell(-1);
-        tabCell2.innerHTML="edit";
+        tabCell2.innerHTML="<a href=\"faculties_edit.html?id="+json[i][col[0]]+"\">Редактировать</a>";
+
     }
 
     // FINALLY ADD THE NEWLY CREATED TABLE WITH JSON DATA TO A CONTAINER.
@@ -111,3 +111,13 @@ function createTableFromJSON(json) {
     divContainer.appendChild(table);
 }
 //////////////////////////////////////////////
+
+
+
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+const id = urlParams.get('id');
+console.log(id);
+
+let editFaculty = document.getElementById("editFaculty");
+editFaculty.setAttribute("value",id);

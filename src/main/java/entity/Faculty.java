@@ -27,6 +27,8 @@ public class Faculty implements Serializable {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "status")
+    private String status;
 
     @JsonIgnore
     @OneToMany(mappedBy = "faculty", fetch = FetchType.LAZY)
