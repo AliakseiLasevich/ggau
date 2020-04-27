@@ -5,7 +5,7 @@ import dto.FacultyDto;
 import entity.Faculty;
 import exception.ErrorMessages;
 import exception.FacultyException;
-import org.modelmapper.ModelMapper;
+import mappers.FacultyMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -48,11 +48,11 @@ public class FacultyServiceImpl implements FacultyService {
         if (facultyRepository.findByName(facultyDto.getName()) != null) {
             throw new FacultyException(ErrorMessages.RECORD_ALREADY_EXISTS.getErrorMessage());
         }
-        ModelMapper modelMapper = new ModelMapper();
-        Faculty facultyEntity = modelMapper.map(facultyDto, Faculty.class);
 
+        Faculty facultyEntity = FacultyMapper.INSTANCE.dtoToEntity(facultyDto);
         Faculty storedFaculty = facultyRepository.save(facultyEntity);
-        FacultyDto returnValue = modelMapper.map(storedFaculty, FacultyDto.class);
+
+        FacultyDto returnValue = FacultyMapper.INSTANCE.entityToDto(storedFaculty);
         return returnValue;
     }
 }

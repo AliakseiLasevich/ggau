@@ -26,7 +26,7 @@ public class Teacher implements Serializable {
     @Column(name = "name")
     private String name;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cathedra")
     private Cathedra cathedra;
 

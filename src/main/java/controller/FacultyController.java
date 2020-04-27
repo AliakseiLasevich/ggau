@@ -4,7 +4,7 @@ import dto.FacultyDto;
 import entity.Faculty;
 import exception.ErrorMessages;
 import exception.FacultyException;
-import org.modelmapper.ModelMapper;
+import mappers.FacultyMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -47,11 +47,11 @@ public class FacultyController {
             throw new FacultyException(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
         }
 
-        ModelMapper modelMapper = new ModelMapper();
-        FacultyDto facultyDto = modelMapper.map(facultyRequestModel, FacultyDto.class);
+        FacultyDto facultyDto = FacultyMapper.INSTANCE.requestModelToDto(facultyRequestModel);
 
         FacultyDto createdFaculty = facultyService.createFaculty(facultyDto);
-        FacultyRest returnValue = modelMapper.map(createdFaculty, FacultyRest.class);
+
+        FacultyRest returnValue = FacultyMapper.INSTANCE.toRest(createdFaculty);
 
         return returnValue;
     }
