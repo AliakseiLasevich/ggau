@@ -3,6 +3,8 @@ package service;
 import dao.interfaces.CathedraRepository;
 import dto.CathedraDto;
 import entity.Cathedra;
+import exception.CathedraException;
+import exception.ErrorMessages;
 import mappers.CathedraMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -37,6 +39,9 @@ public class CathedraServiceImpl implements CathedraService {
     @Transactional
     @Override
     public Cathedra findById(Long id) {
-        return null;
+
+        return cathedraRepository
+                .findById(id)
+                .orElseThrow((() -> new CathedraException(ErrorMessages.NO_CATHEDRA_FOUND.getErrorMessage())));
     }
 }
