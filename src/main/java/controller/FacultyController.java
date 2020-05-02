@@ -15,6 +15,7 @@ import response.FacultyRest;
 import service.interfaces.FacultyService;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/rest/faculties")
@@ -25,14 +26,19 @@ public class FacultyController {
 
 
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<List<Faculty>> findAllFaculties(@RequestParam(value = "page", defaultValue = "0") int page,
-                                                          @RequestParam(value = "limit", defaultValue = "10") int limit) {
+    public ResponseEntity<List<FacultyRest>> findAllFaculties(@RequestParam(value = "page", defaultValue = "0") int page,
+                                                              @RequestParam(value = "limit", defaultValue = "10") int limit) {
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.set("Access-Control-Allow-Origin", "*");
 
+        List<FacultyRest> returnValue = facultyService
+                .findAll(page, limit).stream()
+                .map(FacultyMapper.INSTANCE::dtoToRest)
+                .collect(Collectors.toList());
+
         return ResponseEntity.ok()
                 .headers(responseHeaders)
-                .body(facultyService.findAll(page, limit));
+                .body(returnValue);
     }
 
     @GetMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
@@ -51,7 +57,7 @@ public class FacultyController {
 
         FacultyDto createdFaculty = facultyService.createFaculty(facultyDto);
 
-        FacultyRest returnValue = FacultyMapper.INSTANCE.toRest(createdFaculty);
+        FacultyRest returnValue = FacultyMapper.INSTANCE.dtoToRest(createdFaculty);
 
         return returnValue;
     }

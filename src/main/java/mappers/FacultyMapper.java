@@ -10,13 +10,13 @@ import response.FacultyRest;
 @Mapper(componentModel = "spring")
 public interface FacultyMapper {
 
+    FacultyRest dtoToRest(FacultyDto facultyDto);
+
     Faculty dtoToEntity(FacultyDto facultyDto);
 
     FacultyDto entityToDto(Faculty faculty);
 
     FacultyDto requestModelToDto(FacultyRequestModel requestModel);
-
-    FacultyRest toRest(FacultyDto facultyDto);
 
     FacultyMapper INSTANCE = Mappers.getMapper(FacultyMapper.class);
 

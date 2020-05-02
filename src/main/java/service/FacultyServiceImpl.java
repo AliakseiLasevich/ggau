@@ -16,6 +16,7 @@ import service.interfaces.FacultyService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class FacultyServiceImpl implements FacultyService {
@@ -24,8 +25,8 @@ public class FacultyServiceImpl implements FacultyService {
     private FacultyRepository facultyRepository;
 
     @Transactional
-    public List<Faculty> findAll(int page, int limit) {
-        List<Faculty> returnValue = new ArrayList<>();
+    public List<FacultyDto> findAll(int page, int limit) {
+
 
         if(page>0) page-=1;
         Pageable pageableRequest = PageRequest.of(page, limit);
@@ -33,8 +34,9 @@ public class FacultyServiceImpl implements FacultyService {
         Page<Faculty> facultiesPage = facultyRepository.findAll(pageableRequest);
         List<Faculty> faculties = facultiesPage.getContent();
 
-        return faculties;
+        return faculties.stream().map(FacultyMapper.INSTANCE::entityToDto).collect(Collectors.toList());
     }
+
 
     @Transactional
     public Faculty findById(Long id) {

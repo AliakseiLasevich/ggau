@@ -9,11 +9,25 @@ import response.FacultyRest;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2020-04-27T21:10:09+0300",
+    date = "2020-05-02T12:20:51+0300",
     comments = "version: 1.3.1.Final, compiler: javac, environment: Java 1.8.0_241 (Oracle Corporation)"
 )
 @Component
 public class FacultyMapperImpl implements FacultyMapper {
+
+    @Override
+    public FacultyRest dtoToRest(FacultyDto facultyDto) {
+        if ( facultyDto == null ) {
+            return null;
+        }
+
+        FacultyRest facultyRest = new FacultyRest();
+
+        facultyRest.setId( facultyDto.getId() );
+        facultyRest.setName( facultyDto.getName() );
+
+        return facultyRest;
+    }
 
     @Override
     public Faculty dtoToEntity(FacultyDto facultyDto) {
@@ -23,6 +37,7 @@ public class FacultyMapperImpl implements FacultyMapper {
 
         Faculty faculty = new Faculty();
 
+        faculty.setId( facultyDto.getId() );
         faculty.setName( facultyDto.getName() );
 
         return faculty;
@@ -36,6 +51,7 @@ public class FacultyMapperImpl implements FacultyMapper {
 
         FacultyDto facultyDto = new FacultyDto();
 
+        facultyDto.setId( faculty.getId() );
         facultyDto.setName( faculty.getName() );
 
         return facultyDto;
@@ -52,18 +68,5 @@ public class FacultyMapperImpl implements FacultyMapper {
         facultyDto.setName( requestModel.getName() );
 
         return facultyDto;
-    }
-
-    @Override
-    public FacultyRest toRest(FacultyDto facultyDto) {
-        if ( facultyDto == null ) {
-            return null;
-        }
-
-        FacultyRest facultyRest = new FacultyRest();
-
-        facultyRest.setName( facultyDto.getName() );
-
-        return facultyRest;
     }
 }
