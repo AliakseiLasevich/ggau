@@ -26,11 +26,16 @@ public class CathedraServiceImpl implements CathedraService {
     @Transactional
     @Override
     public List<CathedraDto> findAll(int page, int limit) {
+
+
         if (page > 0) page -= 1;
         Pageable pageableRequest = PageRequest.of(page, limit);
 
         Page<Cathedra> cathedrasPage = cathedraRepository.findAll(pageableRequest);
+
         List<Cathedra> cathedraEntities = cathedrasPage.getContent();
+
+
 
         return cathedraEntities.stream()
                 .map(CathedraMapper.INSTANCE::entityToDto).collect(Collectors.toList());

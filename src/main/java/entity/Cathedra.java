@@ -4,17 +4,21 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
-@Data
+@Entity
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
 @Table(name = "cathedra")
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
@@ -29,13 +33,14 @@ public class Cathedra implements Serializable {
     @Column(name = "name")
     private String name;
 
-//    @Fetch(FetchMode.JOIN)
-    @JsonIgnore
+
+    @Fetch(FetchMode.JOIN)
     @OneToMany(mappedBy = "cathedra", fetch = FetchType.LAZY)
     private List<Teacher> teachers;
 
-    @JsonIgnore
-    @ManyToOne
+
+    @Fetch(FetchMode.JOIN)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "faculty")
     private Faculty faculty;
 
