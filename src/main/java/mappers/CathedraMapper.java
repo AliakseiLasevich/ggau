@@ -9,7 +9,7 @@ import response.CathedraRest;
 @Mapper(componentModel = "spring")
 public interface CathedraMapper {
 
-    CathedraDto toDto(Cathedra cathedra);
+    CathedraDto entityToDto(Cathedra cathedra);
 
     CathedraRest dtoToRest(CathedraDto cathedraDto);
 

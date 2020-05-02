@@ -32,7 +32,7 @@ public class CathedraController {
         List<CathedraDto> cathedraDtos = cathedraService.findAll(page, limit);
 
         List<CathedraRest> cathedraRests = cathedraDtos.stream()
-                .map(cathedraDto -> CathedraMapper.INSTANCE.dtoToRest(cathedraDto))
+                .map(CathedraMapper.INSTANCE::dtoToRest)
                 .collect(Collectors.toList());
 
 

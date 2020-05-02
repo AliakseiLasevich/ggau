@@ -29,11 +29,11 @@ public class CathedraServiceImpl implements CathedraService {
         if (page > 0) page -= 1;
         Pageable pageableRequest = PageRequest.of(page, limit);
 
-        Page<Cathedra> facultiesPage = cathedraRepository.findAll(pageableRequest);
-        List<Cathedra> cathedraEntities = facultiesPage.getContent();
+        Page<Cathedra> cathedrasPage = cathedraRepository.findAll(pageableRequest);
+        List<Cathedra> cathedraEntities = cathedrasPage.getContent();
 
         return cathedraEntities.stream()
-                .map(CathedraMapper.INSTANCE::toDto).collect(Collectors.toList());
+                .map(CathedraMapper.INSTANCE::entityToDto).collect(Collectors.toList());
     }
 
     @Transactional
