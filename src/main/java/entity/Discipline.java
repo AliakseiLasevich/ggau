@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -46,4 +47,8 @@ public class Discipline implements Serializable {
             joinColumns = @JoinColumn(name = "id_discipline"),
             inverseJoinColumns = @JoinColumn(name = "id_studentsubgroup"))
     private List<StudentSubgroup> studentSubgroups;
+
+    @ColumnDefault("1")
+    @Column(name = "active", columnDefinition = "BOOLEAN")
+    private boolean active;
 }

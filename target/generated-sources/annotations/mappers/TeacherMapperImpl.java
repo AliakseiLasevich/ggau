@@ -12,7 +12,7 @@ import response.TeacherRest;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2020-05-02T20:21:33+0300",
+    date = "2020-05-05T12:28:06+0300",
     comments = "version: 1.3.1.Final, compiler: javac, environment: Java 1.8.0_241 (Oracle Corporation)"
 )
 @Component
@@ -41,6 +41,7 @@ public class TeacherMapperImpl implements TeacherMapper {
 
         TeacherRest teacherRest = new TeacherRest();
 
+        teacherRest.setId( teacherDto.getId() );
         teacherRest.setName( teacherDto.getName() );
         teacherRest.setCathedra( cathedraToCathedraRest( teacherDto.getCathedra() ) );
 

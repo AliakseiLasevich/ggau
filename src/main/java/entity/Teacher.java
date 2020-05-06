@@ -3,12 +3,11 @@ package entity;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import lombok.Data;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -19,6 +18,8 @@ import java.util.List;
 @Table(name = "teacher")
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id")
@@ -42,5 +43,9 @@ public class Teacher implements Serializable {
             joinColumns = @JoinColumn(name = "id_teacher"),
             inverseJoinColumns = @JoinColumn(name = "id_discipline"))
     private List<Discipline> disciplines;
+
+    @ColumnDefault("1")
+    @Column(name = "active", columnDefinition = "BOOLEAN")
+    private boolean active;
 
 }

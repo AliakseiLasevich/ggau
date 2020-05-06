@@ -4,6 +4,7 @@ package entity;
         import com.fasterxml.jackson.annotation.ObjectIdGenerators;
         import lombok.Getter;
         import lombok.Setter;
+        import org.hibernate.annotations.ColumnDefault;
 
         import javax.persistence.*;
         import java.io.Serializable;
@@ -33,4 +34,7 @@ public class Specialty implements Serializable {
     @JoinColumn(name = "faculty")
     private Faculty faculty;
 
+    @ColumnDefault("1")
+    @Column(name = "active", columnDefinition = "BOOLEAN")
+    private boolean active;
 }

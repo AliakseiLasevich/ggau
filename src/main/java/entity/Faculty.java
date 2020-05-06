@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -34,5 +35,9 @@ public class Faculty implements Serializable {
 
     @OneToMany(mappedBy = "faculty", fetch = FetchType.LAZY)
     private List<Specialty> specialties;
+
+    @ColumnDefault("1")
+    @Column(name = "active", columnDefinition = "BOOLEAN")
+    private boolean active;
 
 }

@@ -10,6 +10,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class TeacherRest {
 
+    private Long id;
     private String name;
     private CathedraRest cathedra;
+
 }

@@ -35,10 +35,10 @@ public class TeacherServiceImpl implements TeacherService {
 
         Page<Teacher> teachersPage = teacherRepository.findAll(pageableRequest);
         List<Teacher> teacherEntities = teachersPage.getContent();
-
-        return teacherEntities.stream()
-                .peek(teacher -> teacher.setCathedra((Cathedra) Hibernate.unproxy(teacher.getCathedra())))  //set cathedra from lazy loading
+        List<TeacherDto> dtos = teacherEntities.stream()
+                .peek(teacher -> Hibernate.unproxy(teacher.getCathedra().getFaculty()))  //unproxy cathedra and faculty from lazy loading
                 .map(TeacherMapper.INSTANCE::entityToDto)
                 .collect(Collectors.toList());
+        return dtos;
     }
 }

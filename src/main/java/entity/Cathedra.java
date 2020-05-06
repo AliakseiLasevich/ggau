@@ -1,14 +1,12 @@
 package entity;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -34,15 +32,19 @@ public class Cathedra implements Serializable {
     private String name;
 
 
-    @Fetch(FetchMode.JOIN)
+    //    @Fetch(FetchMode.JOIN)
     @OneToMany(mappedBy = "cathedra", fetch = FetchType.LAZY)
     private List<Teacher> teachers;
 
 
-    @Fetch(FetchMode.JOIN)
+    //    @Fetch(FetchMode.JOIN)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "faculty")
     private Faculty faculty;
+
+    @ColumnDefault("1")
+    @Column(name = "active", columnDefinition = "BOOLEAN")
+    private boolean active;
 
 
 }

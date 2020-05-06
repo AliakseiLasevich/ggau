@@ -6,6 +6,7 @@ import entity.Cathedra;
 import exception.CathedraException;
 import exception.ErrorMessages;
 import mappers.CathedraMapper;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -35,9 +36,8 @@ public class CathedraServiceImpl implements CathedraService {
 
         List<Cathedra> cathedraEntities = cathedrasPage.getContent();
 
-
-
         return cathedraEntities.stream()
+                .peek(cathedra -> Hibernate.unproxy(cathedra.getFaculty()))
                 .map(CathedraMapper.INSTANCE::entityToDto).collect(Collectors.toList());
     }
 
