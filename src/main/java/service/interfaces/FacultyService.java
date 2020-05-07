@@ -12,4 +12,5 @@ public interface FacultyService {
     Faculty findById(Long id);
     FacultyDto createFaculty(FacultyDto facultyDto);
 
+    void updateFaculty(FacultyDto facultyDto);
 }

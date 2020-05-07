@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import service.interfaces.FacultyService;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,7 +27,7 @@ public class FacultyServiceImpl implements FacultyService {
     public List<FacultyDto> findAll(int page, int limit) {
 
 
-        if(page>0) page-=1;
+        if (page > 0) page -= 1;
         Pageable pageableRequest = PageRequest.of(page, limit);
 
         Page<Faculty> facultiesPage = facultyRepository.findAll(pageableRequest);
@@ -56,5 +55,15 @@ public class FacultyServiceImpl implements FacultyService {
 
         FacultyDto returnValue = FacultyMapper.INSTANCE.entityToDto(storedFaculty);
         return returnValue;
+    }
+
+    @Transactional
+    @Override
+    public void updateFaculty(FacultyDto facultyDto) {
+        if (facultyRepository.findById(facultyDto.getId()).isPresent()) {
+            Faculty facultyEntity = FacultyMapper.INSTANCE.dtoToEntity(facultyDto);
+
+            facultyRepository.save(facultyEntity);
+        } else throw new FacultyException(ErrorMessages.NO_FACULTY_FOUND.getErrorMessage());
     }
 }

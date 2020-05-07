@@ -6,7 +6,6 @@ import exception.ErrorMessages;
 import exception.FacultyException;
 import mappers.FacultyMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,8 +28,7 @@ public class FacultyController {
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<List<FacultyRest>> findAllFaculties(@RequestParam(value = "page", defaultValue = "0") int page,
                                                               @RequestParam(value = "limit", defaultValue = "25") int limit) {
-//        HttpHeaders responseHeaders = new HttpHeaders();
-//        responseHeaders.set("Access-Control-Allow-Origin", "*");
+
 
         List<FacultyRest> returnValue = facultyService
                 .findAll(page, limit).stream()
@@ -38,7 +36,6 @@ public class FacultyController {
                 .collect(Collectors.toList());
 
         return ResponseEntity.ok()
-//                .headers(responseHeaders)
                 .body(returnValue);
     }
 
@@ -50,8 +47,7 @@ public class FacultyController {
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<FacultyRest> createFaculty(@RequestBody FacultyRequestModel facultyRequestModel) {
-        HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.set("Access-Control-Allow-Origin", "*");
+
         if (facultyRequestModel.getName().isEmpty()) {
             throw new FacultyException(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
         }
@@ -63,12 +59,23 @@ public class FacultyController {
         FacultyRest returnValue = FacultyMapper.INSTANCE.dtoToRest(createdFaculty);
 
         return ResponseEntity.ok()
-                .headers(responseHeaders)
                 .body(returnValue);
     }
 
     @PutMapping("/{id}")
-    public void updateFaculty() {
+    public void updateFaculty(@RequestBody FacultyRequestModel facultyEditRequestModel,
+                              @PathVariable Long id) {
+
+        if (facultyEditRequestModel.getName().isEmpty()) {
+            throw new FacultyException(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
+        }
+
+        FacultyDto facultyDto = FacultyMapper.INSTANCE.requestModelToDto(facultyEditRequestModel);
+        facultyDto.setId(id);
+
+        facultyService.updateFaculty(facultyDto);
+
+
     }
 
 

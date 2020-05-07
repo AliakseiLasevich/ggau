@@ -9,7 +9,7 @@ import response.FacultyRest;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2020-05-07T12:58:47+0300",
+    date = "2020-05-07T22:42:15+0300",
     comments = "version: 1.3.1.Final, compiler: javac, environment: Java 1.8.0_241 (Oracle Corporation)"
 )
 @Component
@@ -69,6 +69,7 @@ public class FacultyMapperImpl implements FacultyMapper {
         FacultyDto facultyDto = new FacultyDto();
 
         facultyDto.setName( requestModel.getName() );
+        facultyDto.setActive( requestModel.getActive() );
 
         return facultyDto;
     }

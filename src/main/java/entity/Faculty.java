@@ -35,7 +35,7 @@ public class Faculty implements Serializable {
     @OneToMany(mappedBy = "faculty", fetch = FetchType.LAZY)
     private List<Specialty> specialties;
 
-    @ColumnDefault(value = "'1'")
+//    @ColumnDefault(value = "'1'")
     @Column(name = "active")
     private Boolean active;
 
