@@ -9,7 +9,7 @@ import response.FacultyRest;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2020-05-02T12:20:51+0300",
+    date = "2020-05-07T12:58:47+0300",
     comments = "version: 1.3.1.Final, compiler: javac, environment: Java 1.8.0_241 (Oracle Corporation)"
 )
 @Component
@@ -25,6 +25,7 @@ public class FacultyMapperImpl implements FacultyMapper {
 
         facultyRest.setId( facultyDto.getId() );
         facultyRest.setName( facultyDto.getName() );
+        facultyRest.setActive( facultyDto.getActive() );
 
         return facultyRest;
     }
@@ -39,6 +40,7 @@ public class FacultyMapperImpl implements FacultyMapper {
 
         faculty.setId( facultyDto.getId() );
         faculty.setName( facultyDto.getName() );
+        faculty.setActive( facultyDto.getActive() );
 
         return faculty;
     }
@@ -53,6 +55,7 @@ public class FacultyMapperImpl implements FacultyMapper {
 
         facultyDto.setId( faculty.getId() );
         facultyDto.setName( faculty.getName() );
+        facultyDto.setActive( faculty.getActive() );
 
         return facultyDto;
     }

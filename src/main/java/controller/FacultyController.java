@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/rest/faculties")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class FacultyController {
 
     @Autowired
@@ -27,9 +28,9 @@ public class FacultyController {
 
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<List<FacultyRest>> findAllFaculties(@RequestParam(value = "page", defaultValue = "0") int page,
-                                                              @RequestParam(value = "limit", defaultValue = "10") int limit) {
-        HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.set("Access-Control-Allow-Origin", "*");
+                                                              @RequestParam(value = "limit", defaultValue = "25") int limit) {
+//        HttpHeaders responseHeaders = new HttpHeaders();
+//        responseHeaders.set("Access-Control-Allow-Origin", "*");
 
         List<FacultyRest> returnValue = facultyService
                 .findAll(page, limit).stream()
@@ -37,7 +38,7 @@ public class FacultyController {
                 .collect(Collectors.toList());
 
         return ResponseEntity.ok()
-                .headers(responseHeaders)
+//                .headers(responseHeaders)
                 .body(returnValue);
     }
 
@@ -48,7 +49,9 @@ public class FacultyController {
 
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE})
-    public FacultyRest createFaculty(@RequestBody FacultyRequestModel facultyRequestModel) {
+    public ResponseEntity<FacultyRest> createFaculty(@RequestBody FacultyRequestModel facultyRequestModel) {
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.set("Access-Control-Allow-Origin", "*");
         if (facultyRequestModel.getName().isEmpty()) {
             throw new FacultyException(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
         }
@@ -59,7 +62,9 @@ public class FacultyController {
 
         FacultyRest returnValue = FacultyMapper.INSTANCE.dtoToRest(createdFaculty);
 
-        return returnValue;
+        return ResponseEntity.ok()
+                .headers(responseHeaders)
+                .body(returnValue);
     }
 
     @PutMapping("/{id}")

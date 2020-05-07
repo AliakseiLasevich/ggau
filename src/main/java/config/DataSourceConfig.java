@@ -53,7 +53,7 @@ public class DataSourceConfig {
     private final Properties hibernateProperties() {
         Properties hibernateProperties = new Properties();
         hibernateProperties.setProperty("hibernate.show_sql", "true");
-        hibernateProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL55Dialect");
+        hibernateProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL8Dialect");
         hibernateProperties.setProperty("hibernate.hbm2ddl.auto", "update");
 
         return hibernateProperties;

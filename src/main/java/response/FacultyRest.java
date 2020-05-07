@@ -11,4 +11,5 @@ public class FacultyRest {
 
     private Long id;
     private String name;
+    private Boolean active;
 }
