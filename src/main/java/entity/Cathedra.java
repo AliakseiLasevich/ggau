@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -31,20 +30,19 @@ public class Cathedra implements Serializable {
     @Column(name = "name")
     private String name;
 
-
-    //    @Fetch(FetchMode.JOIN)
     @OneToMany(mappedBy = "cathedra", fetch = FetchType.LAZY)
     private List<Teacher> teachers;
 
-
-    //    @Fetch(FetchMode.JOIN)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "faculty")
     private Faculty faculty;
 
-    @ColumnDefault("1")
-    @Column(name = "active", columnDefinition = "BOOLEAN")
+
+    @Column(name = "active")
     private boolean active;
 
-
+    @PrePersist
+    public void setDefaultActiveValue() {
+        active = true;
+    }
 }

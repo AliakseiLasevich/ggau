@@ -2,12 +2,14 @@ package controller;
 
 import dto.CathedraDto;
 import entity.Cathedra;
+import exception.CathedraException;
+import exception.ErrorMessages;
 import mappers.CathedraMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import request.CathedraRequestModel;
 import response.CathedraRest;
 import service.interfaces.CathedraService;
 
@@ -16,6 +18,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/rest/cathedras")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class CathedraController {
 
 
@@ -24,47 +27,43 @@ public class CathedraController {
 
 
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<List<CathedraRest>> findAllFaculties(@RequestParam(value = "page", defaultValue = "0") int page,
-                                                               @RequestParam(value = "limit", defaultValue = "10") int limit) {
-        HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.set("Access-Control-Allow-Origin", "*");
+    public ResponseEntity<List<CathedraRest>> findAllCathedras(@RequestParam(value = "page", defaultValue = "0") int page,
+                                                               @RequestParam(value = "limit", defaultValue = "50") int limit,
+                                                               @RequestParam(required = false) Long facultyId) {
 
-        List<CathedraDto> cathedraDtos = cathedraService.findAll(page, limit);
 
+        List<CathedraDto> cathedraDtos = cathedraService.findCathedras(page, limit, facultyId);
         List<CathedraRest> cathedraRests = cathedraDtos.stream()
                 .map(CathedraMapper.INSTANCE::dtoToRest)
                 .collect(Collectors.toList());
 
-
         return ResponseEntity.ok()
-                .headers(responseHeaders)
                 .body(cathedraRests);
     }
 
     @GetMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public Cathedra getFaculty(@PathVariable("id") Long id) {
+    public Cathedra getCathedra(@PathVariable("id") Long id) {
         return cathedraService.findById(id);
     }
 
 
-//    @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE},
-//            produces = {MediaType.APPLICATION_JSON_VALUE})
-//    public FacultyRest createFaculty(@RequestBody FacultyRequestModel facultyRequestModel) {
-//        if (facultyRequestModel.getName().isEmpty()) {
-//            throw new FacultyException(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
-//        }
-//
-//        ModelMapper modelMapper = new ModelMapper();
-//        FacultyDto facultyDto = modelMapper.map(facultyRequestModel, FacultyDto.class);
-//
-//        FacultyDto createdFaculty = facultyService.createFaculty(facultyDto);
-//        FacultyRest returnValue = modelMapper.map(createdFaculty, FacultyRest.class);
-//
-//        return returnValue;
-//    }
-//
-//    @PutMapping("/{id}")
-//    public void updateFaculty() {
-//    }
+
+    @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<CathedraRest> createCathedra(@RequestBody CathedraRequestModel cathedraRequestModel) {
+
+        if (cathedraRequestModel.getName().isEmpty()) {
+            throw new CathedraException(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
+        }
+
+        CathedraDto cathedraDto = CathedraMapper.INSTANCE.requestModelToDto(cathedraRequestModel);
+
+        CathedraDto createdCathedra = cathedraService.createCathedra(cathedraDto);
+
+        CathedraRest returnValue = CathedraMapper.INSTANCE.dtoToRest(createdCathedra);
+
+        return ResponseEntity.ok()
+                .body(returnValue);
+    }
 
 }

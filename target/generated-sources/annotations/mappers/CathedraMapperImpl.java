@@ -2,15 +2,14 @@ package mappers;
 
 import dto.CathedraDto;
 import entity.Cathedra;
-import entity.Faculty;
 import javax.annotation.Generated;
 import org.springframework.stereotype.Component;
+import request.CathedraRequestModel;
 import response.CathedraRest;
-import response.FacultyRest;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2020-05-05T12:28:06+0300",
+    date = "2020-05-08T19:39:00+0300",
     comments = "version: 1.3.1.Final, compiler: javac, environment: Java 1.8.0_241 (Oracle Corporation)"
 )
 @Component
@@ -26,7 +25,6 @@ public class CathedraMapperImpl implements CathedraMapper {
 
         cathedraDto.setId( cathedra.getId() );
         cathedraDto.setName( cathedra.getName() );
-        cathedraDto.setFaculty( cathedra.getFaculty() );
 
         return cathedraDto;
     }
@@ -41,21 +39,21 @@ public class CathedraMapperImpl implements CathedraMapper {
 
         cathedraRest.setId( cathedraDto.getId() );
         cathedraRest.setName( cathedraDto.getName() );
-        cathedraRest.setFaculty( facultyToFacultyRest( cathedraDto.getFaculty() ) );
 
         return cathedraRest;
     }
 
-    protected FacultyRest facultyToFacultyRest(Faculty faculty) {
-        if ( faculty == null ) {
+    @Override
+    public CathedraDto requestModelToDto(CathedraRequestModel requestModel) {
+        if ( requestModel == null ) {
             return null;
         }
 
-        FacultyRest facultyRest = new FacultyRest();
+        CathedraDto cathedraDto = new CathedraDto();
 
-        facultyRest.setId( faculty.getId() );
-        facultyRest.setName( faculty.getName() );
+        cathedraDto.setName( requestModel.getName() );
+        cathedraDto.setFacultyId( requestModel.getFacultyId() );
 
-        return facultyRest;
+        return cathedraDto;
     }
 }

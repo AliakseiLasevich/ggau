@@ -6,7 +6,6 @@ import entity.Cathedra;
 import exception.CathedraException;
 import exception.ErrorMessages;
 import mappers.CathedraMapper;
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -26,20 +25,32 @@ public class CathedraServiceImpl implements CathedraService {
 
     @Transactional
     @Override
-    public List<CathedraDto> findAll(int page, int limit) {
+    public List<CathedraDto> findCathedras(int page, int limit, Long facultyId) {
 
+        if (facultyId != null && facultyId > 0) {
+            return findCathedraByFaculty(facultyId);
+        } else {
+            return findAllCathedras(page, limit);
+        }
+    }
 
+    private List<CathedraDto> findAllCathedras(int page, int limit) {
         if (page > 0) page -= 1;
         Pageable pageableRequest = PageRequest.of(page, limit);
-
         Page<Cathedra> cathedrasPage = cathedraRepository.findAll(pageableRequest);
-
         List<Cathedra> cathedraEntities = cathedrasPage.getContent();
-
         return cathedraEntities.stream()
-                .peek(cathedra -> Hibernate.unproxy(cathedra.getFaculty()))
+//                .peek(cathedra -> Hibernate.unproxy(cathedra.getFaculty()))
                 .map(CathedraMapper.INSTANCE::entityToDto).collect(Collectors.toList());
     }
+
+    private List<CathedraDto> findCathedraByFaculty(Long facultyId) {
+        List<Cathedra> cathedras = cathedraRepository.findByFacultyId(facultyId);
+        return cathedras.stream()
+                .map(CathedraMapper.INSTANCE::entityToDto).collect(Collectors.toList());
+    }
+
+
 
     @Transactional
     @Override
@@ -48,5 +59,11 @@ public class CathedraServiceImpl implements CathedraService {
         return cathedraRepository
                 .findById(id)
                 .orElseThrow((() -> new CathedraException(ErrorMessages.NO_CATHEDRA_FOUND.getErrorMessage())));
+    }
+
+    @Override
+    public CathedraDto createCathedra(CathedraDto cathedraDto) {
+        System.out.println(cathedraDto);
+        return null;
     }
 }

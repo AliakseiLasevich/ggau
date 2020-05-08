@@ -6,6 +6,8 @@ import entity.Cathedra;
 import java.util.List;
 
 public interface CathedraService {
-    List<CathedraDto> findAll(int page, int limit);
+    List<CathedraDto> findCathedras(int page, int limit, Long facultyId);
     Cathedra findById(Long id);
+
+    CathedraDto createCathedra(CathedraDto cathedraDto);
 }

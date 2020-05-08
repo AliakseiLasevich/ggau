@@ -29,7 +29,6 @@ public class FacultyController {
     public ResponseEntity<List<FacultyRest>> findAllFaculties(@RequestParam(value = "page", defaultValue = "0") int page,
                                                               @RequestParam(value = "limit", defaultValue = "25") int limit) {
 
-
         List<FacultyRest> returnValue = facultyService
                 .findAll(page, limit).stream()
                 .map(FacultyMapper.INSTANCE::dtoToRest)
