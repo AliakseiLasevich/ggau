@@ -17,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import service.interfaces.CathedraService;
+import service.interfaces.FacultyService;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,6 +27,9 @@ public class CathedraServiceImpl implements CathedraService {
 
     @Autowired
     CathedraRepository cathedraRepository;
+
+    @Autowired
+    FacultyService facultyService;
 
     @Transactional
     @Override
@@ -78,8 +82,9 @@ public class CathedraServiceImpl implements CathedraService {
     }
 
     @Override
-    public CathedraDto createCathedra(CathedraDto cathedraDto) {
-        System.out.println(cathedraDto);
-        return null;
+    public void createCathedra(CathedraDto cathedraDto) {
+        Cathedra cathedra = CathedraMapper.INSTANCE.dtoToEntity(cathedraDto);
+        cathedra.setFaculty(facultyService.findById(cathedraDto.getFacultyId()));
+        cathedraRepository.save(cathedra);
     }
 }

@@ -14,6 +14,8 @@ public interface CathedraMapper {
 
     CathedraRest dtoToRest(CathedraDto cathedraDto);
 
+    Cathedra dtoToEntity(CathedraDto cathedraDto);
+
     CathedraDto requestModelToDto(CathedraRequestModel requestModel);
 
     CathedraMapper INSTANCE = Mappers.getMapper(CathedraMapper.class);

@@ -12,5 +12,4 @@ public class CathedraRest {
     private Boolean active;
     private FacultyRest faculty;
 
-
 }

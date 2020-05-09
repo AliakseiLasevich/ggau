@@ -9,5 +9,5 @@ public interface CathedraService {
     List<CathedraDto> findCathedras(int page, int limit, Long facultyId);
     Cathedra findById(Long id);
 
-    CathedraDto createCathedra(CathedraDto cathedraDto);
+    void createCathedra(CathedraDto cathedraDto);
 }

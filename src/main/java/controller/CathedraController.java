@@ -14,6 +14,7 @@ import request.CathedraRequestModel;
 import response.CathedraRest;
 import response.FacultyRest;
 import service.interfaces.CathedraService;
+import service.interfaces.FacultyService;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,13 +28,14 @@ public class CathedraController {
     @Autowired
     private CathedraService cathedraService;
 
+    @Autowired
+    private FacultyService facultyService;
+
 
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<List<CathedraRest>> findAllCathedras(@RequestParam(value = "page", defaultValue = "0") int page,
                                                                @RequestParam(value = "limit", defaultValue = "50") int limit,
                                                                @RequestParam(required = false) Long facultyId) {
-
-
         List<CathedraDto> cathedraDtos = cathedraService.findCathedras(page, limit, facultyId);
         List<CathedraRest> cathedraRests = cathedraDtos.stream()
                 .map(cathedraDto -> {
@@ -43,7 +45,6 @@ public class CathedraController {
                     return cathedraRest;
                 })
                 .collect(Collectors.toList());
-
         return ResponseEntity.ok()
                 .body(cathedraRests);
     }
@@ -56,20 +57,13 @@ public class CathedraController {
 
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<CathedraRest> createCathedra(@RequestBody CathedraRequestModel cathedraRequestModel) {
-
+    public void createCathedra(@RequestBody CathedraRequestModel cathedraRequestModel) {
         if (cathedraRequestModel.getName().isEmpty()) {
             throw new CathedraException(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
         }
-
         CathedraDto cathedraDto = CathedraMapper.INSTANCE.requestModelToDto(cathedraRequestModel);
+        cathedraService.createCathedra(cathedraDto);
 
-        CathedraDto createdCathedra = cathedraService.createCathedra(cathedraDto);
-
-        CathedraRest returnValue = CathedraMapper.INSTANCE.dtoToRest(createdCathedra);
-
-        return ResponseEntity.ok()
-                .body(returnValue);
     }
 
 }

@@ -12,7 +12,7 @@ import response.TeacherRest;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2020-05-05T12:28:06+0300",
+    date = "2020-05-09T16:12:02+0300",
     comments = "version: 1.3.1.Final, compiler: javac, environment: Java 1.8.0_241 (Oracle Corporation)"
 )
 @Component
@@ -57,6 +57,7 @@ public class TeacherMapperImpl implements TeacherMapper {
 
         facultyRest.setId( faculty.getId() );
         facultyRest.setName( faculty.getName() );
+        facultyRest.setActive( faculty.getActive() );
 
         return facultyRest;
     }
@@ -70,6 +71,7 @@ public class TeacherMapperImpl implements TeacherMapper {
 
         cathedraRest.setId( cathedra.getId() );
         cathedraRest.setName( cathedra.getName() );
+        cathedraRest.setActive( cathedra.getActive() );
         cathedraRest.setFaculty( facultyToFacultyRest( cathedra.getFaculty() ) );
 
         return cathedraRest;

@@ -1,19 +1,18 @@
 package request;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter
+@Setter
 public class CathedraRequestModel {
 
-    private Long id;
+//    private Long id;
     private String name;
 
     private Long facultyId;
-    private Boolean active;
+//    private Boolean active;
+
+
 
 }
