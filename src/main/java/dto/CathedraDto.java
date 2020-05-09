@@ -11,6 +11,8 @@ public class CathedraDto {
 
     private Long id;
     private String name;
+    private Boolean active;
+    private FacultyDto facultyDto;
 
 }
 

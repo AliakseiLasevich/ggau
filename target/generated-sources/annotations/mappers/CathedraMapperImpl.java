@@ -9,7 +9,7 @@ import response.CathedraRest;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2020-05-08T19:39:00+0300",
+    date = "2020-05-09T15:28:48+0300",
     comments = "version: 1.3.1.Final, compiler: javac, environment: Java 1.8.0_241 (Oracle Corporation)"
 )
 @Component
@@ -25,6 +25,7 @@ public class CathedraMapperImpl implements CathedraMapper {
 
         cathedraDto.setId( cathedra.getId() );
         cathedraDto.setName( cathedra.getName() );
+        cathedraDto.setActive( cathedra.getActive() );
 
         return cathedraDto;
     }
@@ -39,6 +40,7 @@ public class CathedraMapperImpl implements CathedraMapper {
 
         cathedraRest.setId( cathedraDto.getId() );
         cathedraRest.setName( cathedraDto.getName() );
+        cathedraRest.setActive( cathedraDto.getActive() );
 
         return cathedraRest;
     }
@@ -51,8 +53,9 @@ public class CathedraMapperImpl implements CathedraMapper {
 
         CathedraDto cathedraDto = new CathedraDto();
 
+        cathedraDto.setId( requestModel.getId() );
         cathedraDto.setName( requestModel.getName() );
-        cathedraDto.setFacultyId( requestModel.getFacultyId() );
+        cathedraDto.setActive( requestModel.getActive() );
 
         return cathedraDto;
     }

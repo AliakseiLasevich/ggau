@@ -1,8 +1,6 @@
 package response;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -11,4 +9,8 @@ public class CathedraRest {
 
     private Long id;
     private String name;
+    private Boolean active;
+    private FacultyRest faculty;
+
+
 }

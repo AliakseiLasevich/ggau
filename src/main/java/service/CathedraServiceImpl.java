@@ -2,10 +2,14 @@ package service;
 
 import dao.interfaces.CathedraRepository;
 import dto.CathedraDto;
+import dto.FacultyDto;
 import entity.Cathedra;
+import entity.Faculty;
 import exception.CathedraException;
 import exception.ErrorMessages;
 import mappers.CathedraMapper;
+import mappers.FacultyMapper;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -38,10 +42,23 @@ public class CathedraServiceImpl implements CathedraService {
         if (page > 0) page -= 1;
         Pageable pageableRequest = PageRequest.of(page, limit);
         Page<Cathedra> cathedrasPage = cathedraRepository.findAll(pageableRequest);
-        List<Cathedra> cathedraEntities = cathedrasPage.getContent();
-        return cathedraEntities.stream()
-//                .peek(cathedra -> Hibernate.unproxy(cathedra.getFaculty()))
-                .map(CathedraMapper.INSTANCE::entityToDto).collect(Collectors.toList());
+
+        List<Cathedra> cathedraEntities =
+                cathedrasPage.getContent().stream()
+                        .peek(cathedra -> cathedra.setFaculty((Faculty) Hibernate.unproxy(cathedra.getFaculty())))
+                        .collect(Collectors.toList());
+
+
+        List<CathedraDto> returnvalue = cathedraEntities.stream()
+                .map(cathedra -> {
+                    CathedraDto cathedraDto = CathedraMapper.INSTANCE.entityToDto(cathedra);
+                    FacultyDto facultyDto = FacultyMapper.INSTANCE.entityToDto(cathedra.getFaculty());
+                    cathedraDto.setFacultyDto(facultyDto);
+                    return cathedraDto;
+                })
+                .collect(Collectors.toList());
+
+        return returnvalue;
     }
 
     private List<CathedraDto> findCathedraByFaculty(Long facultyId) {
@@ -49,7 +66,6 @@ public class CathedraServiceImpl implements CathedraService {
         return cathedras.stream()
                 .map(CathedraMapper.INSTANCE::entityToDto).collect(Collectors.toList());
     }
-
 
 
     @Transactional
