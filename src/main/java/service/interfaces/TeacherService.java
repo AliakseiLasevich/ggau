@@ -9,4 +9,6 @@ import java.util.List;
 public interface TeacherService {
 
     List<TeacherDto> findAll(int page, int limit);
+
+    void postTeacher(TeacherDto teacherDto);
 }

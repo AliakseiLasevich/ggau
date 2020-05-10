@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.converter.json.GsonBuilderUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import service.interfaces.TeacherService;
@@ -39,5 +40,10 @@ public class TeacherServiceImpl implements TeacherService {
                 .map(TeacherMapper.INSTANCE::entityToDto)
                 .collect(Collectors.toList());
         return dtos;
+    }
+
+    @Override
+    public void postTeacher(TeacherDto teacherDto) {
+        System.out.println(teacherDto);
     }
 }

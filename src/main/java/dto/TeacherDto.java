@@ -14,4 +14,5 @@ public class TeacherDto {
     private Long id;
     private String name;
     private Cathedra cathedra;
+    private Long cathedraId;
 }

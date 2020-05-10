@@ -6,13 +6,14 @@ import entity.Faculty;
 import entity.Teacher;
 import javax.annotation.Generated;
 import org.springframework.stereotype.Component;
+import request.TeacherRequestModel;
 import response.CathedraRest;
 import response.FacultyRest;
 import response.TeacherRest;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2020-05-10T14:12:09+0300",
+    date = "2020-05-10T22:25:04+0300",
     comments = "version: 1.3.1.Final, compiler: javac, environment: Java 1.8.0_241 (Oracle Corporation)"
 )
 @Component
@@ -46,6 +47,20 @@ public class TeacherMapperImpl implements TeacherMapper {
         teacherRest.setCathedra( cathedraToCathedraRest( teacherDto.getCathedra() ) );
 
         return teacherRest;
+    }
+
+    @Override
+    public TeacherDto requestToDto(TeacherRequestModel teacherRequestModel) {
+        if ( teacherRequestModel == null ) {
+            return null;
+        }
+
+        TeacherDto teacherDto = new TeacherDto();
+
+        teacherDto.setName( teacherRequestModel.getName() );
+        teacherDto.setCathedraId( teacherRequestModel.getCathedraId() );
+
+        return teacherDto;
     }
 
     protected FacultyRest facultyToFacultyRest(Faculty faculty) {

@@ -59,7 +59,7 @@ public class CathedraController {
 
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE})
-    public void createCathedra(@RequestBody CathedraRequestModel cathedraRequestModel) {
+    public void postCathedra(@RequestBody CathedraRequestModel cathedraRequestModel) {
         if (cathedraRequestModel.getName().isEmpty()) {
             throw new CathedraException(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
         }
