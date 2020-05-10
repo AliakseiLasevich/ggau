@@ -33,10 +33,10 @@ public class CathedraController {
 
 
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<List<CathedraRest>> findAllCathedras(@RequestParam(value = "page", defaultValue = "0") int page,
-                                                               @RequestParam(value = "limit", defaultValue = "50") int limit,
-                                                               @RequestParam(required = false) Long facultyId) {
-        List<CathedraDto> cathedraDtos = cathedraService.findCathedras(page, limit, facultyId);
+    public ResponseEntity<List<CathedraRest>> findCathedrasByParams(@RequestParam(required = false) Long facultyId) {
+
+        List<CathedraDto> cathedraDtos = cathedraService.findCathedrasByParams(facultyId);
+
         List<CathedraRest> cathedraRests = cathedraDtos.stream()
                 .map(cathedraDto -> {
                     CathedraRest cathedraRest = CathedraMapper.INSTANCE.dtoToRest(cathedraDto);

@@ -1,5 +1,6 @@
 package dto;
 
+import entity.Faculty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,6 +15,5 @@ public class CathedraDto {
     private Boolean active;
     private Long facultyId;
     private FacultyDto facultyDto;
-
 }
 

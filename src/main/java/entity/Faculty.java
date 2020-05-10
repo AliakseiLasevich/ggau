@@ -3,19 +3,16 @@ package entity;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
-@Entity
-@Table(name = "faculty")
 @Getter
 @Setter
-@NoArgsConstructor
+@Entity
+@Table(name = "faculty")
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id")
@@ -42,6 +39,5 @@ public class Faculty implements Serializable {
     public void setDefaultActiveValue() {
         active = true;
     }
-
 
 }

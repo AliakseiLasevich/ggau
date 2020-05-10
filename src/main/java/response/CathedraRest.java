@@ -11,5 +11,4 @@ public class CathedraRest {
     private String name;
     private Boolean active;
     private FacultyRest faculty;
-
 }
