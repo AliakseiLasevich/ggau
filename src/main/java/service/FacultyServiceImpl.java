@@ -62,7 +62,6 @@ public class FacultyServiceImpl implements FacultyService {
     public void updateFaculty(FacultyDto facultyDto) {
         if (facultyRepository.findById(facultyDto.getId()).isPresent()) {
             Faculty facultyEntity = FacultyMapper.INSTANCE.dtoToEntity(facultyDto);
-
             facultyRepository.save(facultyEntity);
         } else throw new FacultyException(ErrorMessages.NO_FACULTY_FOUND.getErrorMessage());
     }

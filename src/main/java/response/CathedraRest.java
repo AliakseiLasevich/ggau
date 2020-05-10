@@ -9,6 +9,6 @@ public class CathedraRest {
 
     private Long id;
     private String name;
-    private Boolean active;
+    private boolean active;
     private FacultyRest faculty;
 }

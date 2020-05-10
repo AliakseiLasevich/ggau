@@ -35,7 +35,7 @@ public class Cathedra implements Serializable {
 
 
     @Column(name = "active")
-    private Boolean active;
+    private boolean active;
 
     @PrePersist
     public void setDefaultActiveValue() {

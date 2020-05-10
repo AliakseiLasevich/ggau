@@ -3,7 +3,6 @@ package service;
 import dao.interfaces.CathedraRepository;
 import dao.interfaces.TeacherRepository;
 import dto.TeacherDto;
-import entity.Cathedra;
 import entity.Teacher;
 import mappers.TeacherMapper;
 import org.hibernate.Hibernate;

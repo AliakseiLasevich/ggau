@@ -11,6 +11,6 @@ import lombok.NoArgsConstructor;
 public class FacultyRequestModel {
 
     private String name;
-    private Boolean active;
+    private boolean active;
 
 }

@@ -9,7 +9,7 @@ import response.CathedraRest;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2020-05-10T13:46:16+0300",
+    date = "2020-05-10T14:12:09+0300",
     comments = "version: 1.3.1.Final, compiler: javac, environment: Java 1.8.0_241 (Oracle Corporation)"
 )
 @Component
@@ -23,9 +23,9 @@ public class CathedraMapperImpl implements CathedraMapper {
 
         CathedraDto cathedraDto = new CathedraDto();
 
+        cathedraDto.setActive( cathedra.isActive() );
         cathedraDto.setId( cathedra.getId() );
         cathedraDto.setName( cathedra.getName() );
-        cathedraDto.setActive( cathedra.getActive() );
 
         return cathedraDto;
     }
@@ -38,9 +38,9 @@ public class CathedraMapperImpl implements CathedraMapper {
 
         CathedraRest cathedraRest = new CathedraRest();
 
+        cathedraRest.setActive( cathedraDto.isActive() );
         cathedraRest.setId( cathedraDto.getId() );
         cathedraRest.setName( cathedraDto.getName() );
-        cathedraRest.setActive( cathedraDto.getActive() );
 
         return cathedraRest;
     }
@@ -53,9 +53,9 @@ public class CathedraMapperImpl implements CathedraMapper {
 
         Cathedra cathedra = new Cathedra();
 
+        cathedra.setActive( cathedraDto.isActive() );
         cathedra.setId( cathedraDto.getId() );
         cathedra.setName( cathedraDto.getName() );
-        cathedra.setActive( cathedraDto.getActive() );
 
         return cathedra;
     }
@@ -68,6 +68,7 @@ public class CathedraMapperImpl implements CathedraMapper {
 
         CathedraDto cathedraDto = new CathedraDto();
 
+        cathedraDto.setActive( requestModel.isActive() );
         cathedraDto.setName( requestModel.getName() );
         cathedraDto.setFacultyId( requestModel.getFacultyId() );
 

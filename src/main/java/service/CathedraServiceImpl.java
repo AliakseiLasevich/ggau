@@ -4,6 +4,7 @@ import dao.interfaces.CathedraRepository;
 import dto.CathedraDto;
 import dto.FacultyDto;
 import entity.Cathedra;
+import entity.Faculty;
 import exception.CathedraException;
 import exception.ErrorMessages;
 import mappers.CathedraMapper;
@@ -76,5 +77,16 @@ public class CathedraServiceImpl implements CathedraService {
         Cathedra cathedra = CathedraMapper.INSTANCE.dtoToEntity(cathedraDto);
         cathedra.setFaculty(facultyService.findById(cathedraDto.getFacultyId()));
         cathedraRepository.save(cathedra);
+    }
+
+    @Override
+    public void updateCathedra(CathedraDto cathedraDto) {
+        if (cathedraRepository.findById(cathedraDto.getId()).isPresent()) {
+            Cathedra cathedra = CathedraMapper.INSTANCE.dtoToEntity(cathedraDto);
+            Faculty f = facultyService.findById(cathedraDto.getFacultyId());
+            cathedra.setFaculty(f);
+            cathedraRepository.save(cathedra);
+        } else throw new CathedraException(ErrorMessages.NO_CATHEDRA_FOUND.getErrorMessage());
+
     }
 }

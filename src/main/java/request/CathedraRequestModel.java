@@ -7,11 +7,9 @@ import lombok.*;
 @Setter
 public class CathedraRequestModel {
 
-//    private Long id;
     private String name;
-
     private Long facultyId;
-//    private Boolean active;
+    private boolean active;
 
 
 

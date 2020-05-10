@@ -33,7 +33,7 @@ public class Faculty implements Serializable {
     private List<Specialty> specialties;
 
     @Column(name = "active")
-    private Boolean active;
+    private boolean active;
 
     @PrePersist
     public void setDefaultActiveValue() {

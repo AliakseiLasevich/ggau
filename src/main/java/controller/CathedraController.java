@@ -1,9 +1,11 @@
 package controller;
 
 import dto.CathedraDto;
+import dto.FacultyDto;
 import entity.Cathedra;
 import exception.CathedraException;
 import exception.ErrorMessages;
+import exception.FacultyException;
 import mappers.CathedraMapper;
 import mappers.FacultyMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import request.CathedraRequestModel;
+import request.FacultyRequestModel;
 import response.CathedraRest;
 import response.FacultyRest;
 import service.interfaces.CathedraService;
@@ -54,7 +57,6 @@ public class CathedraController {
         return cathedraService.findById(id);
     }
 
-
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE})
     public void createCathedra(@RequestBody CathedraRequestModel cathedraRequestModel) {
@@ -63,7 +65,19 @@ public class CathedraController {
         }
         CathedraDto cathedraDto = CathedraMapper.INSTANCE.requestModelToDto(cathedraRequestModel);
         cathedraService.createCathedra(cathedraDto);
+    }
 
+    @PutMapping("/{id}")
+    public void putCathedra(@RequestBody CathedraRequestModel cathedraRequestModel,
+                            @PathVariable Long id) {
+
+        if (cathedraRequestModel.getName().isEmpty()) {
+            throw new CathedraException(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
+        }
+
+        CathedraDto cathedraDto = CathedraMapper.INSTANCE.requestModelToDto(cathedraRequestModel);
+        cathedraDto.setId(id);
+        cathedraService.updateCathedra(cathedraDto);
     }
 
 }
