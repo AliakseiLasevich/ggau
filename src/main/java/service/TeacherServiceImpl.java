@@ -3,6 +3,7 @@ package service;
 import dao.interfaces.CathedraRepository;
 import dao.interfaces.TeacherRepository;
 import dto.TeacherDto;
+import entity.Cathedra;
 import entity.Teacher;
 import mappers.TeacherMapper;
 import org.hibernate.Hibernate;
@@ -36,14 +37,18 @@ public class TeacherServiceImpl implements TeacherService {
         Page<Teacher> teachersPage = teacherRepository.findAll(pageableRequest);
         List<Teacher> teacherEntities = teachersPage.getContent();
         List<TeacherDto> dtos = teacherEntities.stream()
-                .peek(teacher -> Hibernate.unproxy(teacher.getCathedra().getFaculty()))  //unproxy cathedra and faculty from lazy loading
+                .peek(teacher -> Hibernate.unproxy(teacher.getCathedra().getFaculty()))  //unproxy cathedra and faculty from lazy loadingСергей Сергеев
                 .map(TeacherMapper.INSTANCE::entityToDto)
                 .collect(Collectors.toList());
         return dtos;
     }
 
+    @Transactional
     @Override
     public void postTeacher(TeacherDto teacherDto) {
-        System.out.println(teacherDto);
+        Teacher teacher = TeacherMapper.INSTANCE.dtoToEntity(teacherDto);
+        Cathedra c = cathedraRepository.findById(teacherDto.getCathedraId()).get();
+        teacher.setCathedra(c);
+        teacherRepository.save(teacher);
     }
 }

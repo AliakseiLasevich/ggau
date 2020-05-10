@@ -13,7 +13,7 @@ import response.TeacherRest;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2020-05-10T22:25:04+0300",
+    date = "2020-05-10T22:36:21+0300",
     comments = "version: 1.3.1.Final, compiler: javac, environment: Java 1.8.0_241 (Oracle Corporation)"
 )
 @Component
@@ -27,9 +27,9 @@ public class TeacherMapperImpl implements TeacherMapper {
 
         TeacherDto teacherDto = new TeacherDto();
 
-        teacherDto.setCathedra( teacher.getCathedra() );
         teacherDto.setId( teacher.getId() );
         teacherDto.setName( teacher.getName() );
+        teacherDto.setCathedra( teacher.getCathedra() );
 
         return teacherDto;
     }
@@ -61,6 +61,21 @@ public class TeacherMapperImpl implements TeacherMapper {
         teacherDto.setCathedraId( teacherRequestModel.getCathedraId() );
 
         return teacherDto;
+    }
+
+    @Override
+    public Teacher dtoToEntity(TeacherDto teacherDto) {
+        if ( teacherDto == null ) {
+            return null;
+        }
+
+        Teacher teacher = new Teacher();
+
+        teacher.setId( teacherDto.getId() );
+        teacher.setName( teacherDto.getName() );
+        teacher.setCathedra( teacherDto.getCathedra() );
+
+        return teacher;
     }
 
     protected FacultyRest facultyToFacultyRest(Faculty faculty) {

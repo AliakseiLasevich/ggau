@@ -31,8 +31,7 @@ public class TeacherController {
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<List<TeacherRest>> findAllTeachers(@RequestParam(value = "page", defaultValue = "0") int page,
                                                              @RequestParam(value = "limit", defaultValue = "10") int limit) {
-        HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.set("Access-Control-Allow-Origin", "*");
+
 
         List<TeacherRest> returnValue = teacherService
                 .findAll(page, limit).stream()
@@ -40,7 +39,7 @@ public class TeacherController {
                 .collect(Collectors.toList());
 
         return ResponseEntity.ok()
-                .headers(responseHeaders)
+
                 .body(returnValue);
     }
 

@@ -44,8 +44,11 @@ public class Teacher implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "id_discipline"))
     private List<Discipline> disciplines;
 
-    @ColumnDefault("1")
-    @Column(name = "active", columnDefinition = "BOOLEAN")
+    @Column(name = "active")
     private boolean active;
 
+    @PrePersist
+    public void setDefaultActiveValue() {
+        active = true;
+    }
 }
