@@ -51,4 +51,11 @@ public class TeacherServiceImpl implements TeacherService {
         teacher.setCathedra(c);
         teacherRepository.save(teacher);
     }
+
+    @Override
+    public TeacherDto findById(Long id) {
+        Teacher teacher = teacherRepository.findById(id).get();
+        TeacherDto teacherDto = TeacherMapper.INSTANCE.entityToDto(teacher);
+        return teacherDto;
+    }
 }

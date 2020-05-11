@@ -11,14 +11,16 @@ import response.TeacherRest;
 @Mapper(componentModel = "spring")
 public interface TeacherMapper {
 
-//    @Mapping(target = "cathedra", source = "teacher.cathedra")
+    @Mapping(source = "active", target = "active")
     TeacherDto entityToDto(Teacher teacher);
 
-//    @Mapping(target = "id", source = "teacherDto.id")
+    @Mapping(source = "active", target = "active")
     TeacherRest dtoToRest(TeacherDto teacherDto);
+
 
     TeacherDto requestToDto(TeacherRequestModel teacherRequestModel);
 
+    @Mapping(source = "active", target = "active")
     Teacher dtoToEntity(TeacherDto teacherDto);
 
     TeacherMapper INSTANCE = Mappers.getMapper(TeacherMapper.class);

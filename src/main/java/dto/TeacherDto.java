@@ -15,4 +15,5 @@ public class TeacherDto {
     private String name;
     private Cathedra cathedra;
     private Long cathedraId;
+    private boolean active;
 }

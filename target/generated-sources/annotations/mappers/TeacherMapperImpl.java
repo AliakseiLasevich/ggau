@@ -13,7 +13,7 @@ import response.TeacherRest;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2020-05-10T22:36:21+0300",
+    date = "2020-05-11T16:21:44+0300",
     comments = "version: 1.3.1.Final, compiler: javac, environment: Java 1.8.0_241 (Oracle Corporation)"
 )
 @Component
@@ -27,6 +27,7 @@ public class TeacherMapperImpl implements TeacherMapper {
 
         TeacherDto teacherDto = new TeacherDto();
 
+        teacherDto.setActive( teacher.isActive() );
         teacherDto.setId( teacher.getId() );
         teacherDto.setName( teacher.getName() );
         teacherDto.setCathedra( teacher.getCathedra() );
@@ -42,6 +43,7 @@ public class TeacherMapperImpl implements TeacherMapper {
 
         TeacherRest teacherRest = new TeacherRest();
 
+        teacherRest.setActive( teacherDto.isActive() );
         teacherRest.setId( teacherDto.getId() );
         teacherRest.setName( teacherDto.getName() );
         teacherRest.setCathedra( cathedraToCathedraRest( teacherDto.getCathedra() ) );
@@ -57,8 +59,10 @@ public class TeacherMapperImpl implements TeacherMapper {
 
         TeacherDto teacherDto = new TeacherDto();
 
+        teacherDto.setId( teacherRequestModel.getId() );
         teacherDto.setName( teacherRequestModel.getName() );
         teacherDto.setCathedraId( teacherRequestModel.getCathedraId() );
+        teacherDto.setActive( teacherRequestModel.isActive() );
 
         return teacherDto;
     }
@@ -71,6 +75,7 @@ public class TeacherMapperImpl implements TeacherMapper {
 
         Teacher teacher = new Teacher();
 
+        teacher.setActive( teacherDto.isActive() );
         teacher.setId( teacherDto.getId() );
         teacher.setName( teacherDto.getName() );
         teacher.setCathedra( teacherDto.getCathedra() );

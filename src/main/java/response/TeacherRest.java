@@ -13,5 +13,6 @@ public class TeacherRest {
     private Long id;
     private String name;
     private CathedraRest cathedra;
+    private boolean active;
 
 }
