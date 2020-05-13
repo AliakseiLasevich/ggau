@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -30,7 +29,11 @@ public class Building implements Serializable {
     @OneToMany(mappedBy = "building", fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private List<Cabinet> cabinets;
 
-    @ColumnDefault("1")
-    @Column(name = "active", columnDefinition = "BOOLEAN")
+    @Column(name = "active")
     private boolean active;
+
+    @PrePersist
+    public void setDefaultActiveValue() {
+        active = true;
+    }
 }

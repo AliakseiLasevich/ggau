@@ -48,6 +48,7 @@ public class CathedraController {
                     return cathedraRest;
                 })
                 .collect(Collectors.toList());
+
         return ResponseEntity.ok()
                 .body(cathedraRests);
     }
