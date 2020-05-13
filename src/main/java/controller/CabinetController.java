@@ -52,5 +52,19 @@ public class CabinetController {
         cabinetService.save(cabinetDto);
     }
 
+    @PutMapping(value = "/{id}", consumes = {MediaType.APPLICATION_JSON_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE})
+    public void putCabinet(@RequestBody CabinetsRequestModel cabinetsRequestModel,
+                           @PathVariable Long id) {
+        if (cabinetsRequestModel.getNumber() == 0
+                || cabinetsRequestModel.getMaxStudents() == 0
+                || cabinetsRequestModel.getBuildingId() == null) {
+            throw new CabinetException(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
+        }
+        CabinetDto cabinetDto = CabinetMapper.INSTANCE.requestToDto(cabinetsRequestModel);
+        cabinetDto.setId(id);
+        cabinetService.save(cabinetDto);
+    }
+
 
 }
