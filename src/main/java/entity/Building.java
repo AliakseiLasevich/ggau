@@ -30,7 +30,7 @@ public class Building implements Serializable {
     private List<Cabinet> cabinets;
 
     @Column(name = "active")
-    private boolean active;
+    private Boolean active;
 
     @PrePersist
     public void setDefaultActiveValue() {

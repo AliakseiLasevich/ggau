@@ -1,7 +1,9 @@
 package service;
 
+import dao.interfaces.BuildingRepository;
 import dao.interfaces.CabinetRepository;
 import dto.CabinetDto;
+import entity.Building;
 import entity.Cabinet;
 import mappers.CabinetMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,9 @@ public class CabinetServiceImpl implements CabinetService {
 
     @Autowired
     CabinetRepository cabinetRepository;
+
+    @Autowired
+    BuildingRepository buildingRepository;
 
     @Autowired
     BuildingService buildingService;
@@ -52,7 +57,7 @@ public class CabinetServiceImpl implements CabinetService {
     @Override
     public void save(CabinetDto cabinetDto) {
         Cabinet cabinet = CabinetMapper.INSTANCE.dtoToEntity(cabinetDto);
-        cabinet.setBuilding(buildingService.findById(cabinetDto.getBuildingId()));
+        cabinet.setBuilding(buildingRepository.findById(cabinetDto.getBuildingId()).get());
         cabinetRepository.save(cabinet);
     }
 }

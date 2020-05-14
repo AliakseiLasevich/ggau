@@ -1,10 +1,16 @@
 package service.interfaces;
 
-import entity.Building;
+import dto.BuildingDto;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public interface BuildingService {
 
-    Building findById(Long id);
+    BuildingDto findById(Long id);
+
+    List<BuildingDto> findBuildings();
+
+    void save(BuildingDto buildingDto);
 }
