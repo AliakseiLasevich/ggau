@@ -2,7 +2,6 @@ package mappers;
 
 import dto.BuildingDto;
 import entity.Building;
-import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
@@ -25,5 +24,5 @@ public interface BuildingMapper {
     BuildingDto requestToDto(BuildingRequestModel requestModel);
 
     BuildingMapper INSTANCE = Mappers.getMapper(BuildingMapper.class);
-    
+
 }

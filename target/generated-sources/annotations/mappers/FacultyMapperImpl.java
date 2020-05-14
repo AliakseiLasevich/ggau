@@ -9,7 +9,7 @@ import response.FacultyRest;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2020-05-14T18:24:44+0300",
+    date = "2020-05-14T21:04:38+0300",
     comments = "version: 1.3.1.Final, compiler: javac, environment: Java 1.8.0_241 (Oracle Corporation)"
 )
 @Component

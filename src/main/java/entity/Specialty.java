@@ -1,14 +1,13 @@
 package entity;
 
-        import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-        import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-        import lombok.Getter;
-        import lombok.Setter;
-        import org.hibernate.annotations.ColumnDefault;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import lombok.Getter;
+import lombok.Setter;
 
-        import javax.persistence.*;
-        import java.io.Serializable;
-        import java.util.List;
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name = "specialty")
@@ -34,7 +33,12 @@ public class Specialty implements Serializable {
     @JoinColumn(name = "faculty")
     private Faculty faculty;
 
-    @ColumnDefault("1")
-    @Column(name = "active", columnDefinition = "BOOLEAN")
+
+    @Column(name = "active")
     private boolean active;
+
+    @PrePersist
+    public void setDefaultActiveValue() {
+        active = true;
+    }
 }
