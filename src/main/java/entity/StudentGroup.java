@@ -31,9 +31,17 @@ public class StudentGroup implements Serializable {
     @OneToMany(mappedBy = "studentGroup")
     private List<StudentSubgroup> studentSubgroups;
 
+    @Column(name = "course")
+    private int course;
+
     @ManyToOne
-    @JoinColumn(name = "student_course")
-    private StudentCourse studentCourse;
+    @JoinColumn(name = "specialty")
+    private Specialty specialty;
+
+
+//    @ManyToOne
+//    @JoinColumn(name = "student_course")
+//    private StudentCourse studentCourse;
 
     @ManyToMany
     @JoinTable(name = "lesson_studentsubgroup",
@@ -41,7 +49,11 @@ public class StudentGroup implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "id_lesson"))
     private List<Lesson> lessons;
 
-    @ColumnDefault("1")
-    @Column(name = "active", columnDefinition = "BOOLEAN")
+    @Column(name = "active")
     private boolean active;
+
+    @PrePersist
+    public void setDefaultActiveValue() {
+        active = true;
+    }
 }

@@ -16,7 +16,7 @@ import java.util.List;
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id")
-public class Specialty implements Serializable {
+public class  Specialty implements Serializable {
 
     @Id
     @Column(name = "id_specialty")
@@ -26,8 +26,11 @@ public class Specialty implements Serializable {
     @Column(name = "name")
     private String name;
 
+//    @OneToMany(mappedBy = "specialty")
+////    private List<StudentCourse> studentCourses;
+
     @OneToMany(mappedBy = "specialty")
-    private List<StudentCourse> studentCourses;
+    private List<StudentGroup> studentGroups;
 
     @ManyToOne
     @JoinColumn(name = "faculty")

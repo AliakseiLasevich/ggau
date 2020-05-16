@@ -46,3 +46,4 @@ public class SpecialtyServiceImpl implements SpecialtyService {
         specialtyRepository.save(specialty);
     }
 }
+
