@@ -12,6 +12,7 @@ import response.SpecialtyRest;
 public interface SpecialtyMapper {
 
     @Mapping(source = "active", target = "active")
+    @Mapping(source = "faculty.id", target = "facultyId")
     SpecialtyDto entityToDto(Specialty speciality);
 
     @Mapping(source = "active", target = "active")

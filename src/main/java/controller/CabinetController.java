@@ -24,7 +24,10 @@ public class CabinetController {
     CabinetService cabinetService;
 
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<List<CabinetRest>> findCabinetsByParams(@RequestParam(required = false) Long buildingId) {
+    public ResponseEntity<List<CabinetRest>> findCabinetsByParams(@RequestParam(required = true) Long buildingId) {
+
+
+
         List<CabinetDto> cabinetDtos = cabinetService.findCabinetsByParams(buildingId);
 
         List<CabinetRest> cabinetRests = cabinetDtos.stream()

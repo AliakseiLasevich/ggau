@@ -11,5 +11,7 @@ public class SpecialtyRest {
 
     private Long id;
     private String name;
+    private String code;
+    private Long facultyId;
     private Boolean active;
 }

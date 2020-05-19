@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 public class CabinetRest {
 
     private Long id;
+    private int number;
     private String type;
     private int maxStudents;
     private Boolean active;

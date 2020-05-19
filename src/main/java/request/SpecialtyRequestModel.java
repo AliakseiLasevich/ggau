@@ -8,6 +8,7 @@ import lombok.Setter;
 public class SpecialtyRequestModel {
 
     private String name;
+    private String code;
     private Boolean active;
     private Long facultyId;
 }

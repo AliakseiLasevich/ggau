@@ -12,5 +12,6 @@ public class FacultyDto {
     private Long id;
     private String name;
     private boolean active;
+    private Long facultyId;
 
 }

@@ -16,7 +16,7 @@ import java.util.List;
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id")
-public class  Specialty implements Serializable {
+public class Specialty implements Serializable {
 
     @Id
     @Column(name = "id_specialty")
@@ -25,6 +25,9 @@ public class  Specialty implements Serializable {
 
     @Column(name = "name")
     private String name;
+
+    @Column(name = "code")
+    private String code;
 
 //    @OneToMany(mappedBy = "specialty")
 ////    private List<StudentCourse> studentCourses;
