@@ -60,7 +60,7 @@ public class StudentGroupController {
         }
 
         StudentGroupDto studentGroupDto = StudentGroupMapper.INSTANCE.requestToDto(studentGroupRequestModel);
-        studentGroupDto.setSpecialtyId(id);
+        studentGroupDto.setId(id);
         studentGroupService.save(studentGroupDto);
     }
 }

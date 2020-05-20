@@ -27,13 +27,12 @@ public class StudentGroupServiceImpl implements StudentGroupService {
     @Override
     public List<StudentGroupDto> findAllWithSpecialtyAndSubgroups() {
 
-        List<StudentGroup> studentGroups = studentGroupRepository.findAllWithSpecialtyAndSubgroups();
+        List<StudentGroup> studentGroups = studentGroupRepository.findAll();
 
         List<StudentGroupDto> returnValue = studentGroups
                 .stream()
                 .map(studentGroup -> {
                     StudentGroupDto studentGroupDto = StudentGroupMapper.INSTANCE.entityToDto(studentGroup);
-                    studentGroupDto.setSpecialty(specialtyService.findById(studentGroup.getSpecialty().getId()));
                     return studentGroupDto;
                 })
                 .collect(Collectors.toList());

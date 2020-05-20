@@ -8,7 +8,7 @@ import lombok.Setter;
 public class StudentGroupRequestModel {
 
     private int course;
-    private int specialtyId;
+    private Long specialtyId;
     private int number;
     private Boolean active;
 }

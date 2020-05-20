@@ -16,6 +16,7 @@ public class StudentGroupDto {
     private Boolean active;
     private SpecialtyDto specialty;
     private Long specialtyId;
+    private String specialtyName;
 
 
 }
