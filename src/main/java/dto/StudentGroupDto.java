@@ -15,7 +15,7 @@ public class StudentGroupDto {
     private int course;
     private Boolean active;
     private SpecialtyDto specialty;
-    private int specialtyId;
+    private Long specialtyId;
 
 
 }

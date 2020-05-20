@@ -13,5 +13,6 @@ public class StudentGroupRest {
     private int number;
     private int course;
     private Boolean active;
+    private Long specialtyId;
 //    private SpecialtyDto specialty;
 }

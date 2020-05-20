@@ -13,6 +13,7 @@ public interface StudentGroupMapper {
 
     StudentGroup dtoToEntity(StudentGroupDto studentGroupDto);
 
+    @Mapping(source = "specialty.id", target = "specialtyId")
     StudentGroupDto entityToDto(StudentGroup studentGroup);
 
     StudentGroupRest dtoToRest(StudentGroupDto studentGroupDto);

@@ -38,11 +38,6 @@ public class StudentGroup implements Serializable {
     @JoinColumn(name = "specialty")
     private Specialty specialty;
 
-
-//    @ManyToOne
-//    @JoinColumn(name = "student_course")
-//    private StudentCourse studentCourse;
-
     @ManyToMany
     @JoinTable(name = "lesson_studentsubgroup",
             joinColumns = @JoinColumn(name = "id_subgroup"),

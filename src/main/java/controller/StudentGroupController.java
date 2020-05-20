@@ -54,7 +54,7 @@ public class StudentGroupController {
     @PutMapping(value = "/{id}", consumes = {MediaType.APPLICATION_JSON_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE})
     public void putStudentGroup(@RequestBody StudentGroupRequestModel studentGroupRequestModel,
-                             @PathVariable int id) {
+                             @PathVariable Long id) {
         if (studentGroupRequestModel.getNumber() == 0 || studentGroupRequestModel.getCourse() == 0) {
             throw new StudentGroupException(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
         }
