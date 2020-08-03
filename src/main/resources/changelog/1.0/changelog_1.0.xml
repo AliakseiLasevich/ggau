@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="1" author="Aliaksei Lasevich">
+        <createTable tableName="buildings">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="buildings_pkey"/>
+            </column>
+            <column name="public_id" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="active" type="bit(1)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2" author="Aliaksei Lasevich">
+        <createTable tableName="cabinets">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="cabinets_pkey"/>
+            </column>
+            <column name="public_id" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="number" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="max_students" type="INT(5)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="type" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="active" type="bit(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="building_id" type="BIGINT(20)">
+                <constraints nullable="false" foreignKeyName="building_fk"
+                             referencedTableName="buildings"
+                             referencedColumnNames="id"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="3" author="Aliaksei Lasevich">
+        <createTable tableName="faculties">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="faculties_pkey"/>
+            </column>
+            <column name="public_id" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="active" type="bit(1)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="4" author="Aliaksei Lasevich">
+        <createTable tableName="cathedras">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="cathedras_pkey"/>
+            </column>
+            <column name="public_id" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="active" type="bit(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="faculty_id" type="BIGINT(20)">
+                <constraints nullable="false" foreignKeyName="faculty_fk"
+                             referencedTableName="faculties"
+                             referencedColumnNames="id"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="5" author="Aliaksei Lasevich">
+        <createTable tableName="teachers">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="teachers_pkey"/>
+            </column>
+            <column name="public_id" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="active" type="bit(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cathedra_id" type="BIGINT(20)">
+                <constraints nullable="false" foreignKeyName="cathedra_fk"
+                             referencedTableName="cathedras"
+                             referencedColumnNames="id"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="6" author="Aliaksei Lasevich">
+        <createTable tableName="specialties">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="specialties_pkey"/>
+            </column>
+            <column name="public_id" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="code" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="active" type="bit(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="faculty_id" type="BIGINT(20)">
+                <constraints nullable="false" foreignKeyName="faculties_specialty_fk"
+                             referencedTableName="faculties"
+                             referencedColumnNames="id"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="7" author="Aliaksei Lasevich">
+        <createTable tableName="disciplines">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="disciplines_pkey"/>
+            </column>
+            <column name="public_id" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="active" type="bit(1)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="8" author="Aliaksei Lasevich">
+        <createTable tableName="students_groups">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="students_groups_pkey"/>
+            </column>
+            <column name="public_id" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="course" type="INT(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="number" type="INT(5)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="active" type="bit(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="specialty_id" type="BIGINT(20)">
+                <constraints nullable="false" foreignKeyName="student_group_specialty_fk"
+                             referencedTableName="specialties"
+                             referencedColumnNames="id"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="9" author="Aliaksei Lasevich">
+        <createTable tableName="students_subgroups">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="students_subgroups_pkey"/>
+            </column>
+            <column name="public_id" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="students_count" type="INT(5)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="active" type="bit(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="student_group_id" type="BIGINT(20)">
+                <constraints nullable="false" foreignKeyName="student_subgroup_to_group_fk"
+                             referencedTableName="students_groups"
+                             referencedColumnNames="id"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+
+    <changeSet id="10" author="Aliaksei Lasevich">
+        <createTable tableName="lessons">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="lessons_pkey"/>
+            </column>
+            <column name="public_id" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dateTime" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+            <column name="type" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="active" type="BIT(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="order" type="INT(2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="discipline_id" type="BIGINT(20)">
+                <constraints nullable="false" foreignKeyName="lessons_discipline_fk"
+                             referencedTableName="disciplines"
+                             referencedColumnNames="id"/>
+            </column>
+            <column name="cabinet_id" type="BIGINT(20)">
+                <constraints nullable="false" foreignKeyName="lessons_cabinets_fk"
+                             referencedTableName="cabinets"
+                             referencedColumnNames="id"/>
+            </column>
+            <column name="teacher_id" type="BIGINT(20)">
+                <constraints nullable="false" foreignKeyName="lessons_teachers_fk"
+                             referencedTableName="teachers"
+                             referencedColumnNames="id"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="11" author="Aliaksei Lasevich">
+        <createTable tableName="lessons_students_subgroups">
+            <column name="lesson_id" type="BIGINT(20)">
+                <constraints nullable="false" foreignKeyName="lessons_std_subgroups_fk"
+                             referencedTableName="lessons"
+                             referencedColumnNames="id"/>
+            </column>
+            <column name="students_subgroup_id" type="BIGINT(20)">
+                <constraints nullable="false" foreignKeyName="std_subgroup_lessons_fk"
+                             referencedTableName="students_subgroups"
+                             referencedColumnNames="id"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+
+</databaseChangeLog>
