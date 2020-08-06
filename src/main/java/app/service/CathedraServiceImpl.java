@@ -1,92 +1,88 @@
 package app.service;
 
 import app.dao.interfaces.CathedraRepository;
-import app.dto.CathedraDto;
-import app.dto.FacultyDto;
+import app.dto.request.CathedraRequest;
+import app.dto.response.CathedraResponse;
 import app.entity.Cathedra;
 import app.entity.Faculty;
 import app.exception.CathedraException;
 import app.exception.ErrorMessages;
 import app.mappers.CathedraMapper;
-import app.mappers.FacultyMapper;
+import app.service.interfaces.CathedraService;
+import app.service.interfaces.FacultyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import app.service.interfaces.CathedraService;
-import app.service.interfaces.FacultyService;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class CathedraServiceImpl implements CathedraService {
 
-    @Autowired
-    CathedraRepository cathedraRepository;
+    private CathedraRepository cathedraRepository;
+
+    private FacultyService facultyService;
 
     @Autowired
-    FacultyService facultyService;
-
-    @Transactional
-    @Override
-    public List<CathedraDto> findCathedrasByParams(Long facultyId) {
-        if (facultyId != null && facultyId > 0) {
-            return findCathedraByFaculty(facultyId);
-        } else {
-            return findAllCathedras();
-        }
+    public CathedraServiceImpl(CathedraRepository cathedraRepository, FacultyService facultyService) {
+        this.cathedraRepository = cathedraRepository;
+        this.facultyService = facultyService;
     }
 
-    @Transactional
-    public List<CathedraDto> findAllCathedras() {
-        List<Cathedra> cathedraEntities = cathedraRepository.cathedrasWithFaculty();
-        List<CathedraDto> returnvalue = cathedraEntities.stream()
-                .map(cathedra -> {
-                    CathedraDto cathedraDto = CathedraMapper.INSTANCE.entityToDto(cathedra);
-                    FacultyDto facultyDto = FacultyMapper.INSTANCE.entityToDto(cathedra.getFaculty());
-                    cathedraDto.setFacultyDto(facultyDto);
-                    return cathedraDto;
-                })
+    @Override
+    public List<CathedraResponse> findAll() {
+        List<Cathedra> cathedras = cathedraRepository.findAllByActiveTrue();
+        return cathedras.stream()
+                .map(CathedraMapper.INSTANCE::entityToResponse)
                 .collect(Collectors.toList());
-        return returnvalue;
-    }
-
-    private List<CathedraDto> findCathedraByFaculty(Long facultyId) {
-        List<CathedraDto> cathedras = cathedraRepository.findByFacultyId(facultyId).stream()
-                .map(cathedra -> {
-                    CathedraDto cathedraDto = CathedraMapper.INSTANCE.entityToDto(cathedra);
-                    FacultyDto facultyDto = FacultyMapper.INSTANCE.entityToDto(cathedra.getFaculty());
-                    cathedraDto.setFacultyDto(facultyDto);
-                    return cathedraDto;
-                })
-                .collect(Collectors.toList());
-        return cathedras;
-    }
-
-
-    @Transactional
-    @Override
-    public Cathedra findById(Long id) {
-        return cathedraRepository
-                .findById(id)
-                .orElseThrow((() -> new CathedraException(ErrorMessages.NO_CATHEDRA_FOUND.getErrorMessage())));
     }
 
     @Override
-    public void createCathedra(CathedraDto cathedraDto) {
-        Cathedra cathedra = CathedraMapper.INSTANCE.dtoToEntity(cathedraDto);
-        cathedra.setFaculty(facultyService.findById(cathedraDto.getFacultyId()));
+    public void createCathedra(CathedraRequest cathedraRequest, String facultyId) {
+        Cathedra cathedra = cathedraRepository.findByNameAndActiveTrue(cathedraRequest.getName());
+        checkCathedraForNull(cathedra);
+        cathedra = CathedraMapper.INSTANCE.requestToEntity(cathedraRequest);
+        cathedra.setPublicId(UUID.randomUUID().toString());
+        Faculty faculty = facultyService.findEntityByPublicId(facultyId);
+        cathedra.setFaculty(faculty);
         cathedraRepository.save(cathedra);
     }
 
     @Override
-    public void updateCathedra(CathedraDto cathedraDto) {
-        if (cathedraRepository.findById(cathedraDto.getId()).isPresent()) {
-            Cathedra cathedra = CathedraMapper.INSTANCE.dtoToEntity(cathedraDto);
-            Faculty f = facultyService.findById(cathedraDto.getFacultyId());
-            cathedra.setFaculty(f);
-            cathedraRepository.save(cathedra);
-        } else throw new CathedraException(ErrorMessages.NO_CATHEDRA_FOUND.getErrorMessage());
-
+    public void updateCathedra(CathedraRequest cathedraRequest, String publicId) {
+        Cathedra cathedra = cathedraRepository.findByPublicIdAndActiveTrue(publicId);
+        checkCathedraForNull(cathedra);
+        cathedra.setName(cathedraRequest.getName());
+        Faculty f = facultyService.findEntityByPublicId(cathedraRequest.getFacultyId());
+        cathedra.setFaculty(f);
+        cathedraRepository.save(cathedra);
     }
+
+
+    @Override
+    public void deleteCathedra(String publicId) {
+        Cathedra cathedra = cathedraRepository.findByPublicIdAndActiveTrue(publicId);
+        checkCathedraForNull(cathedra);
+        cathedra.setActive(false);
+        cathedraRepository.save(cathedra);
+    }
+
+    @Override
+    public void deactivateCathedrasByFaculty(Faculty faculty) {
+        List<Cathedra> cathedrasToDeactivate = cathedraRepository.findAllByFaculty(faculty);
+        cathedrasToDeactivate.stream()
+                .peek(cathedra -> cathedra.setActive(false))
+                .forEach(cathedra -> cathedraRepository.save(cathedra));
+    }
+
+    private void checkCathedraForNull(Cathedra cathedra) {
+        if (cathedra == null) {
+            throw new CathedraException(ErrorMessages.NO_CATHEDRA_FOUND.getErrorMessage());
+        }
+    }
+
+
 }

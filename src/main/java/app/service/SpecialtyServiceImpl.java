@@ -41,8 +41,8 @@ public class SpecialtyServiceImpl implements SpecialtyService {
     @Override
     public void save(SpecialtyDto specialtyDto) {
         Specialty specialty = SpecialtyMapper.INSTANCE.dtoToEntity(specialtyDto);
-        Faculty faculty = facultyService.findById(specialtyDto.getFacultyId());
-        specialty.setFaculty(faculty);
+//        Faculty faculty = facultyService.findById(specialtyDto.getFacultyId());
+//        specialty.setFaculty(faculty);
         specialtyRepository.save(specialty);
     }
 }

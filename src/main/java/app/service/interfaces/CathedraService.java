@@ -1,18 +1,20 @@
 package app.service.interfaces;
 
-import app.dto.CathedraDto;
-import app.entity.Cathedra;
+import app.dto.request.CathedraRequest;
+import app.dto.response.CathedraResponse;
+import app.entity.Faculty;
 
 import java.util.List;
 
 public interface CathedraService {
 
+    List<CathedraResponse> findAll();
 
-    List<CathedraDto> findCathedrasByParams(Long facultyId);
+    void createCathedra(CathedraRequest cathedraRequest, String facultyId);
 
-    Cathedra findById(Long id);
+    void updateCathedra(CathedraRequest cathedraRequest, String publicId);
 
-    void createCathedra(CathedraDto cathedraDto);
+    void deactivateCathedrasByFaculty(Faculty faculty);
 
-    void updateCathedra(CathedraDto cathedraDto);
+    void deleteCathedra(String publicId);
 }

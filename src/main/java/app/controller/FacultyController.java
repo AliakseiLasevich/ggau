@@ -1,24 +1,19 @@
 package app.controller;
 
-import app.dto.FacultyDto;
-import app.entity.Faculty;
+import app.dto.request.FacultyRequest;
+import app.dto.response.FacultyResponse;
 import app.exception.ErrorMessages;
 import app.exception.FacultyException;
-import app.mappers.FacultyMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import app.dto.request.FacultyRequestModel;
-import app.dto.response.FacultyRest;
 import app.service.interfaces.FacultyService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/rest/faculties")
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class FacultyController {
 
     @Autowired
@@ -26,56 +21,39 @@ public class FacultyController {
 
 
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<List<FacultyRest>> findAllFaculties(@RequestParam(value = "page", defaultValue = "0") int page,
-                                                              @RequestParam(value = "limit", defaultValue = "25") int limit) {
-
-        List<FacultyRest> returnValue = facultyService
-                .findAll(page, limit).stream()
-                .map(FacultyMapper.INSTANCE::dtoToRest)
-                .collect(Collectors.toList());
-
-        return ResponseEntity.ok()
-                .body(returnValue);
+    @ResponseStatus(code = HttpStatus.OK)
+    public List<FacultyResponse> findAllFaculties() {
+        return facultyService.findAll();
     }
 
-    @GetMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public Faculty getFaculty(@PathVariable("id") Long id) {
-        return facultyService.findById(id);
+    @GetMapping(value = "/{publicId}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public FacultyResponse getFaculty(@PathVariable("publicId") String publicId) {
+        return facultyService.findByPublicId(publicId);
     }
 
-    @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE},
-            produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<FacultyRest> createFaculty(@RequestBody FacultyRequestModel facultyRequestModel) {
-
-        if (facultyRequestModel.getName().isEmpty()) {
+    @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ResponseStatus(code = HttpStatus.CREATED)
+    public FacultyResponse createFaculty(@RequestBody FacultyRequest facultyRequest) {
+        if (facultyRequest.getName().isEmpty()) {
             throw new FacultyException(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
         }
-
-        FacultyDto facultyDto = FacultyMapper.INSTANCE.requestModelToDto(facultyRequestModel);
-
-        FacultyDto createdFaculty = facultyService.createFaculty(facultyDto);
-
-        FacultyRest returnValue = FacultyMapper.INSTANCE.dtoToRest(createdFaculty);
-
-        return ResponseEntity.ok()
-                .body(returnValue);
+        FacultyResponse createdFaculty = facultyService.createFaculty(facultyRequest);
+        return createdFaculty;
     }
 
-    @PutMapping("/{id}")
-    public void updateFaculty(@RequestBody FacultyRequestModel facultyEditRequestModel,
-                              @PathVariable Long id) {
-
-        if (facultyEditRequestModel.getName().isEmpty()) {
+    @PutMapping("/{publicId}")
+    public FacultyResponse updateFaculty(@RequestBody FacultyRequest facultyRequest,
+                                         @PathVariable String publicId) {
+        if (facultyRequest.getName().isEmpty()) {
             throw new FacultyException(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
         }
-
-        FacultyDto facultyDto = FacultyMapper.INSTANCE.requestModelToDto(facultyEditRequestModel);
-        facultyDto.setId(id);
-
-        facultyService.updateFaculty(facultyDto);
-
-
+        facultyRequest.setPublicId(publicId);
+        return facultyService.updateFaculty(facultyRequest);
     }
 
-
+    @DeleteMapping("/{publicId}")
+    @ResponseStatus(code = HttpStatus.OK)
+    public void deleteFaculty(@PathVariable String publicId){
+        facultyService.deleteFaculty(publicId);
+    }
 }

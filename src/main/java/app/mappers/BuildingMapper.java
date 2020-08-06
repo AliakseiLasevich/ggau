@@ -5,8 +5,8 @@ import app.entity.Building;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
-import app.dto.request.BuildingRequestModel;
-import app.dto.response.BuildingRest;
+import app.dto.request.BuildingRequest;
+import app.dto.response.BuildingResponse;
 
 @Mapper(componentModel = "spring")
 public interface BuildingMapper {
@@ -18,10 +18,10 @@ public interface BuildingMapper {
     Building dtoToEntity(BuildingDto BuildingDto);
 
     @Mapping(source = "active", target = "active")
-    BuildingRest dtoToRest(BuildingDto BuildingDto);
+    BuildingResponse dtoToRest(BuildingDto BuildingDto);
 
     @Mapping(source = "active", target = "active")
-    BuildingDto requestToDto(BuildingRequestModel requestModel);
+    BuildingDto requestToDto(BuildingRequest requestModel);
 
     BuildingMapper INSTANCE = Mappers.getMapper(BuildingMapper.class);
 

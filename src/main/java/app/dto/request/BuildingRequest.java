@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class BuildingRequestModel {
+public class BuildingRequest {
 
     private String name;
     private Boolean active;

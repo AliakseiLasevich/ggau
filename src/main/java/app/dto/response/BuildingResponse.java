@@ -1,16 +1,15 @@
-package app.dto.request;
-
+package app.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class FacultyRequestModel {
+@NoArgsConstructor
+public class BuildingResponse {
 
+    private Long id;
     private String name;
-    private boolean active;
-
+    private Boolean active;
 }

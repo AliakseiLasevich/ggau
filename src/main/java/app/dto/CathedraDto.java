@@ -13,6 +13,6 @@ public class CathedraDto {
     private String name;
     private boolean active;
     private Long facultyId;
-    private FacultyDto facultyDto;
+//    private FacultyDto facultyDto;
 }
 

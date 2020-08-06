@@ -4,12 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class BuildingRest {
+@Data
+public class CathedraResponse {
 
-    private Long id;
+    private String publicId;
     private String name;
-    private Boolean active;
+    private FacultyResponse faculty;
 }

@@ -7,9 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class FacultyRest {
+public class FacultyResponse {
 
-    private Long id;
+    private String publicId;
     private String name;
-    private boolean active;
 }
