@@ -2,6 +2,7 @@ package app.service.interfaces;
 
 import app.dto.request.CathedraRequest;
 import app.dto.response.CathedraResponse;
+import app.entity.Cathedra;
 import app.entity.Faculty;
 
 import java.util.List;
@@ -17,4 +18,6 @@ public interface CathedraService {
     void deactivateCathedrasByFaculty(Faculty faculty);
 
     void deleteCathedra(String publicId);
+
+    Cathedra findByPublicId(String cathedraId);
 }

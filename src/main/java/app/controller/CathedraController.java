@@ -16,7 +16,6 @@ import java.util.List;
 @RequestMapping("/rest/cathedras")
 public class CathedraController {
 
-
     @Autowired
     private CathedraService cathedraService;
 
@@ -26,14 +25,10 @@ public class CathedraController {
         return cathedraService.findAll();
     }
 
-    @PostMapping(value = "/faculties/{facultyId}", consumes = {MediaType.APPLICATION_JSON_VALUE},
-            produces = {MediaType.APPLICATION_JSON_VALUE})
+    @PostMapping(value = "/faculties/{facultyId}", consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseStatus(HttpStatus.CREATED)
-    public void postCathedra(@RequestBody CathedraRequest cathedraRequest,
-                             @PathVariable String facultyId) {
-        if (cathedraRequest.getName().isEmpty()) {
-            throw new CathedraException(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
-        }
+    public void postCathedra(@RequestBody CathedraRequest cathedraRequest, @PathVariable String facultyId) {
+        checkRequestModel(cathedraRequest);
         cathedraService.createCathedra(cathedraRequest, facultyId);
     }
 
@@ -41,18 +36,19 @@ public class CathedraController {
     @ResponseStatus(HttpStatus.OK)
     public void putCathedra(@RequestBody CathedraRequest cathedraRequest,
                             @PathVariable String publicId) {
-        checkRequestValid(cathedraRequest, publicId);
+        checkRequestModel(cathedraRequest);
         cathedraService.updateCathedra(cathedraRequest, publicId);
     }
 
     @DeleteMapping("/{publicId}")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteCathedra( @PathVariable String publicId) {
+    public void deleteCathedra(@PathVariable String publicId) {
         cathedraService.deleteCathedra(publicId);
     }
 
-    private void checkRequestValid(CathedraRequest cathedraRequest, String publicId) {
-        if (cathedraRequest.getName().isEmpty() || publicId == null) {
+
+    private void checkRequestModel(@RequestBody CathedraRequest cathedraRequest) {
+        if (cathedraRequest.getName().isEmpty()) {
             throw new CathedraException(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
         }
     }

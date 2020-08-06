@@ -1,27 +1,17 @@
 package app.mappers;
 
-import app.dto.TeacherDto;
+import app.dto.request.TeacherRequest;
+import app.dto.response.TeacherResponse;
 import app.entity.Teacher;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
-import app.dto.request.TeacherRequestModel;
-import app.dto.response.TeacherRest;
 
 @Mapper(componentModel = "spring")
 public interface TeacherMapper {
 
-    @Mapping(source = "active", target = "active")
-    TeacherDto entityToDto(Teacher teacher);
+    TeacherResponse entityToResponse(Teacher teacher);
 
-    @Mapping(source = "active", target = "active")
-    TeacherRest dtoToRest(TeacherDto teacherDto);
-
-
-    TeacherDto requestToDto(TeacherRequestModel teacherRequestModel);
-
-    @Mapping(source = "active", target = "active")
-    Teacher dtoToEntity(TeacherDto teacherDto);
+    Teacher requestToEntity(TeacherRequest teacherRequest);
 
     TeacherMapper INSTANCE = Mappers.getMapper(TeacherMapper.class);
 }

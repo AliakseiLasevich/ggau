@@ -19,7 +19,6 @@ public class FacultyController {
     @Autowired
     private FacultyService facultyService;
 
-
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseStatus(code = HttpStatus.OK)
     public List<FacultyResponse> findAllFaculties() {
@@ -34,26 +33,27 @@ public class FacultyController {
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseStatus(code = HttpStatus.CREATED)
     public FacultyResponse createFaculty(@RequestBody FacultyRequest facultyRequest) {
-        if (facultyRequest.getName().isEmpty()) {
-            throw new FacultyException(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
-        }
+        checkRequestModel(facultyRequest);
         FacultyResponse createdFaculty = facultyService.createFaculty(facultyRequest);
         return createdFaculty;
     }
 
     @PutMapping("/{publicId}")
-    public FacultyResponse updateFaculty(@RequestBody FacultyRequest facultyRequest,
-                                         @PathVariable String publicId) {
-        if (facultyRequest.getName().isEmpty()) {
-            throw new FacultyException(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
-        }
+    public FacultyResponse updateFaculty(@RequestBody FacultyRequest facultyRequest, @PathVariable String publicId) {
+        checkRequestModel(facultyRequest);
         facultyRequest.setPublicId(publicId);
         return facultyService.updateFaculty(facultyRequest);
     }
 
     @DeleteMapping("/{publicId}")
     @ResponseStatus(code = HttpStatus.OK)
-    public void deleteFaculty(@PathVariable String publicId){
+    public void deleteFaculty(@PathVariable String publicId) {
         facultyService.deleteFaculty(publicId);
+    }
+
+    private void checkRequestModel(@RequestBody FacultyRequest facultyRequest) {
+        if (facultyRequest.getName().isEmpty()) {
+            throw new FacultyException(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
+        }
     }
 }

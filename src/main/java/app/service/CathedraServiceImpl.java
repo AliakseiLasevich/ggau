@@ -11,6 +11,7 @@ import app.mappers.CathedraMapper;
 import app.service.interfaces.CathedraService;
 import app.service.interfaces.FacultyService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,6 +28,7 @@ public class CathedraServiceImpl implements CathedraService {
     private FacultyService facultyService;
 
     @Autowired
+    @Lazy
     public CathedraServiceImpl(CathedraRepository cathedraRepository, FacultyService facultyService) {
         this.cathedraRepository = cathedraRepository;
         this.facultyService = facultyService;
@@ -78,11 +80,15 @@ public class CathedraServiceImpl implements CathedraService {
                 .forEach(cathedra -> cathedraRepository.save(cathedra));
     }
 
+
     private void checkCathedraForNull(Cathedra cathedra) {
         if (cathedra == null) {
             throw new CathedraException(ErrorMessages.NO_CATHEDRA_FOUND.getErrorMessage());
         }
     }
 
-
+    @Override
+    public Cathedra findByPublicId(String cathedraId) {
+        return cathedraRepository.findByPublicIdAndActiveTrue(cathedraId);
+    }
 }

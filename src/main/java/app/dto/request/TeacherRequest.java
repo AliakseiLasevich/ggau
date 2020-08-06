@@ -6,11 +6,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class TeacherRequestModel {
+public class TeacherRequest {
 
-    private Long id;
     private String name;
-    private Long cathedraId;
-    private boolean active;
-
+    private String cathedraId;
 }

@@ -1,60 +1,84 @@
 package app.service;
 
-import app.dao.interfaces.CathedraRepository;
 import app.dao.interfaces.TeacherRepository;
-import app.dto.TeacherDto;
+import app.dto.request.TeacherRequest;
+import app.dto.response.TeacherResponse;
 import app.entity.Cathedra;
 import app.entity.Teacher;
+import app.exception.ErrorMessages;
+import app.exception.TeacherException;
 import app.mappers.TeacherMapper;
-import org.hibernate.Hibernate;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import app.service.interfaces.CathedraService;
+import app.service.interfaces.TeacherService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import app.service.interfaces.TeacherService;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
 public class TeacherServiceImpl implements TeacherService {
 
-    @Autowired
-    TeacherRepository teacherRepository;
 
-    @Autowired
-    CathedraRepository cathedraRepository;
+    private TeacherRepository teacherRepository;
+
+    private CathedraService cathedraService;
+
+    public TeacherServiceImpl(TeacherRepository teacherRepository, CathedraService cathedraService) {
+        this.teacherRepository = teacherRepository;
+        this.cathedraService = cathedraService;
+    }
+
+    @Override
+    public TeacherResponse findById(String publicId) {
+        Teacher teacher = teacherRepository.findByPublicIdAndActiveTrue(publicId);
+        if (teacher == null) {
+            throw new TeacherException(ErrorMessages.NO_TEACHER_FOUND.getErrorMessage());
+        }
+        return TeacherMapper.INSTANCE.entityToResponse(teacher);
+    }
 
     @Transactional
     @Override
-    public List<TeacherDto> findAll(int page, int limit) {
-        if (page > 0) page -= 1;
-        Pageable pageableRequest = PageRequest.of(page, limit);
-
-        Page<Teacher> teachersPage = teacherRepository.findAll(pageableRequest);
-        List<Teacher> teacherEntities = teachersPage.getContent();
-        List<TeacherDto> dtos = teacherEntities.stream()
-                .peek(teacher -> Hibernate.unproxy(teacher.getCathedra().getFaculty()))  //unproxy cathedra and faculty from lazy loadingСергей Сергеев
-                .map(TeacherMapper.INSTANCE::entityToDto)
+    public List<TeacherResponse> findAll() {
+        List<Teacher> teachers = teacherRepository.findAllWithCathedras();
+        return teachers.stream().
+                map(TeacherMapper.INSTANCE::entityToResponse)
                 .collect(Collectors.toList());
-        return dtos;
     }
 
-    @Transactional
     @Override
-    public void postTeacher(TeacherDto teacherDto) {
-        Teacher teacher = TeacherMapper.INSTANCE.dtoToEntity(teacherDto);
-        Cathedra c = cathedraRepository.findById(teacherDto.getCathedraId()).get();
-        teacher.setCathedra(c);
+    public TeacherResponse createTeacher(TeacherRequest teacherRequest) {
+        Teacher teacher = TeacherMapper.INSTANCE.requestToEntity(teacherRequest);
+        teacher.setPublicId(UUID.randomUUID().toString());
+        Cathedra cathedra = cathedraService.findByPublicId(teacherRequest.getCathedraId());
+        teacher.setCathedra(cathedra);
         teacherRepository.save(teacher);
+        return TeacherMapper.INSTANCE.entityToResponse(teacher);
+    }
+
+
+    @Override
+    public TeacherResponse updateTeacher(TeacherRequest teacherRequest, String publicId) {
+        Teacher teacher = teacherRepository.findByPublicIdAndActiveTrue(publicId);
+        if (teacher == null) {
+            throw new TeacherException(ErrorMessages.NO_TEACHER_FOUND.getErrorMessage());
+        }
+        Cathedra cathedra = cathedraService.findByPublicId(teacherRequest.getCathedraId());
+        teacher.setCathedra(cathedra);
+        teacher.setName(teacherRequest.getName());
+        teacherRepository.save(teacher);
+        return TeacherMapper.INSTANCE.entityToResponse(teacher);
     }
 
     @Override
-    public TeacherDto findById(Long id) {
-        Teacher teacher = teacherRepository.findById(id).get();
-        TeacherDto teacherDto = TeacherMapper.INSTANCE.entityToDto(teacher);
-        return teacherDto;
+    public void deleteTeacher(String publicId) {
+        Teacher teacher = teacherRepository.findByPublicIdAndActiveTrue(publicId);
+        if (teacher == null) {
+            throw new TeacherException(ErrorMessages.NO_TEACHER_FOUND.getErrorMessage());
+        }
+        teacher.setActive(false);
+        teacherRepository.save(teacher);
     }
 }

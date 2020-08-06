@@ -1,74 +1,55 @@
 package app.controller;
 
-import app.dto.TeacherDto;
 import app.exception.ErrorMessages;
 import app.exception.TeacherException;
-import app.mappers.TeacherMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import app.dto.request.TeacherRequestModel;
-import app.dto.response.TeacherRest;
+import app.dto.request.TeacherRequest;
+import app.dto.response.TeacherResponse;
 import app.service.interfaces.TeacherService;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/rest/teachers")
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class TeacherController {
 
     @Autowired
     TeacherService teacherService;
 
-    @GetMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public TeacherRest getTeacher(@PathVariable Long id) {
-        return TeacherMapper.INSTANCE.dtoToRest(teacherService.findById(id));
+    @GetMapping(value = "/{publicId}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public TeacherResponse getTeacher(@PathVariable String publicId) {
+        return teacherService.findById(publicId);
     }
 
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<List<TeacherRest>> findAllTeachers(@RequestParam(value = "page", defaultValue = "0") int page,
-                                                             @RequestParam(value = "limit", defaultValue = "100") int limit) {
-
-
-        List<TeacherRest> returnValue = teacherService
-                .findAll(page, limit).stream()
-                .map(TeacherMapper.INSTANCE::dtoToRest)
-                .collect(Collectors.toList());
-
-        return ResponseEntity.ok()
-
-                .body(returnValue);
+    @ResponseStatus(HttpStatus.OK)
+    public List<TeacherResponse> findAllTeachers() {
+        return teacherService.findAll();
     }
 
-    @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE},
-            produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<TeacherRest> postTeacher(@RequestBody TeacherRequestModel teacherRequestModel) {
-        if (teacherRequestModel.getName().isEmpty() || teacherRequestModel.getCathedraId() == null) {
+    @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ResponseStatus(HttpStatus.CREATED)
+    public TeacherResponse postTeacher(@RequestBody TeacherRequest teacherRequest) {
+        if (teacherRequest.getName().isEmpty() || teacherRequest.getCathedraId() == null) {
             throw new TeacherException(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
         }
-        TeacherDto teacherDto = TeacherMapper.INSTANCE.requestToDto(teacherRequestModel);
-        teacherService.postTeacher(teacherDto);
-
-        TeacherRest teacherRest = TeacherMapper.INSTANCE.dtoToRest(teacherDto);
-        return ResponseEntity.ok()
-                .body(teacherRest);
+        return teacherService.createTeacher(teacherRequest);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<TeacherRest> putTeacher(@RequestBody TeacherRequestModel teacherRequestModel,
-                                                  @PathVariable Long id) {
-        if (teacherRequestModel.getName().isEmpty() || teacherRequestModel.getCathedraId() == null) {
+    @PutMapping("/{publicId}")
+    public TeacherResponse putTeacher(@RequestBody TeacherRequest teacherRequest, @PathVariable String publicId) {
+        if (teacherRequest.getName().isEmpty() || teacherRequest.getCathedraId() == null) {
             throw new TeacherException(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
         }
+        return teacherService.updateTeacher(teacherRequest, publicId);
+    }
 
-        TeacherDto teacherDto = TeacherMapper.INSTANCE.requestToDto(teacherRequestModel);
-        teacherService.postTeacher(teacherDto);
-
-        TeacherRest teacherRest = TeacherMapper.INSTANCE.dtoToRest(teacherDto);
-        return ResponseEntity.ok()
-                .body(teacherRest);
+    @DeleteMapping("/{publicId}")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteTeacher(@PathVariable String publicId) {
+        teacherService.deleteTeacher(publicId);
     }
 }

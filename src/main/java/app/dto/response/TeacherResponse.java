@@ -8,11 +8,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class TeacherRest {
+public class TeacherResponse {
 
-    private Long id;
+    private String publicId;
     private String name;
     private CathedraResponse cathedra;
-    private boolean active;
-
 }

@@ -1,6 +1,7 @@
 package app.service.interfaces;
 
-import app.dto.TeacherDto;
+import app.dto.request.TeacherRequest;
+import app.dto.response.TeacherResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -8,9 +9,13 @@ import java.util.List;
 @Service
 public interface TeacherService {
 
-    List<TeacherDto> findAll(int page, int limit);
+    List<TeacherResponse> findAll();
 
-    void postTeacher(TeacherDto teacherDto);
+    TeacherResponse findById(String publicId);
 
-    TeacherDto findById(Long id);
+    TeacherResponse createTeacher(TeacherRequest teacherRequest);
+
+    TeacherResponse updateTeacher(TeacherRequest teacherRequest, String publicId);
+
+    void deleteTeacher(String publicId);
 }
