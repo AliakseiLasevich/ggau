@@ -4,6 +4,8 @@ public enum ErrorMessages {
     NO_FACULTY_FOUND("Данный факультет не найден."),
     NO_CATHEDRA_FOUND("Данная кафедра не найдена."),
     NO_TEACHER_FOUND("Преподаватель не найден."),
+    NO_BUILDING_FOUND("Здание не найдено."),
+    NO_CABINET_FOUND("Кабинет не найден."),
     MISSING_REQUIRED_FIELD("Не достаточно данных. Проверьте правильность ввода."),
     RECORD_ALREADY_EXISTS("Запись уже содержится в базе данных.");
 

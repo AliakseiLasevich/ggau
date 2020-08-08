@@ -4,12 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class BuildingResponse {
 
-    private Long id;
+    private String publicId;
     private String name;
-    private Boolean active;
+    List<CabinetResponse> cabinets;
 }

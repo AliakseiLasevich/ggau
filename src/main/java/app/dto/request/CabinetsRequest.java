@@ -5,12 +5,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CabinetsRequestModel {
+public class CabinetsRequest {
 
-    private Long buildingId;
     private int number;
     private int maxStudents;
     private String type;
-    private Boolean active;
-
 }

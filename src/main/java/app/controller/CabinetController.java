@@ -1,74 +1,65 @@
 package app.controller;
 
-import app.dto.CabinetDto;
-import app.dto.response.CabinetRest;
+import app.dto.request.CabinetsRequest;
+import app.dto.response.CabinetResponse;
 import app.exception.CabinetException;
 import app.exception.ErrorMessages;
-import app.mappers.CabinetMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import app.dto.request.CabinetsRequestModel;
-
 import app.service.interfaces.CabinetService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/rest/cabinets")
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class CabinetController {
 
     @Autowired
     CabinetService cabinetService;
 
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<List<CabinetRest>> findCabinetsByParams(@RequestParam(required = true) Long buildingId) {
-
-
-
-        List<CabinetDto> cabinetDtos = cabinetService.findCabinetsByParams(buildingId);
-
-        List<CabinetRest> cabinetRests = cabinetDtos.stream()
-                .map(CabinetMapper.INSTANCE::dtoToRest)
-                .collect(Collectors.toList());
-
-        return ResponseEntity.ok()
-                .body(cabinetRests);
+    public List<CabinetResponse> findAll() {
+        return cabinetService.findAll();
     }
 
-    @GetMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public CabinetRest getCabinetById(@PathVariable("id") Long id) {
-        return CabinetMapper.INSTANCE.dtoToRest(cabinetService.findById(id));
+    @GetMapping(value = "/{publicId}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public CabinetResponse findCabinet(@PathVariable("publicId") String publicId) {
+        return cabinetService.findById(publicId);
     }
 
-    @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE},
-            produces = {MediaType.APPLICATION_JSON_VALUE})
-    public void postCabinet(@RequestBody CabinetsRequestModel cabinetsRequestModel) {
-        if (cabinetsRequestModel.getNumber() == 0
-                || cabinetsRequestModel.getMaxStudents() == 0
-                || cabinetsRequestModel.getBuildingId() == null) {
+    @GetMapping(value = "/buildings/{buildingId}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public List<CabinetResponse> findByBuilding(@PathVariable String buildingId) {
+        return cabinetService.findByBuilding(buildingId);
+    }
+
+    @PostMapping(value = "/buildings/{buildingId}", consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ResponseStatus(HttpStatus.CREATED)
+    public CabinetResponse postCabinet(@RequestBody CabinetsRequest cabinetsRequest, @PathVariable String buildingId) {
+        checkRequestModelFields(cabinetsRequest);
+        return cabinetService.createCabinet(cabinetsRequest, buildingId);
+    }
+
+
+    @PutMapping(value = "/{publicId}", consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ResponseStatus(HttpStatus.OK)
+    public CabinetResponse putCabinet(@RequestBody CabinetsRequest cabinetsRequest, @PathVariable String publicId) {
+        checkRequestModelFields(cabinetsRequest);
+        return cabinetService.updateCabinet(cabinetsRequest, publicId);
+    }
+
+    @DeleteMapping(value = "/{publicId}")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteCabinet(@PathVariable String publicId) {
+        cabinetService.deleteCabinet(publicId);
+    }
+
+
+    private void checkRequestModelFields(@RequestBody CabinetsRequest cabinetsRequest) {
+        if (cabinetsRequest.getNumber() == 0 || cabinetsRequest.getMaxStudents() == 0) {
             throw new CabinetException(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
         }
-        CabinetDto cabinetDto = CabinetMapper.INSTANCE.requestToDto(cabinetsRequestModel);
-        cabinetService.save(cabinetDto);
     }
-
-    @PutMapping(value = "/{id}", consumes = {MediaType.APPLICATION_JSON_VALUE},
-            produces = {MediaType.APPLICATION_JSON_VALUE})
-    public void putCabinet(@RequestBody CabinetsRequestModel cabinetsRequestModel,
-                           @PathVariable Long id) {
-        if (cabinetsRequestModel.getNumber() == 0
-                || cabinetsRequestModel.getMaxStudents() == 0
-                || cabinetsRequestModel.getBuildingId() == null) {
-            throw new CabinetException(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
-        }
-        CabinetDto cabinetDto = CabinetMapper.INSTANCE.requestToDto(cabinetsRequestModel);
-        cabinetDto.setId(id);
-        cabinetService.save(cabinetDto);
-    }
-
 
 }

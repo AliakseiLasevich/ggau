@@ -1,13 +1,21 @@
 package app.service.interfaces;
 
-import app.dto.CabinetDto;
+import app.dto.request.CabinetsRequest;
+import app.dto.response.CabinetResponse;
 
 import java.util.List;
 
 public interface CabinetService {
-    List<CabinetDto> findCabinetsByParams(Long buildingId);
 
-    CabinetDto findById(Long id);
+    CabinetResponse findById(String publicId);
 
-    void save(CabinetDto cabinetDto);
+    List<CabinetResponse> findByBuilding(String buildingId);
+
+    List<CabinetResponse> findAll();
+
+    CabinetResponse createCabinet(CabinetsRequest cabinetsRequest, String buildingId);
+
+    CabinetResponse updateCabinet(CabinetsRequest cabinetsRequest, String buildingId);
+
+    void deleteCabinet(String publicId);
 }

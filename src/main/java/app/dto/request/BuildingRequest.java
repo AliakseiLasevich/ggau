@@ -8,5 +8,4 @@ import lombok.Setter;
 public class BuildingRequest {
 
     private String name;
-    private Boolean active;
 }
