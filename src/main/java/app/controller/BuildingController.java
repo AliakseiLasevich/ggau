@@ -47,7 +47,7 @@ public class BuildingController {
         return buildingService.updateBuilding(buildingRequest, publicId);
     }
 
-    @DeleteMapping(value = "/{publicId}", consumes = {MediaType.APPLICATION_JSON_VALUE})
+    @DeleteMapping(value = "/{publicId}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteBuilding(@PathVariable String publicId) {
         buildingService.deleteBuilding(publicId);

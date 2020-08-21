@@ -17,6 +17,6 @@ public interface CabinetRepository extends JpaRepository<Cabinet, Long> {
 
     List<Cabinet> findAllByBuildingAndActiveTrue(Building building);
 
-    Cabinet findByNumberAndBuildingAndActiveTrue(int number, Building building);
+    Cabinet findByNumberAndBuildingAndActiveTrue(String number, Building building);
 
 }

@@ -13,7 +13,7 @@ public interface CabinetService {
 
     List<CabinetResponse> findAll();
 
-    CabinetResponse createCabinet(CabinetsRequest cabinetsRequest, String buildingId);
+    CabinetResponse createCabinet(CabinetsRequest cabinetsRequest);
 
     CabinetResponse updateCabinet(CabinetsRequest cabinetsRequest, String buildingId);
 

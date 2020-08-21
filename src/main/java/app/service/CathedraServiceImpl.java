@@ -45,7 +45,9 @@ public class CathedraServiceImpl implements CathedraService {
     @Override
     public void createCathedra(CathedraRequest cathedraRequest, String facultyId) {
         Cathedra cathedra = cathedraRepository.findByNameAndActiveTrue(cathedraRequest.getName());
-        checkCathedraForNull(cathedra);
+        if(cathedra!= null){
+            throw new CathedraException(ErrorMessages.RECORD_ALREADY_EXISTS.getErrorMessage());
+        }
         cathedra = CathedraMapper.INSTANCE.requestToEntity(cathedraRequest);
         cathedra.setPublicId(UUID.randomUUID().toString());
         Faculty faculty = facultyService.findEntityByPublicId(facultyId);

@@ -7,7 +7,8 @@ import lombok.Setter;
 @Setter
 public class CabinetsRequest {
 
-    private int number;
+    private String number;
     private int maxStudents;
     private String type;
+    private String buildingId;
 }

@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface BuildingRepository extends JpaRepository<Building, Long> {
 
-    @Query(value = "SELECT distinct b FROM Building b INNER JOIN FETCH b.cabinets")
+    @Query(value = "SELECT distinct b FROM Building b LEFT JOIN FETCH b.cabinets WHERE b.active=true ")
     List<Building> findAllWithCabinets();
 
     Building findByPublicIdAndActiveTrue(String publicId);

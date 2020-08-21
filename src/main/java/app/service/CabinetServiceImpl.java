@@ -35,10 +35,14 @@ public class CabinetServiceImpl implements CabinetService {
     @Override
     public CabinetResponse findById(String publicId) {
         Cabinet cabinet = cabinetRepository.findByPublicIdAndActiveTrue(publicId);
+        checkCabinetExists(cabinet);
+        return CabinetMapper.INSTANCE.entityToResponse(cabinet);
+    }
+
+    private void checkCabinetExists(Cabinet cabinet) {
         if (cabinet == null) {
             throw new CabinetException(ErrorMessages.NO_CABINET_FOUND.getErrorMessage());
         }
-        return CabinetMapper.INSTANCE.entityToResponse(cabinet);
     }
 
     @Override
@@ -57,8 +61,8 @@ public class CabinetServiceImpl implements CabinetService {
     }
 
     @Override
-    public CabinetResponse createCabinet(CabinetsRequest cabinetsRequest, String buildingId) {
-        Building building = buildingService.findEntityByPublicId(buildingId);
+    public CabinetResponse createCabinet(CabinetsRequest cabinetsRequest) {
+        Building building = buildingService.findEntityByPublicId(cabinetsRequest.getBuildingId());
         Cabinet cabinet = cabinetRepository.findByNumberAndBuildingAndActiveTrue(cabinetsRequest.getNumber(), building);
         if (cabinet != null) {
             throw new CabinetException(ErrorMessages.RECORD_ALREADY_EXISTS.getErrorMessage());
@@ -72,7 +76,15 @@ public class CabinetServiceImpl implements CabinetService {
 
     @Override
     public CabinetResponse updateCabinet(CabinetsRequest cabinetsRequest, String publicId) {
-        return null;
+        Cabinet cabinet = cabinetRepository.findByPublicIdAndActiveTrue(publicId);
+        checkCabinetExists(cabinet);
+        Building building = buildingService.findEntityByPublicId(cabinetsRequest.getBuildingId());
+        cabinet.setNumber(cabinetsRequest.getNumber());
+        cabinet.setBuilding(building);
+        cabinet.setMaxStudents(cabinetsRequest.getMaxStudents());
+        cabinet.setType(cabinetsRequest.getType());
+        cabinetRepository.save(cabinet);
+        return CabinetMapper.INSTANCE.entityToResponse(cabinet);
     }
 
     @Override

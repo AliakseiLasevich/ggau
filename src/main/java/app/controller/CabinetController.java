@@ -34,11 +34,11 @@ public class CabinetController {
         return cabinetService.findByBuilding(buildingId);
     }
 
-    @PostMapping(value = "/buildings/{buildingId}", consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseStatus(HttpStatus.CREATED)
-    public CabinetResponse postCabinet(@RequestBody CabinetsRequest cabinetsRequest, @PathVariable String buildingId) {
+    public CabinetResponse postCabinet(@RequestBody CabinetsRequest cabinetsRequest) {
         checkRequestModelFields(cabinetsRequest);
-        return cabinetService.createCabinet(cabinetsRequest, buildingId);
+        return cabinetService.createCabinet(cabinetsRequest);
     }
 
 
@@ -57,7 +57,7 @@ public class CabinetController {
 
 
     private void checkRequestModelFields(@RequestBody CabinetsRequest cabinetsRequest) {
-        if (cabinetsRequest.getNumber() == 0 || cabinetsRequest.getMaxStudents() == 0) {
+        if (cabinetsRequest.getNumber() == null || cabinetsRequest.getMaxStudents() == 0) {
             throw new CabinetException(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
         }
     }
