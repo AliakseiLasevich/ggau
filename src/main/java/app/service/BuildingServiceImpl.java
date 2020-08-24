@@ -23,7 +23,7 @@ public class BuildingServiceImpl implements BuildingService {
 
     @Override
     public List<BuildingResponse> findBuildings() {
-        List<Building> buildings = buildingRepository.findAllWithCabinets();
+        List<Building> buildings = buildingRepository.findAllByActiveTrue();
         return buildings.stream()
                 .map(BuildingMapper.INSTANCE::entityToResponse)
                 .collect(Collectors.toList());

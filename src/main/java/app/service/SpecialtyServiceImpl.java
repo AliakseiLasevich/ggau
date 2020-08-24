@@ -1,49 +1,88 @@
 package app.service;
 
 import app.dao.interfaces.SpecialtyRepository;
-import app.dto.SpecialtyDto;
+import app.dto.request.SpecialtyRequest;
+import app.dto.response.SpecialtyResponse;
 import app.entity.Faculty;
 import app.entity.Specialty;
+import app.exception.ErrorMessages;
+import app.exception.SpecialtyException;
 import app.mappers.SpecialtyMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import app.service.interfaces.FacultyService;
 import app.service.interfaces.SpecialtyService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
 public class SpecialtyServiceImpl implements SpecialtyService {
 
-    @Autowired
-    SpecialtyRepository specialtyRepository;
+    private SpecialtyRepository specialtyRepository;
+
+    private FacultyService facultyService;
 
     @Autowired
-    FacultyService facultyService;
-
-    @Override
-    public SpecialtyDto findById(Long id) {
-        return SpecialtyMapper.INSTANCE.entityToDto(specialtyRepository.findById(id).get());
+    public SpecialtyServiceImpl(SpecialtyRepository specialtyRepository, FacultyService facultyService) {
+        this.specialtyRepository = specialtyRepository;
+        this.facultyService = facultyService;
     }
 
     @Override
-    public List<SpecialtyDto> findSpecialities() {
+    public SpecialtyResponse findById(String publicId) {
+        Specialty specialty = checkSpecialtyExists(publicId);
+        return SpecialtyMapper.INSTANCE.entityToResponse(specialty);
+    }
 
-
+    @Override
+    public List<SpecialtyResponse> findSpecialities() {
         return specialtyRepository
-                .findAll()
+                .findAllByActiveTrue()
                 .stream()
-                .map(SpecialtyMapper.INSTANCE::entityToDto)
+                .map(SpecialtyMapper.INSTANCE::entityToResponse)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public void save(SpecialtyDto specialtyDto) {
-        Specialty specialty = SpecialtyMapper.INSTANCE.dtoToEntity(specialtyDto);
-//        Faculty faculty = facultyService.findById(specialtyDto.getFacultyId());
-//        specialty.setFaculty(faculty);
+    public SpecialtyResponse createSpecialty(SpecialtyRequest specialtyRequest) {
+        Specialty specialty = specialtyRepository.findByCodeAndActiveTrue(specialtyRequest.getCode());
+        if (specialty != null) {
+            throw new SpecialtyException(ErrorMessages.RECORD_ALREADY_EXISTS.getErrorMessage());
+        }
+        specialty = SpecialtyMapper.INSTANCE.requestToEntity(specialtyRequest);
+        Faculty faculty = facultyService.findEntityByPublicId(specialtyRequest.getFacultyId());
+        specialty.setFaculty(faculty);
+        specialty.setPublicId(UUID.randomUUID().toString());
         specialtyRepository.save(specialty);
+        return SpecialtyMapper.INSTANCE.entityToResponse(specialty);
+    }
+
+    @Override
+    public SpecialtyResponse updateSpecialty(SpecialtyRequest specialtyRequest, String publicId) {
+        Specialty specialty = checkSpecialtyExists(publicId);
+        Faculty faculty = facultyService.findEntityByPublicId(specialtyRequest.getFacultyId());
+        specialty.setFaculty(faculty);
+        specialty.setCode(specialtyRequest.getCode());
+        specialty.setName(specialtyRequest.getName());
+        specialtyRepository.save(specialty);
+        return SpecialtyMapper.INSTANCE.entityToResponse(specialty);
+    }
+
+    @Override
+    public void deleteSpecialty(String publicId) {
+        Specialty specialty = checkSpecialtyExists(publicId);
+        specialty.setActive(false);
+        specialtyRepository.save(specialty);
+    }
+
+    private Specialty checkSpecialtyExists(String publicId) {
+        Specialty specialty = specialtyRepository.findByPublicIdAndActiveTrue(publicId);
+        if (specialty == null) {
+            throw new SpecialtyException(ErrorMessages.NO_SPECIALTY_FOUND.getErrorMessage());
+        }
+        return specialty;
     }
 }
 

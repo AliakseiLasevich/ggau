@@ -1,66 +1,59 @@
 package app.controller;
 
-import app.dto.SpecialtyDto;
+import app.dto.request.SpecialtyRequest;
+import app.dto.response.SpecialtyResponse;
 import app.exception.ErrorMessages;
 import app.exception.SpecialtyException;
-import app.mappers.SpecialtyMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import app.dto.request.SpecialtyRequestModel;
-import app.dto.response.SpecialtyRest;
 import app.service.interfaces.SpecialtyService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/rest/specialties")
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class SpecialtyController {
 
     @Autowired
     private SpecialtyService specialtyService;
 
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<List<SpecialtyRest>> findSpecialities() {
-        List<SpecialtyDto> specialtyDtos = specialtyService.findSpecialities();
-
-        List<SpecialtyRest> specialtyRests = specialtyDtos.stream()
-                .map(SpecialtyMapper.INSTANCE::dtoToRest)
-                .collect(Collectors.toList());
-
-        return ResponseEntity.ok()
-                .body(specialtyRests);
+    @ResponseStatus(HttpStatus.OK)
+    public List<SpecialtyResponse> findSpecialities() {
+        return specialtyService.findSpecialities();
     }
 
     @GetMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public SpecialtyRest getSpecialtyById(@PathVariable("id") Long id) {
-        return SpecialtyMapper.INSTANCE.dtoToRest(specialtyService.findById(id));
+    public SpecialtyResponse getSpecialtyById(@PathVariable("id") String id) {
+        return specialtyService.findById(id);
     }
 
-
-    @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE},
-            produces = {MediaType.APPLICATION_JSON_VALUE})
-    public void postSpecialty(@RequestBody SpecialtyRequestModel specialtyRequestModel) {
-
-        if (specialtyRequestModel.getName() == null || specialtyRequestModel.getFacultyId() == null) {
-            throw new SpecialtyException(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
-        }
-        SpecialtyDto specialtyDto = SpecialtyMapper.INSTANCE.requestToDto(specialtyRequestModel);
-        specialtyService.save(specialtyDto);
+    @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ResponseStatus(HttpStatus.CREATED)
+    public SpecialtyResponse postSpecialty(@RequestBody SpecialtyRequest specialtyRequest) {
+        checkRequestModel(specialtyRequest);
+        return specialtyService.createSpecialty(specialtyRequest);
     }
 
-    @PutMapping(value = "/{id}", consumes = {MediaType.APPLICATION_JSON_VALUE},
-            produces = {MediaType.APPLICATION_JSON_VALUE})
-    public void putSpecialty(@RequestBody SpecialtyRequestModel specialtyRequestModel,
-                             @PathVariable Long id) {
-        if (specialtyRequestModel.getName() == null || specialtyRequestModel.getFacultyId() == null) {
+    @PutMapping(value = "/{publicId}", consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ResponseStatus(HttpStatus.OK)
+    public SpecialtyResponse putSpecialty(@RequestBody SpecialtyRequest specialtyRequest, @PathVariable String publicId) {
+        checkRequestModel(specialtyRequest);
+      return specialtyService.updateSpecialty(specialtyRequest, publicId);
+
+    }
+
+    @DeleteMapping(value = "/{publicId}")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteSpecialty(@PathVariable String publicId) {
+      specialtyService.deleteSpecialty(publicId);
+    }
+
+    private void checkRequestModel(@RequestBody SpecialtyRequest specialtyRequest) {
+        if (specialtyRequest.getName() == null) {
             throw new SpecialtyException(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
         }
-        SpecialtyDto specialtyDto = SpecialtyMapper.INSTANCE.requestToDto(specialtyRequestModel);
-        specialtyDto.setId(id);
-        specialtyService.save(specialtyDto);
     }
 }

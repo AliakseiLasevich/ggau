@@ -7,11 +7,11 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SpecialtyRest {
+public class SpecialtyResponse {
 
-    private Long id;
+    private String publicId;
     private String name;
     private String code;
-    private Long facultyId;
-    private Boolean active;
+    private FacultyResponse faculty;
+
 }

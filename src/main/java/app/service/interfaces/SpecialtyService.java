@@ -1,6 +1,7 @@
 package app.service.interfaces;
 
-import app.dto.SpecialtyDto;
+import app.dto.request.SpecialtyRequest;
+import app.dto.response.SpecialtyResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -8,9 +9,14 @@ import java.util.List;
 @Service
 public interface SpecialtyService {
 
-    SpecialtyDto findById(Long id);
 
-    List<SpecialtyDto> findSpecialities();
+    SpecialtyResponse findById(String publicId);
 
-    void save(SpecialtyDto specialtyDto);
+    List<SpecialtyResponse> findSpecialities();
+
+    SpecialtyResponse createSpecialty(SpecialtyRequest specialtyRequest);
+
+    SpecialtyResponse updateSpecialty(SpecialtyRequest specialtyRequest, String publicId);
+
+    void deleteSpecialty(String publicId);
 }

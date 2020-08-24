@@ -47,7 +47,7 @@ public class CabinetServiceImpl implements CabinetService {
 
     @Override
     public List<CabinetResponse> findAll() {
-        return cabinetRepository.findByActiveTrue().stream()
+        return cabinetRepository.findByActiveTrueAndBuildingActiveTrue().stream()
                 .map(CabinetMapper.INSTANCE::entityToResponse)
                 .collect(Collectors.toList());
     }
@@ -89,6 +89,9 @@ public class CabinetServiceImpl implements CabinetService {
 
     @Override
     public void deleteCabinet(String publicId) {
-
+        Cabinet cabinet = cabinetRepository.findByPublicIdAndActiveTrue(publicId);
+        checkCabinetExists(cabinet);
+        cabinet.setActive(false);
+        cabinetRepository.save(cabinet);
     }
 }

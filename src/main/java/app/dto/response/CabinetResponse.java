@@ -10,7 +10,10 @@ import lombok.NoArgsConstructor;
 public class CabinetResponse {
 
     private String publicId;
-    private int number;
+    private String number;
     private String type;
     private int maxStudents;
+    private String buildingId;
+    private String buildingName;
+
 }

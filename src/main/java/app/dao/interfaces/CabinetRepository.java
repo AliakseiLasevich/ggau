@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface CabinetRepository extends JpaRepository<Cabinet, Long> {
 
-    List<Cabinet> findByActiveTrue();
+    List<Cabinet> findByActiveTrueAndBuildingActiveTrue();
 
     Cabinet findByPublicIdAndActiveTrue(String publicId);
 
