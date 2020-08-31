@@ -7,7 +7,7 @@ import app.entity.Faculty;
 import app.entity.Specialty;
 import app.exception.ErrorMessages;
 import app.exception.SpecialtyException;
-import app.mappers.SpecialtyMapper;
+import app.converters.SpecialtyMapper;
 import app.service.interfaces.FacultyService;
 import app.service.interfaces.SpecialtyService;
 import org.springframework.beans.factory.annotation.Autowired;

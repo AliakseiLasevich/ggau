@@ -7,7 +7,7 @@ import app.entity.Building;
 import app.entity.Cabinet;
 import app.exception.CabinetException;
 import app.exception.ErrorMessages;
-import app.mappers.CabinetMapper;
+import app.converters.CabinetMapper;
 import app.service.interfaces.BuildingService;
 import app.service.interfaces.CabinetService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -7,7 +7,7 @@ import app.entity.StudentGroup;
 import app.entity.StudentSubgroup;
 import app.exception.StudentGroupException;
 import app.exception.StudentSubgroupException;
-import app.mappers.StudentSubgroupMapper;
+import app.converters.StudentSubgroupMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

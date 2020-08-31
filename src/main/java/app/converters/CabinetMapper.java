@@ -1,4 +1,4 @@
-package app.mappers;
+package app.converters;
 
 import app.dto.request.CabinetsRequest;
 import app.dto.response.CabinetResponse;

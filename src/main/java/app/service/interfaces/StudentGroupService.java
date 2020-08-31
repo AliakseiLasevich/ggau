@@ -1,14 +1,17 @@
 package app.service.interfaces;
 
-import app.dto.StudentGroupDto;
+import app.dto.request.StudentGroupRequest;
+import app.dto.response.StudentGroupResponse;
 
 import java.util.List;
 
 public interface StudentGroupService {
 
-    List<StudentGroupDto> findAllWithSpecialtyAndSubgroups();
+    List<StudentGroupResponse> findAll();
 
-    StudentGroupDto findById(Long id);
+    StudentGroupResponse findById(String publicId);
 
-    void save(StudentGroupDto studentGroupDto);
+    StudentGroupResponse createStudentGroup(StudentGroupRequest studentGroupRequest);
+
+    StudentGroupResponse updateStudentGroup(StudentGroupRequest studentGroupRequest, String publicId);
 }

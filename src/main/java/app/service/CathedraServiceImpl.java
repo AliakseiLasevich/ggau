@@ -7,7 +7,7 @@ import app.entity.Cathedra;
 import app.entity.Faculty;
 import app.exception.CathedraException;
 import app.exception.ErrorMessages;
-import app.mappers.CathedraMapper;
+import app.converters.CathedraMapper;
 import app.service.interfaces.CathedraService;
 import app.service.interfaces.FacultyService;
 import org.springframework.beans.factory.annotation.Autowired;

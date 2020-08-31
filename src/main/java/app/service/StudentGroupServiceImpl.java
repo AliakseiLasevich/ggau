@@ -1,56 +1,58 @@
 package app.service;
 
 import app.dao.interfaces.StudentGroupRepository;
-import app.dto.StudentGroupDto;
+import app.dto.request.StudentGroupRequest;
+import app.dto.response.StudentGroupResponse;
 import app.entity.StudentGroup;
+import app.exception.ErrorMessages;
 import app.exception.StudentGroupException;
-import app.mappers.StudentGroupMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import app.converters.StudentGroupMapper;
 import app.service.interfaces.SpecialtyService;
 import app.service.interfaces.StudentGroupService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
 public class StudentGroupServiceImpl implements StudentGroupService {
 
-    @Autowired
-    StudentGroupRepository studentGroupRepository;
+    private final StudentGroupRepository studentGroupRepository;
 
-    @Autowired
-    SpecialtyService specialtyService;
+    private final SpecialtyService specialtyService;
 
-    @Transactional
+    public StudentGroupServiceImpl(StudentGroupRepository studentGroupRepository, SpecialtyService specialtyService) {
+        this.studentGroupRepository = studentGroupRepository;
+        this.specialtyService = specialtyService;
+    }
+
     @Override
-    public List<StudentGroupDto> findAllWithSpecialtyAndSubgroups() {
-
-        List<StudentGroup> studentGroups = studentGroupRepository.findAll();
-
-        List<StudentGroupDto> returnValue = studentGroups
-                .stream()
-                .map(studentGroup -> {
-                    StudentGroupDto studentGroupDto = StudentGroupMapper.INSTANCE.entityToDto(studentGroup);
-                    return studentGroupDto;
-                })
+    public List<StudentGroupResponse> findAll() {
+        List<StudentGroup> studentGroups = studentGroupRepository.findAllByActiveTrue();
+        return studentGroups.stream()
+                .map(StudentGroupMapper.INSTANCE::entityToResponse)
                 .collect(Collectors.toList());
-        return returnValue;
     }
 
-    @Transactional
     @Override
-    public StudentGroupDto findById(Long id) {
-        return StudentGroupMapper.INSTANCE.entityToDto(studentGroupRepository
-                .findById(id)
-                .orElseThrow(() -> new StudentGroupException("No such group")));
+    public StudentGroupResponse findById(String publicId) {
+        StudentGroup studentGroup = studentGroupRepository.findByPublicIdAndActiveTrue(publicId);
+        if (studentGroup == null) {
+            throw new StudentGroupException(ErrorMessages.NO_STUDENT_GROUP_FOUND.getErrorMessage());
+        }
+        return null;
     }
 
-    @Transactional
     @Override
-    public void save(StudentGroupDto studentGroupDto) {
-        studentGroupRepository.save(StudentGroupMapper.INSTANCE.dtoToEntity(studentGroupDto));
+    public StudentGroupResponse createStudentGroup(StudentGroupRequest studentGroupRequest) {
+        StudentGroup studentGroup = StudentGroupMapper.INSTANCE.requestToEntity(studentGroupRequest);
+        studentGroup.setPublicId(UUID.randomUUID().toString());
+        return null;
     }
 
+    @Override
+    public StudentGroupResponse updateStudentGroup(StudentGroupRequest studentGroupRequest, String publicId) {
+        return null;
+    }
 }

@@ -1,66 +1,51 @@
 package app.controller;
 
-import app.dto.StudentGroupDto;
+import app.dto.request.StudentGroupRequest;
+import app.dto.response.StudentGroupResponse;
 import app.exception.ErrorMessages;
 import app.exception.StudentGroupException;
-import app.mappers.StudentGroupMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import app.dto.request.StudentGroupRequestModel;
-import app.dto.response.StudentGroupRest;
 import app.service.interfaces.StudentGroupService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/rest/studentGroups")
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class StudentGroupController {
 
     @Autowired
     StudentGroupService studentGroupService;
 
     @GetMapping
-    public ResponseEntity<List<StudentGroupRest>> getStudentGroups() {
-        List<StudentGroupDto> studentGroupDtos = studentGroupService.findAllWithSpecialtyAndSubgroups();
-
-        List<StudentGroupRest> studentGroupRests = studentGroupDtos.stream()
-                .map(studentGroupDto -> StudentGroupMapper.INSTANCE.dtoToRest(studentGroupDto)).collect(Collectors.toList());
-        return ResponseEntity
-                .ok(studentGroupRests);
+    @ResponseStatus(HttpStatus.OK)
+    public List<StudentGroupResponse> getStudentGroups() {
+        return studentGroupService.findAll();
     }
 
-    @GetMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public StudentGroupRest getStudentGroupById(@PathVariable("id") Long id) {
-        return StudentGroupMapper.INSTANCE.dtoToRest(studentGroupService.findById(id));
+    @GetMapping(value = "/{publicId}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public StudentGroupResponse getStudentGroupById(@PathVariable("publicId") String publicId) {
+        return studentGroupService.findById(publicId);
     }
 
 
-    @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE},
-            produces = {MediaType.APPLICATION_JSON_VALUE})
-    public void postStudentGroup(@RequestBody StudentGroupRequestModel studentGroupRequestModel) {
-
-        if (studentGroupRequestModel.getNumber() == 0 || studentGroupRequestModel.getCourse() == 0) {
+    @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ResponseStatus(HttpStatus.CREATED)
+    public StudentGroupResponse postStudentGroup(@RequestBody StudentGroupRequest studentGroupRequest) {
+        if (studentGroupRequest.getNumber() == 0 || studentGroupRequest.getCourse() == 0) {
             throw new StudentGroupException(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
         }
-        StudentGroupDto studentGroupDto = StudentGroupMapper.INSTANCE.requestToDto(studentGroupRequestModel);
-        studentGroupService.save(studentGroupDto);
+        return studentGroupService.createStudentGroup(studentGroupRequest);
     }
 
 
-    @PutMapping(value = "/{id}", consumes = {MediaType.APPLICATION_JSON_VALUE},
-            produces = {MediaType.APPLICATION_JSON_VALUE})
-    public void putStudentGroup(@RequestBody StudentGroupRequestModel studentGroupRequestModel,
-                             @PathVariable Long id) {
-        if (studentGroupRequestModel.getNumber() == 0 || studentGroupRequestModel.getCourse() == 0) {
+    @PutMapping(value = "/{publicId}", consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    public StudentGroupResponse putStudentGroup(@RequestBody StudentGroupRequest studentGroupRequest, @PathVariable("publicId") String publicId) {
+        if (studentGroupRequest.getNumber() == 0 || studentGroupRequest.getCourse() == 0) {
             throw new StudentGroupException(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
         }
-
-        StudentGroupDto studentGroupDto = StudentGroupMapper.INSTANCE.requestToDto(studentGroupRequestModel);
-        studentGroupDto.setId(id);
-        studentGroupService.save(studentGroupDto);
+        return studentGroupService.updateStudentGroup(studentGroupRequest, publicId);
     }
 }

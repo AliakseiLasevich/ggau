@@ -6,7 +6,7 @@ import app.dto.response.BuildingResponse;
 import app.entity.Building;
 import app.exception.BuildingException;
 import app.exception.ErrorMessages;
-import app.mappers.BuildingMapper;
+import app.converters.BuildingMapper;
 import app.service.interfaces.BuildingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

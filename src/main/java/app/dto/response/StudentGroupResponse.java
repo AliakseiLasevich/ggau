@@ -4,15 +4,16 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class StudentSubgroupRest {
+public class StudentGroupResponse {
 
-    private Long id;
-    private String name;
+    private String publicId;
     private int number;
     private int course;
-    private Boolean active;
-//    private SpecialtyDto specialty;
+    private SpecialtyResponse specialty;
+    private List<StudentSubgroupResponse> studentSubgroups;
 }

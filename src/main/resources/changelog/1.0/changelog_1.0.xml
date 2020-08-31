@@ -212,7 +212,7 @@
             <column name="public_id" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="dateTime" type="DATETIME">
+            <column name="date_time" type="DATETIME">
                 <constraints nullable="false"/>
             </column>
             <column name="type" type="VARCHAR(255)">
@@ -253,6 +253,103 @@
                 <constraints nullable="false" foreignKeyName="std_subgroup_lessons_fk"
                              referencedTableName="students_subgroups"
                              referencedColumnNames="id"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="12" author="Aliaksei Lasevich">
+        <createTable tableName="discipline_plan">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="learn_plan_pkey"/>
+            </column>
+            <column name="public_id" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="discipline" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="course_project" type="INT(4)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="course_work" type="INT(4)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="exam" type="INT(4)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="flow" type="VARCHAR(10)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="hours_cabinet" type="INT(4)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="hoursKSRL" type="INT(4)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="hoursKSRLR" type="INT(4)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="hoursKSRP" type="INT(4)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="hoursKSRVS" type="INT(4)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="hours_laboratory" type="INT(4)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="hours_lecture" type="INT(4)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="hours_practical_seminary" type="INT(4)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="hours_summary" type="INT(10)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="summary" type="INT(10)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="test" type="INT(4)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="test_count" type="INT(4)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="13" author="Aliaksei Lasevich">
+
+        <createTable tableName="lessons_per_week">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="lessons_per_week_pkey"/>
+            </column>
+            <column name="lecture" type="INT(4)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="practice" type="INT(4)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="date_lessons_per_week_mapping">
+
+            <column name="discipline_plan_id" type="BIGINT(20)">
+                <constraints nullable="false" foreignKeyName="discipline_plan_mapping_fk"
+                             referencedTableName="discipline_plan"
+                             referencedColumnNames="id"/>
+            </column>
+
+            <column name="lesson_per_week_id" type="BIGINT(20)">
+                <constraints nullable="false" foreignKeyName="lesson_per_week_mapping_fk"
+                             referencedTableName="lessons_per_week"
+                             referencedColumnNames="id"
+                             unique="true"/>
+            </column>
+
+            <column name="lessons_key" type="DATE">
+                <constraints nullable="false"/>
             </column>
         </createTable>
     </changeSet>

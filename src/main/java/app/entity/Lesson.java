@@ -23,7 +23,7 @@ public class Lesson implements Serializable {
     @Column(name = "public_id")
     private String publicId;
 
-    @Column(name = "dateTime", nullable = false)
+    @Column(name = "date_time", nullable = false)
     private LocalDateTime dateTime;
 
     @Column(name = "type")

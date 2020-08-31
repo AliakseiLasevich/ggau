@@ -1,4 +1,4 @@
-package app.mappers;
+package app.converters;
 
 import app.dto.request.CathedraRequest;
 import app.dto.response.CathedraResponse;

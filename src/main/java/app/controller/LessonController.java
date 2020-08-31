@@ -1,6 +1,5 @@
 package app.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import app.entity.Lesson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

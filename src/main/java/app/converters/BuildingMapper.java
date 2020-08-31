@@ -1,4 +1,4 @@
-package app.mappers;
+package app.converters;
 
 import app.dto.request.BuildingRequest;
 import app.dto.response.BuildingResponse;

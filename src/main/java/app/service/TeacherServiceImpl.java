@@ -7,7 +7,7 @@ import app.entity.Cathedra;
 import app.entity.Teacher;
 import app.exception.ErrorMessages;
 import app.exception.TeacherException;
-import app.mappers.TeacherMapper;
+import app.converters.TeacherMapper;
 import app.service.interfaces.CathedraService;
 import app.service.interfaces.TeacherService;
 import org.springframework.stereotype.Service;
