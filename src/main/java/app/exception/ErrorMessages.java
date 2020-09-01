@@ -8,6 +8,7 @@ public enum ErrorMessages {
     NO_CABINET_FOUND("Кабинет не найден."),
     NO_SPECIALTY_FOUND("Специальность не найдена."),
     NO_STUDENT_GROUP_FOUND("Студенческая группа не найдена."),
+    NO_DISCIPLINE_FOUND("Учебная дисциплина не найдена."),
     MISSING_REQUIRED_FIELD("Не достаточно данных. Проверьте правильность ввода."),
     RECORD_ALREADY_EXISTS("Запись уже содержится в базе данных.");
 

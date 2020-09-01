@@ -32,7 +32,8 @@ public class SpecialtyServiceImpl implements SpecialtyService {
 
     @Override
     public SpecialtyResponse findById(String publicId) {
-        Specialty specialty = checkSpecialtyExists(publicId);
+        Specialty specialty = specialtyRepository.findByPublicIdAndActiveTrue(publicId);
+        checkSpecialtyExists(specialty);
         return SpecialtyMapper.INSTANCE.entityToResponse(specialty);
     }
 
@@ -61,7 +62,8 @@ public class SpecialtyServiceImpl implements SpecialtyService {
 
     @Override
     public SpecialtyResponse updateSpecialty(SpecialtyRequest specialtyRequest, String publicId) {
-        Specialty specialty = checkSpecialtyExists(publicId);
+        Specialty specialty = specialtyRepository.findByPublicIdAndActiveTrue(publicId);
+        checkSpecialtyExists(specialty);
         Faculty faculty = facultyService.findEntityByPublicId(specialtyRequest.getFacultyId());
         specialty.setFaculty(faculty);
         specialty.setCode(specialtyRequest.getCode());
@@ -72,16 +74,22 @@ public class SpecialtyServiceImpl implements SpecialtyService {
 
     @Override
     public void deleteSpecialty(String publicId) {
-        Specialty specialty = checkSpecialtyExists(publicId);
+        Specialty specialty = specialtyRepository.findByPublicIdAndActiveTrue(publicId);
+        checkSpecialtyExists(specialty);
         specialty.setActive(false);
         specialtyRepository.save(specialty);
     }
 
-    private Specialty checkSpecialtyExists(String publicId) {
-        Specialty specialty = specialtyRepository.findByPublicIdAndActiveTrue(publicId);
+    private void checkSpecialtyExists(Specialty specialty) {
         if (specialty == null) {
             throw new SpecialtyException(ErrorMessages.NO_SPECIALTY_FOUND.getErrorMessage());
         }
+    }
+
+    @Override
+    public Specialty findEntityByPublicId(String publicId) {
+        Specialty specialty = specialtyRepository.findByPublicIdAndActiveTrue(publicId);
+        checkSpecialtyExists(specialty);
         return specialty;
     }
 }

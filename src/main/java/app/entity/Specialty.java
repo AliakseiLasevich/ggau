@@ -32,7 +32,6 @@ public class Specialty implements Serializable {
     private boolean active;
 
     @ManyToOne
-    @JoinColumn(name = "faculty_id")
     private Faculty faculty;
 
     @OneToMany(mappedBy = "specialty")

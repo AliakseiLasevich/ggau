@@ -10,7 +10,6 @@ import java.io.Serializable;
 @Entity
 @Table(name = "students_subgroups")
 @Data
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class StudentSubgroup implements Serializable {
 
     @Id

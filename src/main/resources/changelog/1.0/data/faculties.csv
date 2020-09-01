@@ -1,0 +1,8 @@
+public_id,name,active
+agronom_faculty,Агрономический,true
+fzr_faculty,ФЗР,true
+veterinar_faculty,Ветеринарной медицины,true
+biotech_faculty,Биотехнологический,true
+ingener-tech_faculty,ИТФ,true
+economic_faculty,Экономический,true
+buhgalter_faculty,Бухгалтерского учёта,true

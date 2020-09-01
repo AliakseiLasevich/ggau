@@ -11,7 +11,6 @@ import java.io.Serializable;
 @Entity
 @Table(name = "teachers")
 @Data
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Teacher implements Serializable {
 
     @Id

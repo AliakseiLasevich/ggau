@@ -19,9 +19,6 @@ public class DisciplinePlan {
     @Column(name = "public_id")
     private String publicId;
 
-    @Column(name = "discipline")
-    private String discipline;
-
     @Column(name = "course_project")
     private int courseProject;
 
@@ -67,14 +64,19 @@ public class DisciplinePlan {
     @Column(name = "test")
     private int test;
 
-    @Column(name = "testCount")
+    @Column(name = "test_count")
     private int testCount;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private Discipline discipline;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "date_lessons_per_week_mapping",
             joinColumns = {@JoinColumn(name = "discipline_plan_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "lesson_per_week_id", referencedColumnName = "id")})
-//    @Convert(attributeName = "converted", converter = LocalDateAttributeConverter.class)
     private Map<LocalDate, LessonsPerWeek> lessons;
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "learn_plan_id")
+    private LearnPlan learnPlan;
 }

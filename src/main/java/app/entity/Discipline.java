@@ -1,20 +1,14 @@
 package app.entity;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
-@ToString
+
 @Entity
 @Table(name = "disciplines")
-@Getter
-@Setter
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@Data
 public class Discipline implements Serializable {
 
     @Id

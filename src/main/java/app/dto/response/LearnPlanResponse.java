@@ -1,13 +1,18 @@
-package app.dto.request;
+package app.dto.response;
 
+import app.dto.request.LessonsPerWeekRequest;
+import app.entity.Discipline;
+import app.entity.LessonsPerWeek;
 import lombok.Data;
 
 import java.time.LocalDate;
 import java.util.Map;
 
 @Data
-public class DisciplinePlanRequest {
-    private String disciplinePublicId;
+public class LearnPlanResponse {
+
+    private String publicId;
+    private Discipline discipline;
     private int courseProject;
     private int courseWork;
     private int exam;
@@ -24,5 +29,5 @@ public class DisciplinePlanRequest {
     private int summary;
     private int test;
     private int testCount;
-    private Map<LocalDate, LessonsPerWeekRequest> lessons;
+    private Map<LocalDate, LessonsPerWeek> lessons;
 }
