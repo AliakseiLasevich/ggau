@@ -4,6 +4,7 @@ package app.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.List;
 
 @Data
@@ -19,8 +20,17 @@ public class LearnPlan {
     @Column(name = "public_id")
     private String publicId;
 
+    @Column(name = "start_date")
+    private LocalDate startDate;
+
+    @Column(name = "end_date")
+    private LocalDate endDate;
+
     @Column(name = "course_number")
     private int courseNumber;
+
+    @Column(name = "active")
+    private boolean active;
 
     @OneToOne(cascade = CascadeType.ALL)
     private Faculty faculty;
@@ -30,4 +40,9 @@ public class LearnPlan {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "learnPlan")
     private List<DisciplinePlan> disciplinePlan;
+
+    @PrePersist
+    public void setDefaultActiveValue() {
+        active = true;
+    }
 }

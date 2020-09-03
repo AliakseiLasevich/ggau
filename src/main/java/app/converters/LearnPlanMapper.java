@@ -3,6 +3,7 @@ package app.converters;
 import app.dto.request.DisciplinePlanRequest;
 import app.dto.request.LearnPlanRequest;
 import app.dto.request.LessonsPerWeekRequest;
+import app.dto.response.DisciplineResponse;
 import app.dto.response.LearnPlanResponse;
 import app.entity.Discipline;
 import app.entity.DisciplinePlan;
@@ -25,6 +26,8 @@ public interface LearnPlanMapper {
     DisciplinePlan disciplinePlanRequestToEntity(DisciplinePlanRequest disciplinePlanRequest);
 
     Map<LocalDate, LessonsPerWeek> lessonsPerWeekRequestToEntity(Map<LocalDate, LessonsPerWeekRequest> mapRequest);
+
+    DisciplineResponse disciplinePlanEntityToResponse(DisciplinePlan disciplinePlan);
 
     LearnPlanMapper INSTANCE = Mappers.getMapper(LearnPlanMapper.class);
 }

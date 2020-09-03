@@ -265,7 +265,16 @@
             <column name="public_id" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
+            <column name="start_date" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+            <column name="end_date" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
             <column name="course_number" type="int(2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="active" type="bit(1)">
                 <constraints nullable="false"/>
             </column>
             <column name="faculty_id" type="BIGINT(20)">
@@ -289,41 +298,10 @@
             <column name="public_id" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="course_project" type="INT(4)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="course_work" type="INT(4)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="exam" type="INT(4)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="flow" type="VARCHAR(10)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="hours_cabinet" type="INT(4)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="hoursKSRL" type="INT(4)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="hoursKSRLR" type="INT(4)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="hoursKSRP" type="INT(4)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="hoursKSRVS" type="INT(4)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="hours_laboratory" type="INT(4)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="hours_lecture" type="INT(4)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="hours_practical_seminary" type="INT(4)">
-                <constraints nullable="false"/>
+            <column name="discipline_id" type="BIGINT(20)">
+                <constraints nullable="false" foreignKeyName="discipline_discipline_plan_fk"
+                             referencedTableName="disciplines"
+                             referencedColumnNames="id"/>
             </column>
             <column name="hours_summary" type="INT(10)">
                 <constraints nullable="false"/>
@@ -331,22 +309,56 @@
             <column name="summary" type="INT(10)">
                 <constraints nullable="false"/>
             </column>
-            <column name="test" type="INT(4)">
+            <column name="hours_cabinet" type="INT(4)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="hours_lecture" type="INT(4)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="hours_laboratory" type="INT(4)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="hours_practical_seminary" type="INT(4)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="hoursKSRLecture" type="INT(4)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="hoursKSRLaboratory" type="INT(4)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="hoursKSRPractical" type="INT(4)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="hoursKSRSummary" type="INT(4)">
                 <constraints nullable="false"/>
             </column>
             <column name="test_count" type="INT(4)">
                 <constraints nullable="false"/>
             </column>
-            <column name="discipline_id" type="BIGINT(20)">
-                <constraints nullable="false" foreignKeyName="discipline_discipline_plan_fk"
-                             referencedTableName="disciplines"
+            <column name="flow" type="VARCHAR(10)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="exam" type="bit(1)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="test" type="bit(1)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="course_project" type="bit(1)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="course_work" type="bit(1)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="learn_plan_id" type="BIGINT(20)">
+                <constraints nullable="false" foreignKeyName="learn_plan_discipline_fk"
+                             referencedTableName="learn_plan"
                              referencedColumnNames="id"/>
             </column>
-                        <column name="learn_plan_id" type="BIGINT(20)">
-                            <constraints nullable="false" foreignKeyName="learn_plan_discipline_fk"
-                                         referencedTableName="learn_plan"
-                                         referencedColumnNames="id"/>
-                        </column>
+            <column name="active" type="bit(1)">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
     </changeSet>
 
@@ -382,20 +394,20 @@
 
 
     </changeSet>
-<!--    <changeSet id="15" author="Aliaksei Lasevich">-->
-<!--                <createTable tableName="learn_plan_discipline_plan">-->
-<!--                    <column name="learn_plan_id" type="BIGINT(20)">-->
-<!--                        <constraints nullable="false" foreignKeyName="learn_plan_mapping_fk"-->
-<!--                                     referencedTableName="learn_plan"-->
-<!--                                     referencedColumnNames="id"/>-->
-<!--                    </column>-->
-<!--                    <column name="discipline_plan_id" type="BIGINT(20)">-->
-<!--                        <constraints nullable="false" foreignKeyName="discipline_mapping_fk"-->
-<!--                                     referencedTableName="discipline_plan"-->
-<!--                                     referencedColumnNames="id"/>-->
-<!--                    </column>-->
-<!--                </createTable>-->
-<!--    </changeSet>-->
+    <!--    <changeSet id="15" author="Aliaksei Lasevich">-->
+    <!--                <createTable tableName="learn_plan_discipline_plan">-->
+    <!--                    <column name="learn_plan_id" type="BIGINT(20)">-->
+    <!--                        <constraints nullable="false" foreignKeyName="learn_plan_mapping_fk"-->
+    <!--                                     referencedTableName="learn_plan"-->
+    <!--                                     referencedColumnNames="id"/>-->
+    <!--                    </column>-->
+    <!--                    <column name="discipline_plan_id" type="BIGINT(20)">-->
+    <!--                        <constraints nullable="false" foreignKeyName="discipline_mapping_fk"-->
+    <!--                                     referencedTableName="discipline_plan"-->
+    <!--                                     referencedColumnNames="id"/>-->
+    <!--                    </column>-->
+    <!--                </createTable>-->
+    <!--    </changeSet>-->
 
 
 </databaseChangeLog>
