@@ -373,6 +373,9 @@
             <column name="practice" type="INT(4)">
                 <constraints nullable="false"/>
             </column>
+            <column name="laboratory" type="INT(4)">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
 
         <createTable tableName="date_lessons_per_week_mapping">

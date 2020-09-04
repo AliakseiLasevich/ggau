@@ -30,14 +30,11 @@ public class LearnPlanController {
 
 
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
-    public List<LearnPlanResponse> getLearnPlansByDateRange(@RequestParam(required = false) String dateStart,
-                                                            @RequestParam(required = false) String dateEnd) {
-
-        if (dateStart == null && dateEnd == null) {
+    public List<LearnPlanResponse> getLearnPlansByDateInclude(@RequestParam(required = false) String date) {
+        if (date == null) {
             return learnPlanService.getAllLearnPlans();
         }
-
-        return learnPlanService.getLearnPlansByDateRange(LocalDate.parse(dateStart), LocalDate.parse(dateEnd));
+        return learnPlanService.getLearnPlansByDateInclude(LocalDate.parse(date));
     }
 
 }

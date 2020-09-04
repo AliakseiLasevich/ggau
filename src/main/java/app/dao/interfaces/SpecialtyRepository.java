@@ -1,6 +1,7 @@
 package app.dao.interfaces;
 
 
+import app.entity.Faculty;
 import app.entity.Specialty;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -16,4 +17,5 @@ public interface SpecialtyRepository extends JpaRepository<Specialty, Long> {
 
     Specialty findByCodeAndActiveTrue(String code);
 
+    List<Specialty> findByFacultyAndActiveTrue(Faculty faculty);
 }

@@ -20,4 +20,7 @@ public class LessonsPerWeek {
     @Column(name = "practice")
     private int practice;
 
+    @Column(name = "laboratory")
+    private int laboratory;
+
 }

@@ -15,8 +15,9 @@ public interface LearnPlanRepository extends JpaRepository<LearnPlan, Long> {
 
     LearnPlan findByPublicId(String publicId);
 
-    @Query(value = "from LearnPlan where startDate between :firstDate and :secondDate AND endDate between :firstDate and :secondDate")
-    List<LearnPlan> findByDateRange(@Param("firstDate") LocalDate firstDate, @Param("secondDate") LocalDate secondDate);
+
+    @Query(value = "from LearnPlan l where :date between l.startDate and l.endDate and l.active=true")
+    List<LearnPlan> findByDateInclude(@Param("date") LocalDate date);
 
     List<LearnPlan> findAllByActiveTrue();
 }

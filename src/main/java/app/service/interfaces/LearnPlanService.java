@@ -15,7 +15,7 @@ public interface LearnPlanService {
 
     LearnPlanResponse getLearnPlanByPublicId(String publicId);
 
-    List<LearnPlanResponse> getLearnPlansByDateRange(LocalDate dateStart, LocalDate dateEnd);
+    List<LearnPlanResponse> getLearnPlansByDateInclude(LocalDate date);
 
     List<LearnPlanResponse> getAllLearnPlans();
 }

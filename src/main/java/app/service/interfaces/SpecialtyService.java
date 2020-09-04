@@ -22,4 +22,6 @@ public interface SpecialtyService {
     SpecialtyResponse updateSpecialty(SpecialtyRequest specialtyRequest, String publicId);
 
     void deleteSpecialty(String publicId);
+
+    List<SpecialtyResponse> findSpecialitiesByFacultyId(String facultyId);
 }

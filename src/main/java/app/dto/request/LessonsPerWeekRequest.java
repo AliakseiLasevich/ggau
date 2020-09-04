@@ -6,4 +6,6 @@ import lombok.Data;
 public class LessonsPerWeekRequest {
     private int lecture;
     private int practice;
+    private int laboratory;
+
 }

@@ -92,5 +92,14 @@ public class SpecialtyServiceImpl implements SpecialtyService {
         checkSpecialtyExists(specialty);
         return specialty;
     }
+
+    @Override
+    public List<SpecialtyResponse> findSpecialitiesByFacultyId(String facultyId) {
+        Faculty faculty = facultyService.findEntityByPublicId(facultyId);
+        List<Specialty> specialties = specialtyRepository.findByFacultyAndActiveTrue(faculty);
+        return specialties.stream()
+                .map(SpecialtyMapper.INSTANCE::entityToResponse)
+                .collect(Collectors.toList());
+    }
 }
 

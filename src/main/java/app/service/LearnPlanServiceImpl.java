@@ -81,8 +81,8 @@ public class LearnPlanServiceImpl implements LearnPlanService {
     }
 
     @Override
-    public List<LearnPlanResponse> getLearnPlansByDateRange(LocalDate firstDate, LocalDate secondDate) {
-        List<LearnPlan> learnPlans = learnPlanRepository.findByDateRange(firstDate, secondDate);
+    public List<LearnPlanResponse> getLearnPlansByDateInclude(LocalDate date) {
+        List<LearnPlan> learnPlans = learnPlanRepository.findByDateInclude(date);
         return learnPlans.stream()
                 .map(LearnPlanMapper.INSTANCE::entityToResponse)
                 .collect(Collectors.toList());

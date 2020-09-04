@@ -41,19 +41,25 @@ public class SpecialtyController {
     @ResponseStatus(HttpStatus.OK)
     public SpecialtyResponse putSpecialty(@RequestBody SpecialtyRequest specialtyRequest, @PathVariable String publicId) {
         checkRequestModel(specialtyRequest);
-      return specialtyService.updateSpecialty(specialtyRequest, publicId);
+        return specialtyService.updateSpecialty(specialtyRequest, publicId);
 
     }
 
     @DeleteMapping(value = "/{publicId}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteSpecialty(@PathVariable String publicId) {
-      specialtyService.deleteSpecialty(publicId);
+        specialtyService.deleteSpecialty(publicId);
     }
 
     private void checkRequestModel(@RequestBody SpecialtyRequest specialtyRequest) {
         if (specialtyRequest.getName() == null) {
             throw new SpecialtyException(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
         }
+    }
+
+    @GetMapping(value = "/faculties/{facultyId}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<SpecialtyResponse> getSpecialitiesByFaculty(@PathVariable(required = true) String facultyId) {
+        return specialtyService.findSpecialitiesByFacultyId(facultyId);
     }
 }
