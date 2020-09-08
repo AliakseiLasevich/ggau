@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.List;
 
 @Entity
-@Table(name = "students_groups")
+@Table(name = "student_groups")
 @Data
 public class StudentGroup implements Serializable {
 
@@ -19,21 +19,21 @@ public class StudentGroup implements Serializable {
     @Column(name = "public_id")
     private String publicId;
 
-    @Column(name = "course")
-    private int course;
-
     @Column(name = "number")
     private int number;
 
     @Column(name = "active")
     private boolean active;
 
-    @ManyToOne
-    @JoinColumn(name = "specialty_id")
-    private Specialty specialty;
+    @Column(name = "students_count")
+    private int studentsCount;
 
-    @OneToMany(mappedBy = "studentGroup")
+    @OneToMany(mappedBy = "studentGroup", cascade = CascadeType.ALL)
     private List<StudentSubgroup> studentSubgroups;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "student_course_id")
+    private StudentCourse studentCourse;
 
     @PrePersist
     public void setDefaultActiveValue() {

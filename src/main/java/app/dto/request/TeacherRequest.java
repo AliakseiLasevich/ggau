@@ -10,4 +10,5 @@ public class TeacherRequest {
 
     private String name;
     private String cathedraId;
+    private String note;
 }

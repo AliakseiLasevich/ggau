@@ -1,14 +1,12 @@
 package app.entity;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "students_subgroups")
+@Table(name = "student_subgroups")
 @Data
 public class StudentSubgroup implements Serializable {
 
@@ -29,7 +27,7 @@ public class StudentSubgroup implements Serializable {
     @Column(name = "active")
     private boolean active;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "student_group_id")
     private StudentGroup studentGroup;
 

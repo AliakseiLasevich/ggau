@@ -9,10 +9,10 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class StudentGroupResponse {
+public class StudentCourseResponse {
 
     private String publicId;
-    private int number;
-    private int studentsCount;
-    private List<StudentSubgroupResponse> studentSubgroups;
+    private int courseNumber;
+    private SpecialtyResponse specialty;
+    private List<StudentGroupResponse> studentGroups;
 }

@@ -11,4 +11,6 @@ public class StudentSubgroupResponse {
 
     private String publicId;
     private String name;
+    private int studentsCount;
+
 }

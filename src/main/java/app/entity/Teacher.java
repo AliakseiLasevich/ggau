@@ -31,6 +31,9 @@ public class Teacher implements Serializable {
     @JoinColumn(name = "cathedra_id")
     private Cathedra cathedra;
 
+    @Column(name = "note")
+    private String note;
+
     @PrePersist
     public void setDefaultActiveValue() {
         active = true;

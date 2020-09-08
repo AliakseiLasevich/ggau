@@ -20,4 +20,16 @@
                   separator=","
                   tableName="buildings"/>
     </changeSet>
+    <changeSet id="data_4_teachers" author="Aliaksei Lasevich">
+        <loadData file="changelog/1.0/data/teachers.csv"
+                  separator=","
+                  tableName="teachers"/>
+    </changeSet>
+
+    <changeSet id="data_5_specialties" author="Aliaksei Lasevich">
+        <loadData file="changelog/1.0/data/specialties.csv"
+                  separator=","
+                  tableName="specialties"/>
+    </changeSet>
+
 </databaseChangeLog>

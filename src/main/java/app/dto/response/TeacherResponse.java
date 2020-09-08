@@ -13,4 +13,5 @@ public class TeacherResponse {
     private String publicId;
     private String name;
     private CathedraResponse cathedra;
+    private String note;
 }

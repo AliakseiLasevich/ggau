@@ -34,8 +34,9 @@ public class Specialty implements Serializable {
     @ManyToOne
     private Faculty faculty;
 
+    //TODO add to liquibase
     @OneToMany(mappedBy = "specialty")
-    private List<StudentGroup> studentGroups;
+    private List<StudentCourse> studentCourses;
 
     @PrePersist
     public void setDefaultActiveValue() {

@@ -77,7 +77,6 @@ public class DisciplinePlan {
     @Column(name = "course_work") //Курсовая работа
     private boolean courseWork;
 
-
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "learn_plan_id")
     @JsonIgnore
