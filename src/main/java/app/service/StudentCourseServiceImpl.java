@@ -37,61 +37,15 @@ public class StudentCourseServiceImpl implements StudentCourseService {
     @Autowired
     private StudentSubgroupService studentSubgroupService;
 
-//    TODO отрефакторить. Сильно отрефакторить))
     @Override
     public StudentCourseResponse createStudentCourse(StudentCourseRequest studentCourseRequest) {
         Specialty specialty = specialtyService.findEntityByPublicId(studentCourseRequest.getSpecialtyId());
         StudentCourse studentCourse = studentCourseRepository.findByCourseNumberAndSpecialtyAndActiveTrue(studentCourseRequest.getCourseNumber(), specialty);
         checkStudentCourseExists(studentCourse);
-
-        //Добавляем специальность
         studentCourse = new StudentCourse();
         studentCourse.setSpecialty(specialty);
-
-        //Добавляем номер курса
         studentCourse.setCourseNumber(studentCourseRequest.getCourseNumber());
-
-        //Добавляем уникальный айдишник для курса
         studentCourse.setPublicId(UUID.randomUUID().toString());
-
-        //Создать и добавить студенческие группы.
-        //Создать и добавить подгруппы А и Б
-        StudentCourse finalStudentCourse = studentCourse;
-        List<StudentGroup> studentGroups = studentCourseRequest.getStudentGroups().stream()
-                .map(studentGroupRequest -> {
-                    List<StudentSubgroup> studentSubgroupList = new ArrayList<>();
-
-                    StudentGroup studentGroup = new StudentGroup();
-                    studentGroup.setPublicId(UUID.randomUUID().toString());
-                    studentGroup.setStudentsCount(studentGroupRequest.getStudentsInGroup());
-
-                    if (studentGroupRequest.getStudentsInSubgroupA() != 0) {
-                        StudentSubgroup studentSubgroupA = new StudentSubgroup();
-                        studentSubgroupA.setStudentsCount(studentGroupRequest.getStudentsInSubgroupA());
-                        studentSubgroupA.setName("a");
-                        studentSubgroupA.setPublicId(UUID.randomUUID().toString());
-                        studentSubgroupA.setStudentGroup(studentGroup);
-                        studentSubgroupList.add(studentSubgroupA);
-                    }
-
-                    if (studentGroupRequest.getStudentsInSubgroupB() != 0) {
-                        StudentSubgroup studentSubgroupB = new StudentSubgroup();
-                        studentSubgroupB.setName("b");
-                        studentSubgroupB.setPublicId(UUID.randomUUID().toString());;
-                        studentSubgroupB.setStudentsCount(studentGroupRequest.getStudentsInSubgroupB());
-                        studentSubgroupB.setStudentGroup(studentGroup);
-                        studentSubgroupList.add(studentSubgroupB);
-                    }
-
-                    studentGroup.setStudentSubgroups(studentSubgroupList);
-
-                    studentGroup.setNumber(studentCourseRequest.getStudentGroups().indexOf(studentGroupRequest));
-
-                    studentGroup.setStudentCourse(finalStudentCourse);
-                    return studentGroup;
-                }).collect(Collectors.toList());
-
-        studentCourse.setStudentGroups(studentGroups);
         studentCourseRepository.save(studentCourse);
         return StudentCourseMapper.INSTANCE.entityToResponse(studentCourse);
     }

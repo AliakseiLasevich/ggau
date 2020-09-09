@@ -9,6 +9,4 @@ public class StudentCourseRequest {
 
     private String specialtyId;
     private int courseNumber;
-    private List<StudentGroupRequest> studentGroups;
-
 }
