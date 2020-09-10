@@ -15,4 +15,5 @@ public interface StudentCourseRepository extends JpaRepository<StudentCourse, Lo
 
     StudentCourse findByCourseNumberAndSpecialtyAndActiveTrue(int courseNumber, Specialty specialty);
 
+    StudentCourse findByPublicIdAndActiveTrue(String publicId);
 }

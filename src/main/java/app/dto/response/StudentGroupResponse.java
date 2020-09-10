@@ -13,6 +13,5 @@ public class StudentGroupResponse {
 
     private String publicId;
     private int number;
-    private int studentsCount;
     private List<StudentSubgroupResponse> studentSubgroups;
 }

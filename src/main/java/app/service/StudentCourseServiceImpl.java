@@ -6,18 +6,12 @@ import app.dto.request.StudentCourseRequest;
 import app.dto.response.StudentCourseResponse;
 import app.entity.Specialty;
 import app.entity.StudentCourse;
-import app.entity.StudentGroup;
-import app.entity.StudentSubgroup;
 import app.exception.ErrorMessages;
 import app.exception.StudentCourseException;
 import app.service.interfaces.SpecialtyService;
 import app.service.interfaces.StudentCourseService;
-import app.service.interfaces.StudentGroupService;
-import app.service.interfaces.StudentSubgroupService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -25,23 +19,19 @@ import java.util.stream.Collectors;
 @Service
 public class StudentCourseServiceImpl implements StudentCourseService {
 
-    @Autowired
-    private StudentCourseRepository studentCourseRepository;
+    private final StudentCourseRepository studentCourseRepository;
+    private final SpecialtyService specialtyService;
 
-    @Autowired
-    private SpecialtyService specialtyService;
-
-    @Autowired
-    private StudentGroupService studentGroupService;
-
-    @Autowired
-    private StudentSubgroupService studentSubgroupService;
+    public StudentCourseServiceImpl(StudentCourseRepository studentCourseRepository, SpecialtyService specialtyService) {
+        this.studentCourseRepository = studentCourseRepository;
+        this.specialtyService = specialtyService;
+    }
 
     @Override
     public StudentCourseResponse createStudentCourse(StudentCourseRequest studentCourseRequest) {
         Specialty specialty = specialtyService.findEntityByPublicId(studentCourseRequest.getSpecialtyId());
         StudentCourse studentCourse = studentCourseRepository.findByCourseNumberAndSpecialtyAndActiveTrue(studentCourseRequest.getCourseNumber(), specialty);
-        checkStudentCourseExists(studentCourse);
+        checkStudentCourseNotExists(studentCourse);
         studentCourse = new StudentCourse();
         studentCourse.setSpecialty(specialty);
         studentCourse.setCourseNumber(studentCourseRequest.getCourseNumber());
@@ -50,7 +40,7 @@ public class StudentCourseServiceImpl implements StudentCourseService {
         return StudentCourseMapper.INSTANCE.entityToResponse(studentCourse);
     }
 
-    private void checkStudentCourseExists(StudentCourse studentCourse) {
+    private void checkStudentCourseNotExists(StudentCourse studentCourse) {
         if (studentCourse != null) {
             throw new StudentCourseException(ErrorMessages.RECORD_ALREADY_EXISTS.getErrorMessage());
         }
@@ -62,5 +52,14 @@ public class StudentCourseServiceImpl implements StudentCourseService {
         return studentCourses.stream()
                 .map(StudentCourseMapper.INSTANCE::entityToResponse)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public StudentCourse findEntityByPublicId(String publicId) {
+        StudentCourse studentCourse = studentCourseRepository.findByPublicIdAndActiveTrue(publicId);
+        if (studentCourse == null) {
+            throw new StudentCourseException(ErrorMessages.NO_STUDENT_COURSE_FOUND.getErrorMessage());
+        }
+        return studentCourse;
     }
 }

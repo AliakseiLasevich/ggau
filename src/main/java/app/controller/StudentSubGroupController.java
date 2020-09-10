@@ -1,50 +1,34 @@
 package app.controller;
 
-import app.dto.StudentSubgroupDto;
-import app.exception.ErrorMessages;
-import app.exception.StudentSubgroupException;
-import app.converters.StudentSubgroupMapper;
+import app.dto.request.StudentSubgroupRequest;
+import app.dto.response.StudentSubgroupResponse;
+import app.service.interfaces.StudentSubgroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import app.dto.request.StudentSubgroupRequestModel;
-import app.dto.response.StudentSubgroupResponse;
-import app.service.interfaces.StudentSubgroupService;
 
 @RestController
 @RequestMapping("/rest/studentSubgroups")
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class StudentSubGroupController {
 
     @Autowired
     StudentSubgroupService studentSubgroupService;
 
-    //No need in 'findAll' method
-
-    @GetMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public StudentSubgroupResponse getStudentSubgroupById(@PathVariable("id") Long id) {
-        return StudentSubgroupMapper.INSTANCE.dtoToRest(studentSubgroupService.findById(id));
+    @GetMapping(value = "/{publicId}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public StudentSubgroupResponse getStudentSubgroupById(@PathVariable("publicId") String publicId) {
+        return studentSubgroupService.findByPublicId(publicId);
     }
 
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE})
-    public void postStudentSubgroup(@RequestBody StudentSubgroupRequestModel studentSubgroupRequestModel) {
-        if (studentSubgroupRequestModel.getName() == null) {
-            throw new StudentSubgroupException(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
-        }
-        StudentSubgroupDto studentSubgroupDto = StudentSubgroupMapper.INSTANCE.requestToDto(studentSubgroupRequestModel);
-        studentSubgroupService.save(studentSubgroupDto);
+    public StudentSubgroupResponse postStudentSubgroup(@RequestBody StudentSubgroupRequest studentSubgroupRequest) {
+        return studentSubgroupService.createStudentsSubgroup(studentSubgroupRequest);
+
     }
 
     @PutMapping(value = "/{publicId}", consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public void putStudentSubgroup(@RequestBody StudentSubgroupRequestModel studentSubgroupRequestModel,
-                                   @PathVariable String publicId) {
-        if (studentSubgroupRequestModel.getName() == null) {
-            throw new StudentSubgroupException(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
-        }
-
-        StudentSubgroupDto studentSubgroupDto = StudentSubgroupMapper.INSTANCE.requestToDto(studentSubgroupRequestModel);
-
-        studentSubgroupService.save(studentSubgroupDto);
+    public StudentSubgroupResponse putStudentSubgroup(@RequestBody StudentSubgroupRequest studentSubgroupRequest,
+                                                      @PathVariable String publicId) {
+        return studentSubgroupService.updateStudentsSubgroup(studentSubgroupRequest, publicId);
     }
 }

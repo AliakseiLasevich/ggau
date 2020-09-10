@@ -5,7 +5,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class StudentSubgroupRequestModel {
+public class StudentSubgroupRequest {
 
     private String name;
+    private String studentsCount;
+    private String studentGroupId;
 }

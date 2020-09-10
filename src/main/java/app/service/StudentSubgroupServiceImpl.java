@@ -1,41 +1,54 @@
 package app.service;
 
-import app.dao.interfaces.StudentGroupRepository;
+import app.converters.StudentSubgroupMapper;
 import app.dao.interfaces.StudentSubgroupRepository;
-import app.dto.StudentSubgroupDto;
+import app.dto.request.StudentSubgroupRequest;
+import app.dto.response.StudentSubgroupResponse;
 import app.entity.StudentGroup;
 import app.entity.StudentSubgroup;
-import app.exception.StudentGroupException;
+import app.exception.ErrorMessages;
 import app.exception.StudentSubgroupException;
-import app.converters.StudentSubgroupMapper;
+import app.service.interfaces.StudentGroupService;
+import app.service.interfaces.StudentSubgroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import app.service.interfaces.StudentSubgroupService;
+
+import java.util.UUID;
 
 @Service
 public class StudentSubgroupServiceImpl implements StudentSubgroupService {
 
-    @Autowired
-    private StudentSubgroupRepository studentSubgroupRepository;
+    private final StudentSubgroupRepository studentSubgroupRepository;
+    private final StudentGroupService studentGroupService;
 
     @Autowired
-    private StudentGroupRepository studentGroupRepository;
-
-    @Transactional
-    @Override
-    public StudentSubgroupDto findById(Long id) {
-        return StudentSubgroupMapper.INSTANCE.entityToDto(studentSubgroupRepository.findById(id).orElseThrow(() -> new StudentSubgroupException("Нет такой подгруппы!!!11")));
+    public StudentSubgroupServiceImpl(StudentSubgroupRepository studentSubgroupRepository, StudentGroupService studentGroupService) {
+        this.studentSubgroupRepository = studentSubgroupRepository;
+        this.studentGroupService = studentGroupService;
     }
 
-    @Transactional
     @Override
-    public void save(StudentSubgroupDto studentSubgroupDto) {
-        StudentSubgroup studentSubgroup = StudentSubgroupMapper.INSTANCE.dtoToEntity(studentSubgroupDto);
-        StudentGroup studentGroup = studentGroupRepository.findById(studentSubgroupDto.getStudentGroupId()).orElseThrow(() -> new StudentGroupException("Нет такой группы"));
+    public StudentSubgroupResponse findByPublicId(String publicId) {
+
+        return null;
+    }
+
+    @Override
+    public StudentSubgroupResponse createStudentsSubgroup(StudentSubgroupRequest studentSubgroupRequest) {
+        StudentGroup studentGroup = studentGroupService.findEntityByPublicId(studentSubgroupRequest.getStudentGroupId());
+        StudentSubgroup studentSubgroup = studentSubgroupRepository.findByNameAndStudentGroupAndActiveTrue(studentSubgroupRequest.getName(), studentGroup);
+        if (studentSubgroup != null) {
+            throw new StudentSubgroupException(ErrorMessages.RECORD_ALREADY_EXISTS.getErrorMessage());
+        }
+        studentSubgroup = StudentSubgroupMapper.INSTANCE.requestToEntity(studentSubgroupRequest);
         studentSubgroup.setStudentGroup(studentGroup);
+        studentSubgroup.setPublicId(UUID.randomUUID().toString());
         studentSubgroupRepository.save(studentSubgroup);
+        return StudentSubgroupMapper.INSTANCE.entityToResponse(studentSubgroup);
     }
 
-
+    @Override
+    public StudentSubgroupResponse updateStudentsSubgroup(StudentSubgroupRequest studentSubgroupRequest, String publicId) {
+        return null;
+    }
 }

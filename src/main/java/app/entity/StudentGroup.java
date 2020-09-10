@@ -25,9 +25,6 @@ public class StudentGroup implements Serializable {
     @Column(name = "active")
     private boolean active;
 
-    @Column(name = "students_count")
-    private int studentsCount;
-
     @OneToMany(mappedBy = "studentGroup", cascade = CascadeType.ALL)
     private List<StudentSubgroup> studentSubgroups;
 

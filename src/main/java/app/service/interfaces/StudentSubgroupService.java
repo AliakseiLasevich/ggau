@@ -1,9 +1,14 @@
 package app.service.interfaces;
 
-import app.dto.StudentSubgroupDto;
+
+import app.dto.request.StudentSubgroupRequest;
+import app.dto.response.StudentSubgroupResponse;
 
 public interface StudentSubgroupService {
-    StudentSubgroupDto findById(Long id);
 
-    void save(StudentSubgroupDto studentSubgroupDto);
+    StudentSubgroupResponse findByPublicId(String publicId);
+
+    StudentSubgroupResponse createStudentsSubgroup(StudentSubgroupRequest studentSubgroupRequest);
+
+    StudentSubgroupResponse updateStudentsSubgroup(StudentSubgroupRequest studentSubgroupRequest, String publicId);
 }

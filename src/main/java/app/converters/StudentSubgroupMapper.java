@@ -1,22 +1,17 @@
 package app.converters;
 
-import app.dto.StudentSubgroupDto;
+import app.dto.request.StudentSubgroupRequest;
+import app.dto.response.StudentSubgroupResponse;
 import app.entity.StudentSubgroup;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
-import app.dto.request.StudentSubgroupRequestModel;
-import app.dto.response.StudentSubgroupResponse;
 
 @Mapper(componentModel = "spring")
 public interface StudentSubgroupMapper {
 
-    StudentSubgroupResponse dtoToRest(StudentSubgroupDto studentSubgroupDto);
+    StudentSubgroupResponse entityToResponse(StudentSubgroup studentSubgroup);
 
-    StudentSubgroupDto entityToDto(StudentSubgroup studentSubgroup);
-
-    StudentSubgroup dtoToEntity(StudentSubgroupDto studentSubgroupDto);
-
-    StudentSubgroupDto requestToDto(StudentSubgroupRequestModel studentSubgroupRequestModel);
+    StudentSubgroup requestToEntity(StudentSubgroupRequest studentSubgroupRequest);
 
     StudentSubgroupMapper INSTANCE = Mappers.getMapper(StudentSubgroupMapper.class);
 

@@ -1,13 +1,14 @@
 package app.service;
 
+import app.converters.StudentGroupMapper;
 import app.dao.interfaces.StudentGroupRepository;
 import app.dto.request.StudentGroupRequest;
 import app.dto.response.StudentGroupResponse;
+import app.entity.StudentCourse;
 import app.entity.StudentGroup;
 import app.exception.ErrorMessages;
 import app.exception.StudentGroupException;
-import app.converters.StudentGroupMapper;
-import app.service.interfaces.SpecialtyService;
+import app.service.interfaces.StudentCourseService;
 import app.service.interfaces.StudentGroupService;
 import org.springframework.stereotype.Service;
 
@@ -19,12 +20,12 @@ import java.util.stream.Collectors;
 public class StudentGroupServiceImpl implements StudentGroupService {
 
     private final StudentGroupRepository studentGroupRepository;
+    private final StudentCourseService studentCourseService;
 
-    private final SpecialtyService specialtyService;
 
-    public StudentGroupServiceImpl(StudentGroupRepository studentGroupRepository, SpecialtyService specialtyService) {
+    public StudentGroupServiceImpl(StudentGroupRepository studentGroupRepository, StudentCourseService studentCourseService) {
         this.studentGroupRepository = studentGroupRepository;
-        this.specialtyService = specialtyService;
+        this.studentCourseService = studentCourseService;
     }
 
     @Override
@@ -41,18 +42,35 @@ public class StudentGroupServiceImpl implements StudentGroupService {
         if (studentGroup == null) {
             throw new StudentGroupException(ErrorMessages.NO_STUDENT_GROUP_FOUND.getErrorMessage());
         }
-        return null;
+        return StudentGroupMapper.INSTANCE.entityToResponse(studentGroup);
     }
 
     @Override
     public StudentGroupResponse createStudentGroup(StudentGroupRequest studentGroupRequest) {
-        StudentGroup studentGroup = StudentGroupMapper.INSTANCE.requestToEntity(studentGroupRequest);
+        StudentCourse studentCourse = studentCourseService.findEntityByPublicId(studentGroupRequest.getCourseId());
+        StudentGroup studentGroup = studentGroupRepository.findByNumberAndStudentCourseAndActiveTrue(studentGroupRequest.getNumber(), studentCourse);
+        if(studentGroup != null){
+            throw new StudentGroupException(ErrorMessages.RECORD_ALREADY_EXISTS.getErrorMessage());
+        }
+        studentGroup = StudentGroupMapper.INSTANCE.requestToEntity(studentGroupRequest);
         studentGroup.setPublicId(UUID.randomUUID().toString());
-        return null;
+        studentGroup.setStudentCourse(studentCourse);
+        studentGroupRepository.save(studentGroup);
+        return StudentGroupMapper.INSTANCE.entityToResponse(studentGroup);
     }
 
     @Override
     public StudentGroupResponse updateStudentGroup(StudentGroupRequest studentGroupRequest, String publicId) {
+        System.out.println("UPDATE");
         return null;
+    }
+
+    @Override
+    public StudentGroup findEntityByPublicId(String publicId) {
+        StudentGroup studentGroup = studentGroupRepository.findByPublicIdAndActiveTrue(publicId);
+        if (studentGroup == null) {
+            throw new StudentGroupException(ErrorMessages.NO_STUDENT_GROUP_FOUND.getErrorMessage());
+        }
+        return studentGroup;
     }
 }

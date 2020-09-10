@@ -192,9 +192,6 @@
             <column name="active" type="bit(1)">
                 <constraints nullable="false"/>
             </column>
-            <column name="students_count" type="INT(5)">
-                <constraints nullable="false"/>
-            </column>
             <column name="student_course_id" type="BIGINT(20)">
                 <constraints nullable="false" foreignKeyName="student_group_student_course_fk"
                              referencedTableName="student_courses"
