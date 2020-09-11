@@ -19,13 +19,25 @@ public class StudentCourseController {
 
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseStatus(HttpStatus.CREATED)
-    public StudentCourseResponse postStudentGroup(@RequestBody StudentCourseRequest studentCourseRequest) {
+    public StudentCourseResponse postStudentCourse(@RequestBody StudentCourseRequest studentCourseRequest) {
         return studentCourseService.createStudentCourse(studentCourseRequest);
     }
 
+    @PutMapping(value = "/{publicId}", consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ResponseStatus(HttpStatus.OK)
+    public StudentCourseResponse putStudentCourse(@PathVariable String publicId, @RequestBody StudentCourseRequest studentCourseRequest) {
+        return studentCourseService.updateStudentCourse(studentCourseRequest, publicId);
+    }
+
     @GetMapping
-    public List<StudentCourseResponse> getAllStudentCourses(){
+    public List<StudentCourseResponse> getAllStudentCourses() {
         return studentCourseService.getAllStudentCourses();
+    }
+
+    @DeleteMapping(value = "/{publicId}")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteStudentCourse(@PathVariable String publicId) {
+        studentCourseService.deleteStudentCourse(publicId);
     }
 
 }

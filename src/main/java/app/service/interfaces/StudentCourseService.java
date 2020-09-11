@@ -15,4 +15,8 @@ public interface StudentCourseService {
     List<StudentCourseResponse> getAllStudentCourses();
 
     StudentCourse findEntityByPublicId(String publicId);
+
+    StudentCourseResponse updateStudentCourse(StudentCourseRequest studentCourseRequest, String publicId);
+
+    void deleteStudentCourse(String publicId);
 }

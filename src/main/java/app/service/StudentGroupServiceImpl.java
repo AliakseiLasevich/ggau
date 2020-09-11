@@ -39,19 +39,15 @@ public class StudentGroupServiceImpl implements StudentGroupService {
     @Override
     public StudentGroupResponse findById(String publicId) {
         StudentGroup studentGroup = studentGroupRepository.findByPublicIdAndActiveTrue(publicId);
-        if (studentGroup == null) {
-            throw new StudentGroupException(ErrorMessages.NO_STUDENT_GROUP_FOUND.getErrorMessage());
-        }
+        checkStudentGroupExists(studentGroup == null, ErrorMessages.NO_STUDENT_GROUP_FOUND);
         return StudentGroupMapper.INSTANCE.entityToResponse(studentGroup);
     }
 
     @Override
     public StudentGroupResponse createStudentGroup(StudentGroupRequest studentGroupRequest) {
         StudentCourse studentCourse = studentCourseService.findEntityByPublicId(studentGroupRequest.getCourseId());
-        StudentGroup studentGroup = studentGroupRepository.findByNumberAndStudentCourseAndActiveTrue(studentGroupRequest.getNumber(), studentCourse);
-        if(studentGroup != null){
-            throw new StudentGroupException(ErrorMessages.RECORD_ALREADY_EXISTS.getErrorMessage());
-        }
+        checkStudentGroupForNoDuplicates(studentGroupRequest, studentCourse);
+        StudentGroup studentGroup;
         studentGroup = StudentGroupMapper.INSTANCE.requestToEntity(studentGroupRequest);
         studentGroup.setPublicId(UUID.randomUUID().toString());
         studentGroup.setStudentCourse(studentCourse);
@@ -61,16 +57,30 @@ public class StudentGroupServiceImpl implements StudentGroupService {
 
     @Override
     public StudentGroupResponse updateStudentGroup(StudentGroupRequest studentGroupRequest, String publicId) {
-        System.out.println("UPDATE");
-        return null;
+        StudentGroup studentGroup = studentGroupRepository.findByPublicIdAndActiveTrue(publicId);
+        checkStudentGroupExists(studentGroup == null, ErrorMessages.NO_STUDENT_GROUP_FOUND);
+        StudentCourse studentCourse = studentCourseService.findEntityByPublicId(studentGroupRequest.getCourseId());
+        checkStudentGroupForNoDuplicates(studentGroupRequest, studentCourse);
+        studentGroup.setNumber(studentGroupRequest.getNumber());
+        studentGroupRepository.save(studentGroup);
+        return StudentGroupMapper.INSTANCE.entityToResponse(studentGroup);
+    }
+
+    private void checkStudentGroupExists(boolean b, ErrorMessages noStudentGroupFound) {
+        if (b) {
+            throw new StudentGroupException(noStudentGroupFound.getErrorMessage());
+        }
+    }
+
+    private void checkStudentGroupForNoDuplicates(StudentGroupRequest studentGroupRequest, StudentCourse studentCourse) {
+        StudentGroup studentGroup = studentGroupRepository.findByNumberAndStudentCourseAndActiveTrue(studentGroupRequest.getNumber(), studentCourse);
+        checkStudentGroupExists(studentGroup != null, ErrorMessages.RECORD_ALREADY_EXISTS);
     }
 
     @Override
     public StudentGroup findEntityByPublicId(String publicId) {
         StudentGroup studentGroup = studentGroupRepository.findByPublicIdAndActiveTrue(publicId);
-        if (studentGroup == null) {
-            throw new StudentGroupException(ErrorMessages.NO_STUDENT_GROUP_FOUND.getErrorMessage());
-        }
+        checkStudentGroupExists(studentGroup == null, ErrorMessages.NO_STUDENT_GROUP_FOUND);
         return studentGroup;
     }
 }

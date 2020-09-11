@@ -62,4 +62,26 @@ public class StudentCourseServiceImpl implements StudentCourseService {
         }
         return studentCourse;
     }
+
+    @Override
+    public StudentCourseResponse updateStudentCourse(StudentCourseRequest studentCourseRequest, String publicId) {
+        Specialty specialty = specialtyService.findEntityByPublicId(studentCourseRequest.getSpecialtyId());
+
+        StudentCourse studentCourseToCheck = studentCourseRepository.findByCourseNumberAndSpecialtyAndActiveTrue(studentCourseRequest.getCourseNumber(), specialty);
+        checkStudentCourseNotExists(studentCourseToCheck);
+
+        StudentCourse studentCourse = findEntityByPublicId(publicId);
+        studentCourse.setCourseNumber(studentCourseRequest.getCourseNumber());
+
+        studentCourse.setSpecialty(specialty);
+        studentCourseRepository.save(studentCourse);
+        return StudentCourseMapper.INSTANCE.entityToResponse(studentCourse);
+    }
+
+    @Override
+    public void deleteStudentCourse(String publicId) {
+        StudentCourse studentCourse = findEntityByPublicId(publicId);
+        studentCourse.setActive(false);
+        studentCourseRepository.save(studentCourse);
+    }
 }
