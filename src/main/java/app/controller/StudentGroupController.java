@@ -40,4 +40,15 @@ public class StudentGroupController {
     public StudentGroupResponse putStudentGroup(@RequestBody StudentGroupRequest studentGroupRequest, @PathVariable("publicId") String publicId) {
         return studentGroupService.updateStudentGroup(studentGroupRequest, publicId);
     }
+
+    @DeleteMapping(value = "/{publicId}")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteStudentGroup(@PathVariable String publicId) {
+        studentGroupService.deleteStudentGroup(publicId);
+    }
+
+    @GetMapping(value = "/courses/{publicId}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public List<StudentGroupResponse> getStudentGroupsByCourseId(@PathVariable("publicId") String publicId) {
+        return studentGroupService.findAllByCourseId(publicId);
+    }
 }

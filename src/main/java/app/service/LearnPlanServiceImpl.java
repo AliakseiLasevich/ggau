@@ -36,6 +36,7 @@ public class LearnPlanServiceImpl implements LearnPlanService {
         this.disciplineService = disciplineService;
     }
 
+    //TODO REFACTORING
     @Override
     @Transactional
     public LearnPlanResponse createLearnPlan(LearnPlanRequest learnPlanRequest) {

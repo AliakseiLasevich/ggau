@@ -17,4 +17,8 @@ public interface StudentGroupService {
     StudentGroupResponse updateStudentGroup(StudentGroupRequest studentGroupRequest, String publicId);
 
     StudentGroup findEntityByPublicId(String studentGroupId);
+
+    void deleteStudentGroup(String publicId);
+
+    List<StudentGroupResponse> findAllByCourseId(String publicId);
 }

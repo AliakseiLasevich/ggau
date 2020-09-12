@@ -17,4 +17,6 @@ public interface StudentGroupRepository extends JpaRepository<StudentGroup, Long
 
     StudentGroup findByNumberAndStudentCourseAndActiveTrue(int number, StudentCourse studentCourse);
 
+    List<StudentGroup> findAllByStudentCourseAndActiveTrue(StudentCourse studentCourse);
+
 }

@@ -83,4 +83,21 @@ public class StudentGroupServiceImpl implements StudentGroupService {
         checkStudentGroupExists(studentGroup == null, ErrorMessages.NO_STUDENT_GROUP_FOUND);
         return studentGroup;
     }
+
+    @Override
+    public void deleteStudentGroup(String publicId) {
+        StudentGroup studentGroup = findEntityByPublicId(publicId);
+        studentGroup.setActive(false);
+        studentGroup.getStudentSubgroups().forEach(studentSubgroup -> studentSubgroup.setActive(false));
+        studentGroupRepository.save(studentGroup);
+    }
+
+    @Override
+    public List<StudentGroupResponse> findAllByCourseId(String courseId) {
+        StudentCourse course = studentCourseService.findEntityByPublicId(courseId);
+        List<StudentGroup> studentGroups = studentGroupRepository.findAllByStudentCourseAndActiveTrue(course);
+        return studentGroups.stream()
+                .map(StudentGroupMapper.INSTANCE::entityToResponse)
+                .collect(Collectors.toList());
+    }
 }
