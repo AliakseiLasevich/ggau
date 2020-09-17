@@ -8,6 +8,6 @@ import lombok.Setter;
 public class StudentSubgroupRequest {
 
     private String name;
-    private String studentsCount;
+    private int studentsCount;
     private String studentGroupId;
 }

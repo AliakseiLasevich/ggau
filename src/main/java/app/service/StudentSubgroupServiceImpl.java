@@ -13,7 +13,9 @@ import app.service.interfaces.StudentSubgroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class StudentSubgroupServiceImpl implements StudentSubgroupService {
@@ -29,8 +31,16 @@ public class StudentSubgroupServiceImpl implements StudentSubgroupService {
 
     @Override
     public StudentSubgroupResponse findByPublicId(String publicId) {
+        StudentSubgroup studentSubgroup = getStudentSubgroup(publicId);
+        return StudentSubgroupMapper.INSTANCE.entityToResponse(studentSubgroup);
+    }
 
-        return null;
+    private StudentSubgroup getStudentSubgroup(String publicId) {
+        StudentSubgroup studentSubgroup = studentSubgroupRepository.findByPublicIdAndActiveTrue(publicId);
+        if (studentSubgroup == null) {
+            throw new StudentSubgroupException(ErrorMessages.NO_STUDENT_SUBGROUP_FOUND.getErrorMessage());
+        }
+        return studentSubgroup;
     }
 
     @Override
@@ -49,6 +59,28 @@ public class StudentSubgroupServiceImpl implements StudentSubgroupService {
 
     @Override
     public StudentSubgroupResponse updateStudentsSubgroup(StudentSubgroupRequest studentSubgroupRequest, String publicId) {
-        return null;
+        StudentSubgroup studentSubgroup = getStudentSubgroup(publicId);
+        studentSubgroup.setName(studentSubgroupRequest.getName());
+        studentSubgroup.setStudentsCount(studentSubgroupRequest.getStudentsCount());
+        StudentGroup studentGroup = studentGroupService.findEntityByPublicId(studentSubgroupRequest.getStudentGroupId());
+        studentSubgroup.setStudentGroup(studentGroup);
+        studentSubgroupRepository.save(studentSubgroup);
+        return StudentSubgroupMapper.INSTANCE.entityToResponse(studentSubgroup);
+    }
+
+    @Override
+    public void deleteStudentSubgroup(String publicId) {
+        StudentSubgroup studentSubgroup = getStudentSubgroup(publicId);
+        studentSubgroup.setActive(false);
+        studentSubgroupRepository.save(studentSubgroup);
+    }
+
+    @Override
+    public List<StudentSubgroupResponse> findByGroupId(String publicId) {
+        StudentGroup studentGroup = studentGroupService.findEntityByPublicId(publicId);
+        List<StudentSubgroup> studentSubgroups = studentSubgroupRepository.findAllByStudentGroupAndActiveTrue(studentGroup);
+        return studentSubgroups.stream()
+                .map(StudentSubgroupMapper.INSTANCE::entityToResponse)
+                .collect(Collectors.toList());
     }
 }

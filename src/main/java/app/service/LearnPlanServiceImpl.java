@@ -96,4 +96,12 @@ public class LearnPlanServiceImpl implements LearnPlanService {
                 .map(LearnPlanMapper.INSTANCE::entityToResponse)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public void deleteLearnPlan(String publicId) {
+        LearnPlan learnPlan = learnPlanRepository.findByPublicId(publicId);
+        checkLearnPlanExists(learnPlan);
+        learnPlan.setActive(false);
+        learnPlanRepository.save(learnPlan);
+    }
 }
