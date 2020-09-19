@@ -4,10 +4,12 @@ import app.converters.StudentCourseMapper;
 import app.dao.interfaces.StudentCourseRepository;
 import app.dto.request.StudentCourseRequest;
 import app.dto.response.StudentCourseResponse;
+import app.entity.Faculty;
 import app.entity.Specialty;
 import app.entity.StudentCourse;
 import app.exception.ErrorMessages;
 import app.exception.StudentCourseException;
+import app.service.interfaces.FacultyService;
 import app.service.interfaces.SpecialtyService;
 import app.service.interfaces.StudentCourseService;
 import org.springframework.stereotype.Service;
@@ -21,10 +23,12 @@ public class StudentCourseServiceImpl implements StudentCourseService {
 
     private final StudentCourseRepository studentCourseRepository;
     private final SpecialtyService specialtyService;
+    private final FacultyService facultyService;
 
-    public StudentCourseServiceImpl(StudentCourseRepository studentCourseRepository, SpecialtyService specialtyService) {
+    public StudentCourseServiceImpl(StudentCourseRepository studentCourseRepository, SpecialtyService specialtyService, FacultyService facultyService) {
         this.studentCourseRepository = studentCourseRepository;
         this.specialtyService = specialtyService;
+        this.facultyService = facultyService;
     }
 
     @Override
@@ -83,5 +87,14 @@ public class StudentCourseServiceImpl implements StudentCourseService {
         StudentCourse studentCourse = findEntityByPublicId(publicId);
         studentCourse.setActive(false);
         studentCourseRepository.save(studentCourse);
+    }
+
+    @Override
+    public List<StudentCourseResponse> getStudentsCoursesByFaculty(String facultyId) {
+        Faculty faculty = facultyService.findEntityByPublicId(facultyId);
+        List<StudentCourse> studentCourses = studentCourseRepository.findAllBySpecialty_FacultyAndActiveTrue(faculty);
+        return studentCourses.stream()
+                .map(StudentCourseMapper.INSTANCE::entityToResponse)
+                .collect(Collectors.toList());
     }
 }

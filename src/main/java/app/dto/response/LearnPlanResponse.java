@@ -11,8 +11,7 @@ public class LearnPlanResponse {
     private LocalDate startDate;
     private LocalDate endDate;
     private String publicId;
-    private int courseNumber;
     private FacultyResponse faculty;
-    private SpecialtyResponse specialty;
+    private StudentCourseResponse studentCourse;
     private List<DisciplinePlanResponse> disciplinePlan;
 }

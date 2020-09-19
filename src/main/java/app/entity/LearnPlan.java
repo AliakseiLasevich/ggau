@@ -26,9 +26,6 @@ public class LearnPlan {
     @Column(name = "end_date")
     private LocalDate endDate;
 
-    @Column(name = "course_number")
-    private int courseNumber;
-
     @Column(name = "active")
     private boolean active;
 
@@ -36,7 +33,7 @@ public class LearnPlan {
     private Faculty faculty;
 
     @OneToOne(cascade = CascadeType.ALL)
-    private Specialty specialty;
+    private StudentCourse studentCourse;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "learnPlan")
     private List<DisciplinePlan> disciplinePlan;

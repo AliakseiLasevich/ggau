@@ -7,10 +7,7 @@ import app.dto.response.LearnPlanResponse;
 import app.entity.*;
 import app.exception.ErrorMessages;
 import app.exception.LearnPlanException;
-import app.service.interfaces.DisciplineService;
-import app.service.interfaces.FacultyService;
-import app.service.interfaces.LearnPlanService;
-import app.service.interfaces.SpecialtyService;
+import app.service.interfaces.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,13 +24,16 @@ public class LearnPlanServiceImpl implements LearnPlanService {
     private final FacultyService facultyService;
     private final SpecialtyService specialtyService;
     private final DisciplineService disciplineService;
+    private final StudentCourseService studentCourseService;
+
 
     @Autowired
-    public LearnPlanServiceImpl(LearnPlanRepository learnPlanRepository, FacultyService facultyService, SpecialtyService specialtyService, DisciplineService disciplineService) {
+    public LearnPlanServiceImpl(LearnPlanRepository learnPlanRepository, FacultyService facultyService, SpecialtyService specialtyService, DisciplineService disciplineService, StudentCourseService studentCourseService) {
         this.learnPlanRepository = learnPlanRepository;
         this.facultyService = facultyService;
         this.specialtyService = specialtyService;
         this.disciplineService = disciplineService;
+        this.studentCourseService = studentCourseService;
     }
 
     //TODO REFACTORING
@@ -46,9 +46,9 @@ public class LearnPlanServiceImpl implements LearnPlanService {
         // УСТАНОВИТЬ ФАКУЛЬТЕТ
         Faculty faculty = facultyService.findEntityByPublicId(learnPlanRequest.getFacultyId());
         learnPlan.setFaculty(faculty);
-        // УСТАНОВИТЬ СПЕЦИАЛИЗАЦИЮ
-        Specialty specialty = specialtyService.findEntityByPublicId(learnPlanRequest.getSpecialtyId());
-        learnPlan.setSpecialty(specialty);
+        // УСТАНОВИТЬ КОНКРЕТНЫЙ КУРС К ПЛАНУ
+        StudentCourse studentCourse = studentCourseService.findEntityByPublicId(learnPlanRequest.getStudentsCourseId());
+        learnPlan.setStudentCourse(studentCourse);
         // ДОБАВИТЬ ДЛЯ КАЖДОГО ПЛАНА ДИСЦИПЛИНЫ СВОЙ АЙДИШНИК
         learnPlan.getDisciplinePlan().forEach(disciplinePlan -> disciplinePlan.setPublicId(UUID.randomUUID().toString()));
         // УСТАНОВИТЬ ДВОЙНУЮ СВЯЗЬ ДЛЯ ПРАВИЛЬНОГО МАППИНГА ONE-TO-MANY-MANY-TO-ONE

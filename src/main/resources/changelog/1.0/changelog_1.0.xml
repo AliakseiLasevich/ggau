@@ -239,20 +239,17 @@
             <column name="end_date" type="DATETIME">
                 <constraints nullable="false"/>
             </column>
-            <column name="course_number" type="int(2)">
-                <constraints nullable="false"/>
-            </column>
             <column name="active" type="bit(1)">
                 <constraints nullable="false"/>
+            </column>
+            <column name="student_course_id" type="BIGINT(20)">
+                <constraints nullable="false" foreignKeyName="learn_plan_course_fk"
+                             referencedTableName="student_courses"
+                             referencedColumnNames="id"/>
             </column>
             <column name="faculty_id" type="BIGINT(20)">
                 <constraints nullable="false" foreignKeyName="learn_plan_faculty_fk"
                              referencedTableName="faculties"
-                             referencedColumnNames="id"/>
-            </column>
-            <column name="specialty_id" type="BIGINT(20)">
-                <constraints nullable="false" foreignKeyName="learn_plan_specialty_fk"
-                             referencedTableName="specialties"
                              referencedColumnNames="id"/>
             </column>
         </createTable>
@@ -402,21 +399,6 @@
                              referencedColumnNames="id"/>
             </column>
 
-        </createTable>
-    </changeSet>
-
-    <changeSet id="14" author="Aliaksei Lasevich">
-        <createTable tableName="lessons_student_groups">
-            <column name="lesson_id" type="BIGINT(20)">
-                <constraints nullable="false" foreignKeyName="lessons_std_groups_fk"
-                             referencedTableName="lessons"
-                             referencedColumnNames="id"/>
-            </column>
-            <column name="students_group_id" type="BIGINT(20)">
-                <constraints nullable="false" foreignKeyName="std_group_lessons_fk"
-                             referencedTableName="student_groups"
-                             referencedColumnNames="id"/>
-            </column>
         </createTable>
     </changeSet>
 

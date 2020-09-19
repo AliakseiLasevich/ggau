@@ -11,7 +11,6 @@ public class LearnPlanRequest {
     private LocalDate startDate;
     private LocalDate endDate;
     private String facultyId;
-    private String specialtyId;
-    private int courseNumber;
+    private String studentsCourseId;
     private List<DisciplinePlanRequest> disciplinePlan;
 }

@@ -1,6 +1,7 @@
 package app.controller;
 
 import app.dto.request.StudentCourseRequest;
+import app.dto.response.SpecialtyResponse;
 import app.dto.response.StudentCourseResponse;
 import app.service.interfaces.StudentCourseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,12 @@ public class StudentCourseController {
     @ResponseStatus(HttpStatus.OK)
     public void deleteStudentCourse(@PathVariable String publicId) {
         studentCourseService.deleteStudentCourse(publicId);
+    }
+
+    @GetMapping(value = "/faculties/{facultyId}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<StudentCourseResponse>getStudentsCoursesByFaculty(@PathVariable(required = true) String facultyId) {
+        return studentCourseService.getStudentsCoursesByFaculty(facultyId);
     }
 
 }

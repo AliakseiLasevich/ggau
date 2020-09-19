@@ -46,12 +46,6 @@ public class Lesson implements Serializable {
     private Cabinet cabinet;
 
     @ManyToMany
-    @JoinTable(name = "lessons_student_groups",
-            joinColumns = @JoinColumn(name = "lesson_id"),
-            inverseJoinColumns = @JoinColumn(name = "students_group_id"))
-    private List<StudentGroup> studentGroups;
-
-    @ManyToMany
     @JoinTable(name = "lessons_student_subgroups",
             joinColumns = @JoinColumn(name = "lesson_id"),
             inverseJoinColumns = @JoinColumn(name = "students_subgroup_id"))
