@@ -37,7 +37,6 @@ public class CabinetController {
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseStatus(HttpStatus.CREATED)
     public CabinetResponse postCabinet(@RequestBody CabinetsRequest cabinetsRequest) {
-        checkRequestModelFields(cabinetsRequest);
         return cabinetService.createCabinet(cabinetsRequest);
     }
 
@@ -45,7 +44,6 @@ public class CabinetController {
     @PutMapping(value = "/{publicId}", consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseStatus(HttpStatus.OK)
     public CabinetResponse putCabinet(@RequestBody CabinetsRequest cabinetsRequest, @PathVariable String publicId) {
-        checkRequestModelFields(cabinetsRequest);
         return cabinetService.updateCabinet(cabinetsRequest, publicId);
     }
 
@@ -56,10 +54,6 @@ public class CabinetController {
     }
 
 
-    private void checkRequestModelFields(@RequestBody CabinetsRequest cabinetsRequest) {
-        if (cabinetsRequest.getNumber() == null || cabinetsRequest.getMaxStudents() == 0) {
-            throw new CabinetException(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
-        }
-    }
+
 
 }

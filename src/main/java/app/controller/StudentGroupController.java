@@ -28,13 +28,11 @@ public class StudentGroupController {
         return studentGroupService.findById(publicId);
     }
 
-
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseStatus(HttpStatus.CREATED)
     public StudentGroupResponse postStudentGroup(@RequestBody StudentGroupRequest studentGroupRequest) {
         return studentGroupService.createStudentGroup(studentGroupRequest);
     }
-
 
     @PutMapping(value = "/{publicId}", consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
     public StudentGroupResponse putStudentGroup(@RequestBody StudentGroupRequest studentGroupRequest, @PathVariable("publicId") String publicId) {

@@ -2,8 +2,6 @@ package app.controller;
 
 import app.dto.request.BuildingRequest;
 import app.dto.response.BuildingResponse;
-import app.exception.BuildingException;
-import app.exception.ErrorMessages;
 import app.service.interfaces.BuildingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,17 +31,11 @@ public class BuildingController {
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseStatus(HttpStatus.CREATED)
     public BuildingResponse postBuilding(@RequestBody BuildingRequest buildingRequest) {
-        if (buildingRequest.getName() == null) {
-            throw new BuildingException(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
-        }
         return buildingService.createBuilding(buildingRequest);
     }
 
     @PutMapping(value = "/{publicId}", consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
     public BuildingResponse putBuilding(@RequestBody BuildingRequest buildingRequest, @PathVariable String publicId) {
-        if (buildingRequest.getName() == null) {
-            throw new BuildingException(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
-        }
         return buildingService.updateBuilding(buildingRequest, publicId);
     }
 

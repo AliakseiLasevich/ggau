@@ -1,7 +1,6 @@
 package app.controller;
 
 import app.dto.request.StudentCourseRequest;
-import app.dto.response.SpecialtyResponse;
 import app.dto.response.StudentCourseResponse;
 import app.service.interfaces.StudentCourseService;
 import org.springframework.beans.factory.annotation.Autowired;

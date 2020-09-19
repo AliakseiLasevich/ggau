@@ -33,14 +33,11 @@ public class FacultyController {
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseStatus(code = HttpStatus.CREATED)
     public FacultyResponse createFaculty(@RequestBody FacultyRequest facultyRequest) {
-        checkRequestModel(facultyRequest);
-        FacultyResponse createdFaculty = facultyService.createFaculty(facultyRequest);
-        return createdFaculty;
+        return facultyService.createFaculty(facultyRequest);
     }
 
     @PutMapping("/{publicId}")
     public FacultyResponse updateFaculty(@RequestBody FacultyRequest facultyRequest, @PathVariable String publicId) {
-        checkRequestModel(facultyRequest);
         facultyRequest.setPublicId(publicId);
         return facultyService.updateFaculty(facultyRequest);
     }
@@ -51,9 +48,5 @@ public class FacultyController {
         facultyService.deleteFaculty(publicId);
     }
 
-    private void checkRequestModel(@RequestBody FacultyRequest facultyRequest) {
-        if (facultyRequest.getName().isEmpty()) {
-            throw new FacultyException(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
-        }
-    }
+
 }

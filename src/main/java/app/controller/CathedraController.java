@@ -28,7 +28,6 @@ public class CathedraController {
     @PostMapping(value = "/faculties/{facultyId}", consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseStatus(HttpStatus.CREATED)
     public void postCathedra(@RequestBody CathedraRequest cathedraRequest, @PathVariable String facultyId) {
-        checkRequestModel(cathedraRequest);
         cathedraService.createCathedra(cathedraRequest, facultyId);
     }
 
@@ -36,7 +35,6 @@ public class CathedraController {
     @ResponseStatus(HttpStatus.OK)
     public void putCathedra(@RequestBody CathedraRequest cathedraRequest,
                             @PathVariable String publicId) {
-        checkRequestModel(cathedraRequest);
         cathedraService.updateCathedra(cathedraRequest, publicId);
     }
 
@@ -47,9 +45,5 @@ public class CathedraController {
     }
 
 
-    private void checkRequestModel(@RequestBody CathedraRequest cathedraRequest) {
-        if (cathedraRequest.getName().isEmpty()) {
-            throw new CathedraException(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
-        }
-    }
+
 }
