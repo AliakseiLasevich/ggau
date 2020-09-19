@@ -8,8 +8,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class ResourceHandlerConfig implements WebMvcConfigurer {
 
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-
-        //add webapp resources path: css and other to war
         registry
                 .addResourceHandler("/**")
                 .addResourceLocations("/");

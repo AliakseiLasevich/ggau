@@ -4,13 +4,17 @@ import app.dto.request.LessonRequest;
 import app.dto.response.LessonResponse;
 import app.service.interfaces.LessonService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
+@RequestMapping("/rest/lessons")
 public class LessonController {
 
     @Autowired
@@ -28,8 +32,9 @@ public class LessonController {
     }
 
     @GetMapping(value = "/student_courses/{courseId}", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public List<LessonResponse> getLessonsByStudentsCourse(@PathVariable("courseId") String courseId) {
-        return null;
+    public List<LessonResponse> getLessonsByStudentsCourseAndDate(@PathVariable("courseId") String courseId,
+                                                                  @RequestParam  @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate date) {
+        return lessonService.getLessonsByStudentsCourseAndDate(courseId, date);
     }
 
 }

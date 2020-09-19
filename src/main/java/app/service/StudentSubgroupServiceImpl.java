@@ -4,6 +4,7 @@ import app.converters.StudentSubgroupMapper;
 import app.dao.interfaces.StudentSubgroupRepository;
 import app.dto.request.StudentSubgroupRequest;
 import app.dto.response.StudentSubgroupResponse;
+import app.entity.StudentCourse;
 import app.entity.StudentGroup;
 import app.entity.StudentSubgroup;
 import app.exception.ErrorMessages;
@@ -82,5 +83,11 @@ public class StudentSubgroupServiceImpl implements StudentSubgroupService {
         return studentSubgroups.stream()
                 .map(StudentSubgroupMapper.INSTANCE::entityToResponse)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<StudentSubgroup> findAllByStudentCourse(String courseId) {
+        List<StudentSubgroup> studentSubgroups = studentSubgroupRepository.findAllByStudentCourseByQuery(courseId);
+        return studentSubgroups;
     }
 }
