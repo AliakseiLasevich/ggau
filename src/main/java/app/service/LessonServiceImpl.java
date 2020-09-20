@@ -38,15 +38,12 @@ public class LessonServiceImpl implements LessonService {
 
     @Override
     public LessonResponse createLesson(LessonRequest lessonRequest) {
-
         return null;
     }
 
     @Override
-    public List<LessonResponse> getLessonsByStudentsCourseAndDate(String courseId, LocalDate date) {
-        List<StudentSubgroup> gr = studentSubgroupService.findAllByStudentCourse(courseId);
-
-//        List<Lesson> lessons = lessonRepository.findByStudentSubgroupsIsContainingStudentSubgroupAndActiveTrueAndDateTimeDate(studentCourse, );
+    public List<LessonResponse> getLessonsByStudentsCourseAndDate(String courseId, LocalDate firstDate, LocalDate lastDate) {
+        List<Lesson> lessons = lessonRepository.findAllByStudentCourseAndDateRange(courseId, firstDate, lastDate);
         return null;
     }
 }

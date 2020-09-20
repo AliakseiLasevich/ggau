@@ -14,5 +14,5 @@ public interface LessonService {
 
     LessonResponse createLesson(LessonRequest lessonRequest);
 
-    List<LessonResponse> getLessonsByStudentsCourseAndDate(String courseId, LocalDate date);
+    List<LessonResponse> getLessonsByStudentsCourseAndDate(String courseId, LocalDate firstDate, LocalDate lastDate);
 }

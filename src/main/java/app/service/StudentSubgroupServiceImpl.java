@@ -85,9 +85,4 @@ public class StudentSubgroupServiceImpl implements StudentSubgroupService {
                 .collect(Collectors.toList());
     }
 
-    @Override
-    public List<StudentSubgroup> findAllByStudentCourse(String courseId) {
-        List<StudentSubgroup> studentSubgroups = studentSubgroupRepository.findAllByStudentCourseByQuery(courseId);
-        return studentSubgroups;
-    }
 }

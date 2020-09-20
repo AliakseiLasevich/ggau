@@ -33,8 +33,11 @@ public class LessonController {
 
     @GetMapping(value = "/student_courses/{courseId}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public List<LessonResponse> getLessonsByStudentsCourseAndDate(@PathVariable("courseId") String courseId,
-                                                                  @RequestParam  @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate date) {
-        return lessonService.getLessonsByStudentsCourseAndDate(courseId, date);
+                                                                  @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)  LocalDateTime firstDate,
+                                                                  @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)  LocalDateTime lastDate) {
+        LocalDate f = firstDate.toLocalDate();
+        LocalDate l = lastDate.toLocalDate();
+        return lessonService.getLessonsByStudentsCourseAndDate(courseId, f, l);
     }
 
 }

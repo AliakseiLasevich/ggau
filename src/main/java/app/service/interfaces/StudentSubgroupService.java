@@ -1,9 +1,7 @@
 package app.service.interfaces;
 
-
 import app.dto.request.StudentSubgroupRequest;
 import app.dto.response.StudentSubgroupResponse;
-import app.entity.StudentSubgroup;
 
 import java.util.List;
 
@@ -18,8 +16,5 @@ public interface StudentSubgroupService {
     void deleteStudentSubgroup(String publicId);
 
     List<StudentSubgroupResponse> findByGroupId(String publicId);
-
-    List<StudentSubgroup> findAllByStudentCourse(String courseId);
-
 
 }
