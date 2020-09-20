@@ -14,10 +14,12 @@ public interface LessonRepository extends JpaRepository<Lesson, Long> {
 
     List<Lesson> findAllByActiveTrue();
 
-    @Query(value = "SELECT * FROM lessons as l, student_subgroups as subs, student_groups as gr, student_courses as c " +
-            "WHERE c.id=gr.student_course_id " +
-            "AND gr.id=subs.student_group_id " +
-            "AND c.public_id=:courseId " +
+    @Query(value = "SELECT * FROM lessons_student_subgroups as lss " +
+            "LEFT OUTER JOIN lessons as l on l.id=lss.lesson_id " +
+            "LEFT OUTER JOIN student_subgroups as ss on ss.id=lss.students_subgroup_id " +
+            "INNER JOIN student_groups as sg on sg.id=ss.student_group_id " +
+            "INNER JOIN student_courses as sc on sg.student_course_id=sc.id " +
+            "WHERE sc.public_id= :courseId " +
             "AND l.date_time BETWEEN :firstDate AND :lastDate", nativeQuery = true)
     List<Lesson> findAllByStudentCourseAndDateRange(@Param("courseId") String courseId, LocalDate firstDate, LocalDate lastDate);
 

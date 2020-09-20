@@ -44,6 +44,6 @@ public class LessonServiceImpl implements LessonService {
     @Override
     public List<LessonResponse> getLessonsByStudentsCourseAndDate(String courseId, LocalDate firstDate, LocalDate lastDate) {
         List<Lesson> lessons = lessonRepository.findAllByStudentCourseAndDateRange(courseId, firstDate, lastDate);
-        return null;
+        return lessons.stream().map(LessonMapper.INSTANCE::entityToResponse).collect(Collectors.toList());
     }
 }
