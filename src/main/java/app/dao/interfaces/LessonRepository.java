@@ -20,7 +20,8 @@ public interface LessonRepository extends JpaRepository<Lesson, Long> {
             "INNER JOIN student_groups as sg on sg.id=ss.student_group_id " +
             "INNER JOIN student_courses as sc on sg.student_course_id=sc.id " +
             "WHERE sc.public_id= :courseId " +
-            "AND l.date_time BETWEEN :firstDate AND :lastDate", nativeQuery = true)
+            "AND l.date_time BETWEEN :firstDate AND :lastDate " +
+            "GROUP BY lss.lesson_id", nativeQuery = true)
     List<Lesson> findAllByStudentCourseAndDateRange(@Param("courseId") String courseId, LocalDate firstDate, LocalDate lastDate);
 
 

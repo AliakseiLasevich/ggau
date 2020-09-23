@@ -13,4 +13,5 @@ public class StudentGroupResponse {
 
     private String publicId;
     private int number;
+    private List<StudentSubgroupResponse> studentSubgroups;
 }

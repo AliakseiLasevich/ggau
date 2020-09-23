@@ -97,4 +97,10 @@ public class StudentCourseServiceImpl implements StudentCourseService {
                 .map(StudentCourseMapper.INSTANCE::entityToResponse)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public StudentCourseResponse getStudentCourseByPublicId(String publicId) {
+        StudentCourse studentCourse = findEntityByPublicId(publicId);
+        return StudentCourseMapper.INSTANCE.entityToResponse(studentCourse);
+    }
 }

@@ -46,4 +46,10 @@ public class StudentCourseController {
         return studentCourseService.getStudentsCoursesByFaculty(facultyId);
     }
 
+    @GetMapping(value = "/{publicId}")
+    @ResponseStatus(HttpStatus.OK)
+    public StudentCourseResponse getStudentCourseById(@PathVariable(required = true) String publicId) {
+        return studentCourseService.getStudentCourseByPublicId(publicId);
+    }
+
 }

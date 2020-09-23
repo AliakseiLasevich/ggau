@@ -22,4 +22,6 @@ public interface StudentCourseService {
     void deleteStudentCourse(String publicId);
 
     List<StudentCourseResponse> getStudentsCoursesByFaculty(String facultyId);
+
+    StudentCourseResponse getStudentCourseByPublicId(String publicId);
 }
