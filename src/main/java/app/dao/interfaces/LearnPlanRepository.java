@@ -2,6 +2,7 @@ package app.dao.interfaces;
 
 
 import app.entity.LearnPlan;
+import app.entity.StudentCourse;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -18,6 +19,10 @@ public interface LearnPlanRepository extends JpaRepository<LearnPlan, Long> {
 
     @Query(value = "from LearnPlan l where :date between l.startDate and l.endDate and l.active=true")
     List<LearnPlan> findByDateInclude(@Param("date") LocalDate date);
+
+    @Query(value = "from LearnPlan l where :date between l.startDate and l.endDate and l.active=true AND l.studentCourse.publicId = :studentCourseId")
+    LearnPlan findByDateIncludeAndStudentCourse(@Param("date") LocalDate date,
+                                                @Param("studentCourseId") String studentCourseId);
 
     List<LearnPlan> findAllByActiveTrue();
 }

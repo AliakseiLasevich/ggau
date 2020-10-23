@@ -22,7 +22,9 @@ public interface LessonRepository extends JpaRepository<Lesson, Long> {
             "WHERE sc.public_id= :courseId " +
             "AND l.date_time BETWEEN :firstDate AND :lastDate " +
             "GROUP BY lss.lesson_id", nativeQuery = true)
-    List<Lesson> findAllByStudentCourseAndDateRange(@Param("courseId") String courseId, LocalDate firstDate, LocalDate lastDate);
+    List<Lesson> findAllByStudentCourseAndDateRange(@Param("courseId") String courseId,
+                                                    @Param("firstDate") LocalDate firstDate,
+                                                    @Param("lastDate") LocalDate lastDate);
 
 
 }

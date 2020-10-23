@@ -10,7 +10,6 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -33,11 +32,9 @@ public class LessonController {
 
     @GetMapping(value = "/student_courses/{courseId}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public List<LessonResponse> getLessonsByStudentsCourseAndDate(@PathVariable("courseId") String courseId,
-                                                                  @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)  LocalDateTime firstDate,
-                                                                  @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)  LocalDateTime lastDate) {
-        LocalDate f = firstDate.toLocalDate();
-        LocalDate l = lastDate.toLocalDate();
-        return lessonService.getLessonsByStudentsCourseAndDate(courseId, f, l);
+                                                                  @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)  LocalDate firstDate,
+                                                                  @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)  LocalDate lastDate) {
+        return lessonService.getLessonsByStudentsCourseAndDate(courseId, firstDate, lastDate);
     }
 
 }

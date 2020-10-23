@@ -20,4 +20,6 @@ public interface LearnPlanService {
     List<LearnPlanResponse> getAllLearnPlans();
 
     void deleteLearnPlan(String publicId);
+
+    LearnPlanResponse getLearnPlanByDateAndStudentCourse(LocalDate date, String courseId);
 }

@@ -4,6 +4,7 @@ import app.dto.request.LearnPlanRequest;
 import app.dto.response.LearnPlanResponse;
 import app.service.interfaces.LearnPlanService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +30,7 @@ public class LearnPlanController {
     }
 
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
-    public List<LearnPlanResponse> getLearnPlansByDateInclude(@RequestParam(required = false) String date) {
+    public List<LearnPlanResponse> getAllLearnPlansByDateInclude(@RequestParam(required = false) String date) {
         if (date == null) {
             return learnPlanService.getAllLearnPlans();
         }
@@ -40,5 +41,11 @@ public class LearnPlanController {
     @ResponseStatus(code = HttpStatus.OK)
     public void deleteLearnPlan(@PathVariable String publicId) {
         learnPlanService.deleteLearnPlan(publicId);
+    }
+
+    @GetMapping(value = "/courses/{publicId}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public LearnPlanResponse getLearnPlanByDateAndStudentCourse(@PathVariable String publicId,
+                                                                @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)  LocalDate date) {
+        return learnPlanService.getLearnPlanByDateAndStudentCourse(date, publicId);
     }
 }

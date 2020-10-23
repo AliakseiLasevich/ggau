@@ -5,7 +5,6 @@ import app.dao.interfaces.LessonRepository;
 import app.dto.request.LessonRequest;
 import app.dto.response.LessonResponse;
 import app.entity.Lesson;
-import app.entity.StudentSubgroup;
 import app.service.interfaces.LessonService;
 import app.service.interfaces.StudentCourseService;
 import app.service.interfaces.StudentSubgroupService;
@@ -19,14 +18,18 @@ import java.util.stream.Collectors;
 @Service
 public class LessonServiceImpl implements LessonService {
 
-    @Autowired
-    private LessonRepository lessonRepository;
+    private final LessonRepository lessonRepository;
+
+    private final StudentCourseService studentCourseService;
+
+    private final StudentSubgroupService studentSubgroupService;
 
     @Autowired
-    private StudentCourseService studentCourseService;
-
-    @Autowired
-    private StudentSubgroupService studentSubgroupService;
+    public LessonServiceImpl(LessonRepository lessonRepository, StudentCourseService studentCourseService, StudentSubgroupService studentSubgroupService) {
+        this.lessonRepository = lessonRepository;
+        this.studentCourseService = studentCourseService;
+        this.studentSubgroupService = studentSubgroupService;
+    }
 
     @Override
     public List<LessonResponse> findAll() {

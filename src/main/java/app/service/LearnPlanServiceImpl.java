@@ -3,6 +3,7 @@ package app.service;
 import app.converters.LearnPlanMapper;
 import app.dao.interfaces.LearnPlanRepository;
 import app.dto.request.LearnPlanRequest;
+import app.dto.response.ErrorMessage;
 import app.dto.response.LearnPlanResponse;
 import app.entity.*;
 import app.exception.ErrorMessages;
@@ -103,5 +104,14 @@ public class LearnPlanServiceImpl implements LearnPlanService {
         checkLearnPlanExists(learnPlan);
         learnPlan.setActive(false);
         learnPlanRepository.save(learnPlan);
+    }
+
+    @Override
+    public LearnPlanResponse getLearnPlanByDateAndStudentCourse(LocalDate date, String courseId) {
+        LearnPlan learnPlan = learnPlanRepository.findByDateIncludeAndStudentCourse(date, courseId);
+        if (learnPlan == null) {
+            throw new LearnPlanException(ErrorMessages.NO_LEARN_PLAN_FOUND.getErrorMessage());
+        }
+        return LearnPlanMapper.INSTANCE.entityToResponse(learnPlan);
     }
 }
