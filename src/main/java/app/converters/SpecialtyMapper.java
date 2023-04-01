@@ -5,9 +5,10 @@ import app.dto.response.SpecialtyResponse;
 import app.entity.Specialty;
 import org.mapstruct.Mapper;
 
+import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface SpecialtyMapper {
 
     SpecialtyResponse entityToResponse(Specialty specialty);

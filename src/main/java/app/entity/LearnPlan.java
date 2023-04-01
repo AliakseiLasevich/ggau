@@ -1,13 +1,27 @@
 package app.entity;
 
 
-import lombok.Data;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "learn_plan")
 public class LearnPlan {
@@ -38,8 +52,8 @@ public class LearnPlan {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "learnPlan")
     private List<DisciplinePlan> disciplinePlan;
 
-    @PrePersist
-    public void setDefaultActiveValue() {
-        active = true;
-    }
+//    @PrePersist
+//    public void setDefaultActiveValue() {
+//        active = true;
+////    }
 }

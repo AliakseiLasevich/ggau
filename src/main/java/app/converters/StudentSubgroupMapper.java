@@ -4,9 +4,10 @@ import app.dto.request.StudentSubgroupRequest;
 import app.dto.response.StudentSubgroupResponse;
 import app.entity.StudentSubgroup;
 import org.mapstruct.Mapper;
+import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface StudentSubgroupMapper {
 
     StudentSubgroupResponse entityToResponse(StudentSubgroup studentSubgroup);

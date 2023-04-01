@@ -2,8 +2,10 @@ package app.entity;
 
 import lombok.Data;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.io.Serializable;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 
 @Entity
 @Table(name = "cabinets")

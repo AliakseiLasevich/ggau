@@ -4,9 +4,10 @@ import app.dto.request.DisciplineRequest;
 import app.dto.response.DisciplineResponse;
 import app.entity.Discipline;
 import org.mapstruct.Mapper;
+import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface DisciplineMapper {
 
     DisciplineResponse entityToResponse(Discipline discipline);

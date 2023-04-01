@@ -3,9 +3,11 @@ package app.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.util.Map;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 
 @Data
 @Entity

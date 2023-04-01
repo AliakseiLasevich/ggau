@@ -16,7 +16,7 @@
             <column name="name" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="active" type="bit(1)">
+            <column name="active" type="boolean">
                 <constraints nullable="false"/>
             </column>
         </createTable>
@@ -39,10 +39,10 @@
             <column name="type" type="VARCHAR(100)">
                 <constraints nullable="false"/>
             </column>
-            <column name="active" type="bit(1)">
+            <column name="active" type="boolean">
                 <constraints nullable="false"/>
             </column>
-            <column name="building_id" type="BIGINT(20)">
+            <column name="building_id" type="bigint">
                 <constraints nullable="false" foreignKeyName="building_fk"
                              referencedTableName="buildings"
                              referencedColumnNames="id"/>
@@ -61,7 +61,7 @@
             <column name="name" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="active" type="bit(1)">
+            <column name="active" type="boolean">
                 <constraints nullable="false"/>
             </column>
         </createTable>
@@ -78,10 +78,10 @@
             <column name="name" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="active" type="bit(1)">
+            <column name="active" type="boolean">
                 <constraints nullable="false"/>
             </column>
-            <column name="faculty_id" type="BIGINT(20)">
+            <column name="faculty_id" type="bigint">
                 <constraints nullable="false" foreignKeyName="faculty_fk"
                              referencedTableName="faculties"
                              referencedColumnNames="id"/>
@@ -103,10 +103,10 @@
             <column name="note" type="VARCHAR(1000)">
                 <constraints nullable="true"/>
             </column>
-            <column name="active" type="bit(1)">
+            <column name="active" type="boolean">
                 <constraints nullable="false"/>
             </column>
-            <column name="cathedra_id" type="BIGINT(20)">
+            <column name="cathedra_id" type="bigint">
                 <constraints nullable="false" foreignKeyName="cathedra_fk"
                              referencedTableName="cathedras"
                              referencedColumnNames="id"/>
@@ -128,10 +128,10 @@
             <column name="code" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="active" type="bit(1)">
+            <column name="active" type="boolean">
                 <constraints nullable="false"/>
             </column>
-            <column name="faculty_id" type="BIGINT(20)">
+            <column name="faculty_id" type="bigint">
                 <constraints nullable="false" foreignKeyName="faculties_specialty_fk"
                              referencedTableName="faculties"
                              referencedColumnNames="id"/>
@@ -150,7 +150,7 @@
             <column name="name" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="active" type="bit(1)">
+            <column name="active" type="boolean">
                 <constraints nullable="false"/>
             </column>
         </createTable>
@@ -159,7 +159,7 @@
     <changeSet id="7a" author="Aliaksei Lasevich">
         <createTable tableName="student_courses">
             <column name="id" type="bigint" autoIncrement="true">
-                <constraints primaryKey="true" primaryKeyName="disciplines_pkey"/>
+                <constraints primaryKey="true" primaryKeyName="student_courses_pkey"/>
             </column>
             <column name="public_id" type="VARCHAR(255)">
                 <constraints nullable="false"/>
@@ -167,10 +167,10 @@
             <column name="course_number" type="INT(2)">
                 <constraints nullable="false"/>
             </column>
-            <column name="active" type="bit(1)">
+            <column name="active" type="boolean">
                 <constraints nullable="false"/>
             </column>
-            <column name="specialty_id" type="BIGINT(20)">
+            <column name="specialty_id" type="bigint">
                 <constraints nullable="false" foreignKeyName="student_course_specialty_fk"
                              referencedTableName="specialties"
                              referencedColumnNames="id"/>
@@ -189,10 +189,10 @@
             <column name="number" type="INT(5)">
                 <constraints nullable="false"/>
             </column>
-            <column name="active" type="bit(1)">
+            <column name="active" type="boolean">
                 <constraints nullable="false"/>
             </column>
-            <column name="student_course_id" type="BIGINT(20)">
+            <column name="student_course_id" type="bigint">
                 <constraints nullable="false" foreignKeyName="student_group_student_course_fk"
                              referencedTableName="student_courses"
                              referencedColumnNames="id"/>
@@ -214,10 +214,10 @@
             <column name="students_count" type="INT(5)">
                 <constraints nullable="false"/>
             </column>
-            <column name="active" type="bit(1)">
+            <column name="active" type="boolean">
                 <constraints nullable="false"/>
             </column>
-            <column name="student_group_id" type="BIGINT(20)">
+            <column name="student_group_id" type="bigint">
                 <constraints nullable="false" foreignKeyName="student_subgroup_to_group_fk"
                              referencedTableName="student_groups"
                              referencedColumnNames="id"/>
@@ -239,15 +239,15 @@
             <column name="end_date" type="DATETIME">
                 <constraints nullable="false"/>
             </column>
-            <column name="active" type="bit(1)">
+            <column name="active" type="boolean">
                 <constraints nullable="false"/>
             </column>
-            <column name="student_course_id" type="BIGINT(20)">
+            <column name="student_course_id" type="bigint">
                 <constraints nullable="false" foreignKeyName="learn_plan_course_fk"
                              referencedTableName="student_courses"
                              referencedColumnNames="id"/>
             </column>
-            <column name="faculty_id" type="BIGINT(20)">
+            <column name="faculty_id" type="bigint">
                 <constraints nullable="false" foreignKeyName="learn_plan_faculty_fk"
                              referencedTableName="faculties"
                              referencedColumnNames="id"/>
@@ -258,12 +258,12 @@
     <changeSet id="11" author="Aliaksei Lasevich">
         <createTable tableName="discipline_plan">
             <column name="id" type="bigint" autoIncrement="true">
-                <constraints primaryKey="true" primaryKeyName="learn_plan_pkey"/>
+                <constraints primaryKey="true" primaryKeyName="discipline_plan_pkey"/>
             </column>
             <column name="public_id" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="discipline_id" type="BIGINT(20)">
+            <column name="discipline_id" type="bigint">
                 <constraints nullable="false" foreignKeyName="discipline_discipline_plan_fk"
                              referencedTableName="disciplines"
                              referencedColumnNames="id"/>
@@ -304,24 +304,24 @@
             <column name="flow" type="VARCHAR(10)">
                 <constraints nullable="false"/>
             </column>
-            <column name="exam" type="bit(1)">
+            <column name="exam" type="boolean">
                 <constraints nullable="true"/>
             </column>
-            <column name="test" type="bit(1)">
+            <column name="test" type="boolean">
                 <constraints nullable="true"/>
             </column>
-            <column name="course_project" type="bit(1)">
+            <column name="course_project" type="boolean">
                 <constraints nullable="true"/>
             </column>
-            <column name="course_work" type="bit(1)">
+            <column name="course_work" type="boolean">
                 <constraints nullable="true"/>
             </column>
-            <column name="learn_plan_id" type="BIGINT(20)">
+            <column name="learn_plan_id" type="bigint">
                 <constraints nullable="false" foreignKeyName="learn_plan_discipline_fk"
                              referencedTableName="learn_plan"
                              referencedColumnNames="id"/>
             </column>
-            <column name="active" type="bit(1)">
+            <column name="active" type="boolean">
                 <constraints nullable="false"/>
             </column>
         </createTable>
@@ -344,12 +344,12 @@
         </createTable>
 
         <createTable tableName="date_lessons_per_week_mapping">
-            <column name="discipline_plan_id" type="BIGINT(20)">
+            <column name="discipline_plan_id" type="bigint">
                 <constraints nullable="false" foreignKeyName="discipline_plan_mapping_fk"
                              referencedTableName="discipline_plan"
                              referencedColumnNames="id"/>
             </column>
-            <column name="lesson_per_week_id" type="BIGINT(20)">
+            <column name="lesson_per_week_id" type="bigint">
                 <constraints nullable="false" foreignKeyName="lesson_per_week_mapping_fk"
                              referencedTableName="lessons_per_week"
                              referencedColumnNames="id"
@@ -370,7 +370,7 @@
             <column name="public_id" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="active" type="BIT(1)">
+            <column name="active" type="boolean">
                 <constraints nullable="false"/>
             </column>
             <column name="type" type="VARCHAR(100)">
@@ -383,17 +383,17 @@
                 <constraints nullable="false"/>
             </column>
 
-            <column name="discipline_id" type="BIGINT(20)">
+            <column name="discipline_id" type="bigint">
                 <constraints nullable="false" foreignKeyName="lessons_discipline_fk"
                              referencedTableName="disciplines"
                              referencedColumnNames="id"/>
             </column>
-            <column name="teacher_id" type="BIGINT(20)">
+            <column name="teacher_id" type="bigint">
                 <constraints nullable="false" foreignKeyName="lessons_teachers_fk"
                              referencedTableName="teachers"
                              referencedColumnNames="id"/>
             </column>
-            <column name="cabinet_id" type="BIGINT(20)">
+            <column name="cabinet_id" type="bigint">
                 <constraints nullable="false" foreignKeyName="lessons_cabinets_fk"
                              referencedTableName="cabinets"
                              referencedColumnNames="id"/>
@@ -404,12 +404,12 @@
 
     <changeSet id="15" author="Aliaksei Lasevich">
         <createTable tableName="lessons_student_subgroups">
-            <column name="lesson_id" type="BIGINT(20)">
+            <column name="lesson_id" type="bigint">
                 <constraints nullable="false" foreignKeyName="lessons_std_subgroups_fk"
                              referencedTableName="lessons"
                              referencedColumnNames="id"/>
             </column>
-            <column name="students_subgroup_id" type="BIGINT(20)">
+            <column name="students_subgroup_id" type="bigint">
                 <constraints nullable="false" foreignKeyName="std_subgroup_lessons_fk"
                              referencedTableName="student_subgroups"
                              referencedColumnNames="id"/>

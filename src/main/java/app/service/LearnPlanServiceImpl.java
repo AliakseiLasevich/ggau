@@ -3,19 +3,22 @@ package app.service;
 import app.converters.LearnPlanMapper;
 import app.dao.interfaces.LearnPlanRepository;
 import app.dto.request.LearnPlanRequest;
-import app.dto.response.ErrorMessage;
 import app.dto.response.LearnPlanResponse;
-import app.entity.*;
+import app.entity.Faculty;
+import app.entity.LearnPlan;
 import app.exception.ErrorMessages;
 import app.exception.LearnPlanException;
-import app.service.interfaces.*;
+import app.service.interfaces.DisciplineService;
+import app.service.interfaces.FacultyService;
+import app.service.interfaces.LearnPlanService;
+import app.service.interfaces.SpecialtyService;
+import app.service.interfaces.StudentCourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -43,28 +46,28 @@ public class LearnPlanServiceImpl implements LearnPlanService {
     public LearnPlanResponse createLearnPlan(LearnPlanRequest learnPlanRequest) {
         LearnPlan learnPlan = LearnPlanMapper.INSTANCE.requestToEntity(learnPlanRequest);
         // УСТАНОВИТЬ АЙДИШНИК ДЛЯ ПЛАНА
-        learnPlan.setPublicId(UUID.randomUUID().toString());
+//        learnPlan.setPublicId(UUID.randomUUID().toString());
         // УСТАНОВИТЬ ФАКУЛЬТЕТ
         Faculty faculty = facultyService.findEntityByPublicId(learnPlanRequest.getFacultyId());
-        learnPlan.setFaculty(faculty);
+//        learnPlan.setFaculty(faculty);
         // УСТАНОВИТЬ КОНКРЕТНЫЙ КУРС К ПЛАНУ
-        StudentCourse studentCourse = studentCourseService.findEntityByPublicId(learnPlanRequest.getStudentsCourseId());
-        learnPlan.setStudentCourse(studentCourse);
+//        StudentCourse studentCourse = studentCourseService.findEntityByPublicId(learnPlanRequest.getStudentsCourseId());
+//        learnPlan.setStudentCourse(studentCourse);
         // ДОБАВИТЬ ДЛЯ КАЖДОГО ПЛАНА ДИСЦИПЛИНЫ СВОЙ АЙДИШНИК
-        learnPlan.getDisciplinePlan().forEach(disciplinePlan -> disciplinePlan.setPublicId(UUID.randomUUID().toString()));
+//        learnPlan.getDisciplinePlan().forEach(disciplinePlan -> disciplinePlan.setPublicId(UUID.randomUUID().toString()));
         // УСТАНОВИТЬ ДВОЙНУЮ СВЯЗЬ ДЛЯ ПРАВИЛЬНОГО МАППИНГА ONE-TO-MANY-MANY-TO-ONE
-        List<DisciplinePlan> disciplinePlanList = learnPlan.getDisciplinePlan();
-        disciplinePlanList.forEach(disciplinePlan -> disciplinePlan.setLearnPlan(learnPlan));
+//        List<DisciplinePlan> disciplinePlanList = learnPlan.getDisciplinePlan();
+//        disciplinePlanList.forEach(disciplinePlan -> disciplinePlan.setLearnPlan(learnPlan));
         // УСТАНОВИТЬ ДЛЯ ПЛАНА ДИСЦИПЛИНЫ СООТВЕТСТВУЮЩУЮ ДИСЦИПЛИНУ
-        for (int i = 0; i < disciplinePlanList.size(); i++) {
-            Discipline discipline = disciplineService.findEntityByPublicId(learnPlanRequest.getDisciplinePlan().get(i).getDisciplinePublicId());
-            DisciplinePlan disciplinePlan = disciplinePlanList.get(i);
-            disciplinePlan.setDiscipline(discipline);
-            disciplinePlanList.set(i, disciplinePlan);
-        }
-        // ЗАСЕТАТЬ ДИСЦИПЛИНЫ К ПЛАНУ
-        learnPlan.setDisciplinePlan(disciplinePlanList);
-        // СОХРАНИТЬ
+//        for (int i = 0; i < disciplinePlanList.size(); i++) {
+//            Discipline discipline = disciplineService.findEntityByPublicId(learnPlanRequest.getDisciplinePlan().get(i).getDisciplinePublicId());
+//            DisciplinePlan disciplinePlan = disciplinePlanList.get(i);
+//            disciplinePlan.setDiscipline(discipline);
+//            disciplinePlanList.set(i, disciplinePlan);
+//        }
+//        // ЗАСЕТАТЬ ДИСЦИПЛИНЫ К ПЛАНУ
+//        learnPlan.setDisciplinePlan(disciplinePlanList);
+//        // СОХРАНИТЬ
         learnPlanRepository.save(learnPlan);
         return LearnPlanMapper.INSTANCE.entityToResponse(learnPlan);
     }
@@ -102,7 +105,7 @@ public class LearnPlanServiceImpl implements LearnPlanService {
     public void deleteLearnPlan(String publicId) {
         LearnPlan learnPlan = learnPlanRepository.findByPublicId(publicId);
         checkLearnPlanExists(learnPlan);
-        learnPlan.setActive(false);
+//        learnPlan.setActive(false);
         learnPlanRepository.save(learnPlan);
     }
 

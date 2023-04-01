@@ -4,9 +4,10 @@ import app.dto.request.BuildingRequest;
 import app.dto.response.BuildingResponse;
 import app.entity.Building;
 import org.mapstruct.Mapper;
+import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface BuildingMapper {
 
     Building requestToEntity(BuildingRequest buildingRequest);

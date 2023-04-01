@@ -4,9 +4,10 @@ import app.dto.request.FacultyRequest;
 import app.dto.response.FacultyResponse;
 import app.entity.Faculty;
 import org.mapstruct.Mapper;
+import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface FacultyMapper {
 
     Faculty requestToEntity(FacultyRequest facultyRequest);
