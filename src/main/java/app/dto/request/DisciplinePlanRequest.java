@@ -1,12 +1,18 @@
 package app.dto.request;
 
-import lombok.Data;
+import app.entity.Interfaces.RequestInterface;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.Map;
 
-@Data
-public class DisciplinePlanRequest {
+@Getter
+@Setter
+@NoArgsConstructor
+public class DisciplinePlanRequest implements RequestInterface {
 
     private String disciplinePublicId;
     private int hoursSummary;

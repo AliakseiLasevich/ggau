@@ -1,12 +1,18 @@
 package app.dto.request;
 
-import lombok.Data;
+import app.entity.Interfaces.RequestInterface;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.List;
 
-@Data
-public class LearnPlanRequest {
+@Getter
+@Setter
+@NoArgsConstructor
+public class LearnPlanRequest implements RequestInterface {
 
     private LocalDate startDate;
     private LocalDate endDate;

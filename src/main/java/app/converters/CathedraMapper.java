@@ -4,17 +4,10 @@ import app.dto.request.CathedraRequest;
 import app.dto.response.CathedraResponse;
 import app.entity.Cathedra;
 import org.mapstruct.Mapper;
-import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
-public interface CathedraMapper {
-
-    CathedraResponse entityToResponse(Cathedra cathedra);
-
-    Cathedra requestToEntity(CathedraRequest cathedraRequest);
+@Mapper(uses = CathedraMapper.class, componentModel = "spring")
+public interface CathedraMapper extends AbstractMapper<Cathedra, CathedraRequest, CathedraResponse> {
 
     CathedraMapper INSTANCE = Mappers.getMapper(CathedraMapper.class);
-
-
 }

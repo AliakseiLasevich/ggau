@@ -1,14 +1,18 @@
 package app.dto.request;
 
 
+import app.entity.Interfaces.RequestInterface;
 import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@Data
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class FacultyRequest {
+public class FacultyRequest implements RequestInterface {
 
     private String publicId;
     private String name;

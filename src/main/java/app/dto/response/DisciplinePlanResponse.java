@@ -1,13 +1,19 @@
 package app.dto.response;
 
+import app.entity.Interfaces.ResponseInterface;
 import app.entity.LessonsPerWeek;
-import lombok.Data;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.Map;
 
-@Data
-public class DisciplinePlanResponse {
+@Getter
+@Setter
+@NoArgsConstructor
+public class DisciplinePlanResponse implements ResponseInterface {
     private String publicId;
     private DisciplineResponse discipline;
     private int hoursSummary;

@@ -5,19 +5,13 @@ import app.dto.response.CabinetResponse;
 import app.entity.Cabinet;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.ReportingPolicy;
-import org.mapstruct.factory.Mappers;
 
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
-public interface CabinetMapper {
+@Mapper(uses = CabinetMapper.class, componentModel = "spring")
+public interface CabinetMapper extends AbstractMapper<Cabinet, CabinetsRequest, CabinetResponse> {
 
+    @Override
     @Mapping(source = "building.publicId", target = "buildingId")
     @Mapping(source = "building.name", target = "buildingName")
     CabinetResponse entityToResponse(Cabinet cabinet);
-
-    Cabinet requestToEntity(CabinetsRequest cabinetsRequest);
-
-    CabinetMapper INSTANCE = Mappers.getMapper(CabinetMapper.class);
-
 
 }

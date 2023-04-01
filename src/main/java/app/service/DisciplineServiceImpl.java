@@ -12,12 +12,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
 public class DisciplineServiceImpl implements DisciplineService {
 
+    private DisciplineMapper disciplineMapper;
 
     @Autowired
     private DisciplineRepository disciplineRepository;
@@ -32,7 +34,10 @@ public class DisciplineServiceImpl implements DisciplineService {
     @Override
     public List<DisciplineResponse> findAll() {
         return disciplineRepository.findAllByActiveTrue().stream()
-                .map(DisciplineMapper.INSTANCE::entityToResponse)
+                .map(discipline -> Optional.ofNullable(discipline)
+                        .map(disciplineMapper::entityToResponse))
+                .filter(Optional::isPresent)
+                .map(Optional::get)
                 .collect(Collectors.toList());
     }
 
@@ -40,7 +45,7 @@ public class DisciplineServiceImpl implements DisciplineService {
     public DisciplineResponse findByPublicId(String publicId) {
         Discipline discipline = disciplineRepository.findByPublicIdAndActiveTrue(publicId);
         checkDisciplineExists(discipline);
-        return DisciplineMapper.INSTANCE.entityToResponse(discipline);
+        return disciplineMapper.entityToResponse(discipline);
     }
 
     private void checkDisciplineExists(Discipline discipline) {
@@ -51,10 +56,10 @@ public class DisciplineServiceImpl implements DisciplineService {
 
     @Override
     public DisciplineResponse createDiscipline(DisciplineRequest disciplineRequest) {
-        Discipline discipline = DisciplineMapper.INSTANCE.requestToEntity(disciplineRequest);
+        Discipline discipline = disciplineMapper.requestToEntity(disciplineRequest);
         discipline.setPublicId(UUID.randomUUID().toString());
         disciplineRepository.save(discipline);
-        return DisciplineMapper.INSTANCE.entityToResponse(discipline);
+        return disciplineMapper.entityToResponse(discipline);
     }
 
     @Override
@@ -63,7 +68,7 @@ public class DisciplineServiceImpl implements DisciplineService {
         checkDisciplineExists(discipline);
         discipline.setName(disciplineRequest.getName());
         disciplineRepository.save(discipline);
-        return DisciplineMapper.INSTANCE.entityToResponse(discipline);
+        return disciplineMapper.entityToResponse(discipline);
     }
 
     @Override

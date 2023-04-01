@@ -1,11 +1,17 @@
 package app.dto.request;
 
-import lombok.Data;
+import app.entity.Interfaces.RequestInterface;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.List;
 
-@Data
-public class StudentCourseRequest {
+@Getter
+@Setter
+@NoArgsConstructor
+public class StudentCourseRequest implements RequestInterface {
 
     private String specialtyId;
     private int courseNumber;

@@ -1,17 +1,30 @@
 package app.entity;
 
+import app.entity.Interfaces.EntityInterface;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import lombok.Data;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import jakarta.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
 @Entity
 @Table(name = "student_groups")
-@Data
-public class StudentGroup implements Serializable {
+@Getter
+@Setter
+@NoArgsConstructor
+public class StudentGroup implements Serializable, EntityInterface {
 
     @Id
     @Column(name = "id")

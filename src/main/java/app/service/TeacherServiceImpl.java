@@ -1,5 +1,6 @@
 package app.service;
 
+import app.converters.TeacherMapper;
 import app.dao.interfaces.TeacherRepository;
 import app.dto.request.TeacherRequest;
 import app.dto.response.TeacherResponse;
@@ -7,9 +8,12 @@ import app.entity.Cathedra;
 import app.entity.Teacher;
 import app.exception.ErrorMessages;
 import app.exception.TeacherException;
-import app.converters.TeacherMapper;
 import app.service.interfaces.CathedraService;
 import app.service.interfaces.TeacherService;
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,17 +22,17 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
+@Setter
+@RequiredArgsConstructor
+@AllArgsConstructor
 public class TeacherServiceImpl implements TeacherService {
 
-
+    @Autowired
     private TeacherRepository teacherRepository;
-
     private CathedraService cathedraService;
 
-    public TeacherServiceImpl(TeacherRepository teacherRepository, CathedraService cathedraService) {
-        this.teacherRepository = teacherRepository;
-        this.cathedraService = cathedraService;
-    }
+    @Autowired
+    private TeacherMapper teacherMapper;
 
     @Override
     public TeacherResponse findById(String publicId) {
@@ -36,7 +40,7 @@ public class TeacherServiceImpl implements TeacherService {
         if (teacher == null) {
             throw new TeacherException(ErrorMessages.NO_TEACHER_FOUND.getErrorMessage());
         }
-        return TeacherMapper.INSTANCE.entityToResponse(teacher);
+        return teacherMapper.entityToResponse(teacher);
     }
 
     @Transactional
@@ -44,18 +48,18 @@ public class TeacherServiceImpl implements TeacherService {
     public List<TeacherResponse> findAll() {
         List<Teacher> teachers = teacherRepository.findAllWithCathedras();
         return teachers.stream().
-                map(TeacherMapper.INSTANCE::entityToResponse)
+                map(teacherMapper::entityToResponse)
                 .collect(Collectors.toList());
     }
 
     @Override
     public TeacherResponse createTeacher(TeacherRequest teacherRequest) {
-        Teacher teacher = TeacherMapper.INSTANCE.requestToEntity(teacherRequest);
+        Teacher teacher = teacherMapper.requestToEntity(teacherRequest);
         teacher.setPublicId(UUID.randomUUID().toString());
         Cathedra cathedra = cathedraService.findByPublicId(teacherRequest.getCathedraId());
         teacher.setCathedra(cathedra);
         teacherRepository.save(teacher);
-        return TeacherMapper.INSTANCE.entityToResponse(teacher);
+        return teacherMapper.entityToResponse(teacher);
     }
 
 
@@ -69,7 +73,7 @@ public class TeacherServiceImpl implements TeacherService {
         teacher.setCathedra(cathedra);
         teacher.setName(teacherRequest.getName());
         teacherRepository.save(teacher);
-        return TeacherMapper.INSTANCE.entityToResponse(teacher);
+        return teacherMapper.entityToResponse(teacher);
     }
 
     @Override

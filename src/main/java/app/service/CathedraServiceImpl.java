@@ -1,5 +1,6 @@
 package app.service;
 
+import app.converters.CathedraMapper;
 import app.dao.interfaces.CathedraRepository;
 import app.dto.request.CathedraRequest;
 import app.dto.response.CathedraResponse;
@@ -7,7 +8,6 @@ import app.entity.Cathedra;
 import app.entity.Faculty;
 import app.exception.CathedraException;
 import app.exception.ErrorMessages;
-import app.converters.CathedraMapper;
 import app.service.interfaces.CathedraService;
 import app.service.interfaces.FacultyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +23,9 @@ import java.util.stream.Collectors;
 @Transactional
 public class CathedraServiceImpl implements CathedraService {
 
-    private CathedraRepository cathedraRepository;
+    private final CathedraRepository cathedraRepository;
 
-    private FacultyService facultyService;
+    private final FacultyService facultyService;
 
     @Autowired
     @Lazy
@@ -45,7 +45,7 @@ public class CathedraServiceImpl implements CathedraService {
     @Override
     public void createCathedra(CathedraRequest cathedraRequest, String facultyId) {
         Cathedra cathedra = cathedraRepository.findByNameAndActiveTrue(cathedraRequest.getName());
-        if(cathedra!= null){
+        if (cathedra != null) {
             throw new CathedraException(ErrorMessages.RECORD_ALREADY_EXISTS.getErrorMessage());
         }
         cathedra = CathedraMapper.INSTANCE.requestToEntity(cathedraRequest);

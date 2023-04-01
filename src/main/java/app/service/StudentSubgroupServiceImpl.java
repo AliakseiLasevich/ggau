@@ -4,7 +4,6 @@ import app.converters.StudentSubgroupMapper;
 import app.dao.interfaces.StudentSubgroupRepository;
 import app.dto.request.StudentSubgroupRequest;
 import app.dto.response.StudentSubgroupResponse;
-import app.entity.StudentCourse;
 import app.entity.StudentGroup;
 import app.entity.StudentSubgroup;
 import app.exception.ErrorMessages;

@@ -1,12 +1,12 @@
 package app.service;
 
+import app.converters.FacultyMapper;
 import app.dao.interfaces.FacultyRepository;
 import app.dto.request.FacultyRequest;
 import app.dto.response.FacultyResponse;
 import app.entity.Faculty;
 import app.exception.ErrorMessages;
 import app.exception.FacultyException;
-import app.converters.FacultyMapper;
 import app.service.interfaces.CathedraService;
 import app.service.interfaces.FacultyService;
 import org.springframework.stereotype.Service;

@@ -1,13 +1,17 @@
 package app.dto.response;
 
+import app.entity.Interfaces.ResponseInterface;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @AllArgsConstructor
+@Getter
+@Setter
 @NoArgsConstructor
-@Data
-public class CathedraResponse {
+public class CathedraResponse implements ResponseInterface {
 
     private String publicId;
     private String name;

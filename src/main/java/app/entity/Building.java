@@ -1,5 +1,6 @@
 package app.entity;
 
+import app.entity.Interfaces.EntityInterface;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -11,16 +12,20 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.List;
 
 @Entity
 @Table(name = "buildings")
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 //@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-public class Building implements Serializable {
+public class Building implements Serializable, EntityInterface {
 
     @Id
     @Column(name = "id")

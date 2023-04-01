@@ -1,5 +1,6 @@
 package app.service;
 
+import app.converters.CabinetMapper;
 import app.dao.interfaces.CabinetRepository;
 import app.dto.request.CabinetsRequest;
 import app.dto.response.CabinetResponse;
@@ -7,10 +8,9 @@ import app.entity.Building;
 import app.entity.Cabinet;
 import app.exception.CabinetException;
 import app.exception.ErrorMessages;
-import app.converters.CabinetMapper;
 import app.service.interfaces.BuildingService;
 import app.service.interfaces.CabinetService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,23 +20,27 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
+
 public class CabinetServiceImpl implements CabinetService {
 
     private final CabinetRepository cabinetRepository;
 
     private final BuildingService buildingService;
 
-    @Autowired
-    public CabinetServiceImpl(CabinetRepository cabinetRepository, BuildingService buildingService) {
-        this.cabinetRepository = cabinetRepository;
-        this.buildingService = buildingService;
-    }
+    private final CabinetMapper cabinetMapper;
+
+//    @Autowired
+//    public CabinetServiceImpl(CabinetRepository cabinetRepository, BuildingService buildingService) {
+//        this.cabinetRepository = cabinetRepository;
+//        this.buildingService = buildingService;
+//    }
 
     @Override
     public CabinetResponse findById(String publicId) {
         Cabinet cabinet = cabinetRepository.findByPublicIdAndActiveTrue(publicId);
         checkCabinetExists(cabinet);
-        return CabinetMapper.INSTANCE.entityToResponse(cabinet);
+        return cabinetMapper.entityToResponse(cabinet);
     }
 
     private void checkCabinetExists(Cabinet cabinet) {
@@ -48,7 +52,7 @@ public class CabinetServiceImpl implements CabinetService {
     @Override
     public List<CabinetResponse> findAll() {
         return cabinetRepository.findByActiveTrueAndBuildingActiveTrue().stream()
-                .map(CabinetMapper.INSTANCE::entityToResponse)
+                .map(cabinetMapper::entityToResponse)
                 .collect(Collectors.toList());
     }
 
@@ -56,7 +60,7 @@ public class CabinetServiceImpl implements CabinetService {
     public List<CabinetResponse> findByBuilding(String buildingId) {
         Building building = buildingService.findEntityByPublicId(buildingId);
         return cabinetRepository.findAllByBuildingAndActiveTrue(building).stream()
-                .map(CabinetMapper.INSTANCE::entityToResponse)
+                .map(cabinetMapper::entityToResponse)
                 .collect(Collectors.toList());
     }
 
@@ -67,11 +71,11 @@ public class CabinetServiceImpl implements CabinetService {
         if (cabinet != null) {
             throw new CabinetException(ErrorMessages.RECORD_ALREADY_EXISTS.getErrorMessage());
         }
-        cabinet = CabinetMapper.INSTANCE.requestToEntity(cabinetsRequest);
+        cabinet = cabinetMapper.requestToEntity(cabinetsRequest);
         cabinet.setPublicId(UUID.randomUUID().toString());
         cabinet.setBuilding(building);
         cabinetRepository.save(cabinet);
-        return CabinetMapper.INSTANCE.entityToResponse(cabinet);
+        return cabinetMapper.entityToResponse(cabinet);
     }
 
     @Override
@@ -84,7 +88,7 @@ public class CabinetServiceImpl implements CabinetService {
         cabinet.setMaxStudents(cabinetsRequest.getMaxStudents());
         cabinet.setType(cabinetsRequest.getType());
         cabinetRepository.save(cabinet);
-        return CabinetMapper.INSTANCE.entityToResponse(cabinet);
+        return cabinetMapper.entityToResponse(cabinet);
     }
 
     @Override

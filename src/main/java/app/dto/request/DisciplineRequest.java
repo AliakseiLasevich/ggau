@@ -1,9 +1,15 @@
 package app.dto.request;
 
-import lombok.Data;
+import app.entity.Interfaces.RequestInterface;
 
-@Data
-public class DisciplineRequest {
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
+public class DisciplineRequest implements RequestInterface {
 
     private String name;
 }

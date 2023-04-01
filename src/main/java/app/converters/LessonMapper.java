@@ -10,10 +10,10 @@ import org.mapstruct.factory.Mappers;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface LessonMapper {
 
+    LessonMapper INSTANCE = Mappers.getMapper(LessonMapper.class);
+
     Lesson requestToEntity(LessonRequest lessonRequest);
 
     LessonResponse entityToResponse(Lesson lesson);
-
-    LessonMapper INSTANCE = Mappers.getMapper(LessonMapper.class);
 
 }

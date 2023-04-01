@@ -18,6 +18,8 @@ import java.util.Map;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface LearnPlanMapper {
 
+    LearnPlanMapper INSTANCE = Mappers.getMapper(LearnPlanMapper.class);
+
     LearnPlanResponse entityToResponse(LearnPlan learnPlan);
 
     LearnPlan requestToEntity(LearnPlanRequest learnPlanRequest);
@@ -27,6 +29,4 @@ public interface LearnPlanMapper {
     Map<LocalDate, LessonsPerWeek> lessonsPerWeekRequestToEntity(Map<LocalDate, LessonsPerWeekRequest> mapRequest);
 
     DisciplineResponse disciplinePlanEntityToResponse(DisciplinePlan disciplinePlan);
-
-    LearnPlanMapper INSTANCE = Mappers.getMapper(LearnPlanMapper.class);
 }

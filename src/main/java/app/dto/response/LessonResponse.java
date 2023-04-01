@@ -1,13 +1,19 @@
 package app.dto.response;
 
+import app.entity.Interfaces.ResponseInterface;
 import app.entity.LessonType;
-import lombok.Data;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Data
-public class LessonResponse {
+@Getter
+@Setter
+@NoArgsConstructor
+public class LessonResponse implements ResponseInterface {
 
     private String publicId;
     private LessonType type;

@@ -10,9 +10,9 @@ import org.mapstruct.factory.Mappers;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface StudentGroupMapper {
 
+    StudentGroupMapper INSTANCE = Mappers.getMapper(StudentGroupMapper.class);
+
     StudentGroupResponse entityToResponse(StudentGroup studentGroup);
 
     StudentGroup requestToEntity(StudentGroupRequest studentGroupRequest);
-
-    StudentGroupMapper INSTANCE = Mappers.getMapper(StudentGroupMapper.class);
 }
