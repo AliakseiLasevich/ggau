@@ -1,8 +1,8 @@
 package app.service.interfaces;
 
-import app.dto.request.DisciplineRequest;
-import app.dto.response.DisciplineResponse;
-import app.entity.Discipline;
+import app.model.dto.request.DisciplineRequest;
+import app.model.dto.response.DisciplineResponse;
+import app.model.entity.Discipline;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

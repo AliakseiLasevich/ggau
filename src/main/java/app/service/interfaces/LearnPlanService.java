@@ -1,8 +1,8 @@
 package app.service.interfaces;
 
-import app.dto.request.LearnPlanRequest;
+import app.model.dto.request.LearnPlanRequest;
 
-import app.dto.response.LearnPlanResponse;
+import app.model.dto.response.LearnPlanResponse;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;

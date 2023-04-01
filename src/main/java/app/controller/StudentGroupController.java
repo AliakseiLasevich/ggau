@@ -1,7 +1,7 @@
 package app.controller;
 
-import app.dto.request.StudentGroupRequest;
-import app.dto.response.StudentGroupResponse;
+import app.model.dto.request.StudentGroupRequest;
+import app.model.dto.response.StudentGroupResponse;
 import app.service.interfaces.StudentGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

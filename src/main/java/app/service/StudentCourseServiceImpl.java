@@ -1,12 +1,12 @@
 package app.service;
 
-import app.converters.StudentCourseMapper;
+import app.model.mapper.StudentCourseMapper;
 import app.dao.interfaces.StudentCourseRepository;
-import app.dto.request.StudentCourseRequest;
-import app.dto.response.StudentCourseResponse;
-import app.entity.Faculty;
-import app.entity.Specialty;
-import app.entity.StudentCourse;
+import app.model.dto.request.StudentCourseRequest;
+import app.model.dto.response.StudentCourseResponse;
+import app.model.entity.Faculty;
+import app.model.entity.Specialty;
+import app.model.entity.StudentCourse;
 import app.exception.ErrorMessages;
 import app.exception.StudentCourseException;
 import app.service.interfaces.FacultyService;

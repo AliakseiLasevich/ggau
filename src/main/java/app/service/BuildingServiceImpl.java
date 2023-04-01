@@ -1,10 +1,10 @@
 package app.service;
 
-import app.converters.BuildingMapper;
+import app.model.mapper.BuildingMapper;
 import app.dao.interfaces.BuildingRepository;
-import app.dto.request.BuildingRequest;
-import app.dto.response.BuildingResponse;
-import app.entity.Building;
+import app.model.dto.request.BuildingRequest;
+import app.model.dto.response.BuildingResponse;
+import app.model.entity.Building;
 import app.exception.BuildingException;
 import app.exception.ErrorMessages;
 import app.service.interfaces.BuildingService;

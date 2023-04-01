@@ -1,11 +1,11 @@
 package app.service;
 
-import app.converters.LearnPlanMapper;
+import app.model.mapper.LearnPlanMapper;
 import app.dao.interfaces.LearnPlanRepository;
-import app.dto.request.LearnPlanRequest;
-import app.dto.response.LearnPlanResponse;
-import app.entity.Faculty;
-import app.entity.LearnPlan;
+import app.model.dto.request.LearnPlanRequest;
+import app.model.dto.response.LearnPlanResponse;
+import app.model.entity.Faculty;
+import app.model.entity.LearnPlan;
 import app.exception.ErrorMessages;
 import app.exception.LearnPlanException;
 import app.service.interfaces.DisciplineService;

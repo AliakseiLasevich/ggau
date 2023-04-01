@@ -1,16 +1,16 @@
 package app.beans;
 
-import app.converters.BuildingMapper;
+import app.model.mapper.BuildingMapper;
 import app.converters.BuildingMapperImpl;
-import app.converters.CabinetMapper;
+import app.model.mapper.CabinetMapper;
 import app.converters.CabinetMapperImpl;
-import app.converters.CathedraMapper;
+import app.model.mapper.CathedraMapper;
 import app.converters.CathedraMapperImpl;
-import app.converters.DisciplineMapper;
+import app.model.mapper.DisciplineMapper;
 import app.converters.DisciplineMapperImpl;
-import app.converters.FacultyMapper;
+import app.model.mapper.FacultyMapper;
 import app.converters.FacultyMapperImpl;
-import app.converters.TeacherMapper;
+import app.model.mapper.TeacherMapper;
 import app.converters.TeacherMapperImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;

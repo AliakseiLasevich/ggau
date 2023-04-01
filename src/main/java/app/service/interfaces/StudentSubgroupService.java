@@ -1,7 +1,7 @@
 package app.service.interfaces;
 
-import app.dto.request.StudentSubgroupRequest;
-import app.dto.response.StudentSubgroupResponse;
+import app.model.dto.request.StudentSubgroupRequest;
+import app.model.dto.response.StudentSubgroupResponse;
 
 import java.util.List;
 

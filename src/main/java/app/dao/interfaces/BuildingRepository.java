@@ -1,7 +1,7 @@
 package app.dao.interfaces;
 
 
-import app.entity.Building;
+import app.model.entity.Building;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import org.springframework.stereotype.Repository;

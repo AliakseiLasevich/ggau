@@ -1,9 +1,9 @@
 package app.dao.interfaces;
 
 
-import app.entity.Faculty;
-import app.entity.Specialty;
-import app.entity.StudentCourse;
+import app.model.entity.Faculty;
+import app.model.entity.Specialty;
+import app.model.entity.StudentCourse;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

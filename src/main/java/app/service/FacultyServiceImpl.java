@@ -1,10 +1,10 @@
 package app.service;
 
-import app.converters.FacultyMapper;
+import app.model.mapper.FacultyMapper;
 import app.dao.interfaces.FacultyRepository;
-import app.dto.request.FacultyRequest;
-import app.dto.response.FacultyResponse;
-import app.entity.Faculty;
+import app.model.dto.request.FacultyRequest;
+import app.model.dto.response.FacultyResponse;
+import app.model.entity.Faculty;
 import app.exception.ErrorMessages;
 import app.exception.FacultyException;
 import app.service.interfaces.CathedraService;

@@ -1,10 +1,10 @@
 package app.service;
 
-import app.converters.LessonMapper;
+import app.model.mapper.LessonMapper;
 import app.dao.interfaces.LessonRepository;
-import app.dto.request.LessonRequest;
-import app.dto.response.LessonResponse;
-import app.entity.Lesson;
+import app.model.dto.request.LessonRequest;
+import app.model.dto.response.LessonResponse;
+import app.model.entity.Lesson;
 import app.service.interfaces.LessonService;
 import app.service.interfaces.StudentCourseService;
 import app.service.interfaces.StudentSubgroupService;

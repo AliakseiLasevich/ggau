@@ -1,8 +1,8 @@
 package app.service.interfaces;
 
-import app.dto.request.BuildingRequest;
-import app.dto.response.BuildingResponse;
-import app.entity.Building;
+import app.model.dto.request.BuildingRequest;
+import app.model.dto.response.BuildingResponse;
+import app.model.entity.Building;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

@@ -1,9 +1,9 @@
 package app.service.interfaces;
 
-import app.dto.request.CathedraRequest;
-import app.dto.response.CathedraResponse;
-import app.entity.Cathedra;
-import app.entity.Faculty;
+import app.model.dto.request.CathedraRequest;
+import app.model.dto.response.CathedraResponse;
+import app.model.entity.Cathedra;
+import app.model.entity.Faculty;
 
 import java.util.List;
 

@@ -1,8 +1,7 @@
 package app.dao.interfaces;
 
 
-import app.entity.LearnPlan;
-import app.entity.StudentCourse;
+import app.model.entity.LearnPlan;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

@@ -1,9 +1,7 @@
 package app.controller;
 
-import app.dto.request.CathedraRequest;
-import app.dto.response.CathedraResponse;
-import app.exception.CathedraException;
-import app.exception.ErrorMessages;
+import app.model.dto.request.CathedraRequest;
+import app.model.dto.response.CathedraResponse;
 import app.service.interfaces.CathedraService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

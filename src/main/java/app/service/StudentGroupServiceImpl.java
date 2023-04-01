@@ -1,11 +1,11 @@
 package app.service;
 
-import app.converters.StudentGroupMapper;
+import app.model.mapper.StudentGroupMapper;
 import app.dao.interfaces.StudentGroupRepository;
-import app.dto.request.StudentGroupRequest;
-import app.dto.response.StudentGroupResponse;
-import app.entity.StudentCourse;
-import app.entity.StudentGroup;
+import app.model.dto.request.StudentGroupRequest;
+import app.model.dto.response.StudentGroupResponse;
+import app.model.entity.StudentCourse;
+import app.model.entity.StudentGroup;
 import app.exception.ErrorMessages;
 import app.exception.StudentGroupException;
 import app.service.interfaces.StudentCourseService;

@@ -1,7 +1,7 @@
 package app.dao.interfaces;
 
-import app.entity.Cathedra;
-import app.entity.Faculty;
+import app.model.entity.Cathedra;
+import app.model.entity.Faculty;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

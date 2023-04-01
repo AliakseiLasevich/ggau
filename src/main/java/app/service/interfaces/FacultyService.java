@@ -1,8 +1,8 @@
 package app.service.interfaces;
 
-import app.dto.request.FacultyRequest;
-import app.dto.response.FacultyResponse;
-import app.entity.Faculty;
+import app.model.dto.request.FacultyRequest;
+import app.model.dto.response.FacultyResponse;
+import app.model.entity.Faculty;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

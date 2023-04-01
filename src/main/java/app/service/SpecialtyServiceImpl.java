@@ -1,11 +1,11 @@
 package app.service;
 
-import app.converters.SpecialtyMapper;
+import app.model.mapper.SpecialtyMapper;
 import app.dao.interfaces.SpecialtyRepository;
-import app.dto.request.SpecialtyRequest;
-import app.dto.response.SpecialtyResponse;
-import app.entity.Faculty;
-import app.entity.Specialty;
+import app.model.dto.request.SpecialtyRequest;
+import app.model.dto.response.SpecialtyResponse;
+import app.model.entity.Faculty;
+import app.model.entity.Specialty;
 import app.exception.ErrorMessages;
 import app.exception.SpecialtyException;
 import app.service.interfaces.FacultyService;

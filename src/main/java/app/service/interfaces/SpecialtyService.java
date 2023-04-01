@@ -1,8 +1,8 @@
 package app.service.interfaces;
 
-import app.dto.request.SpecialtyRequest;
-import app.dto.response.SpecialtyResponse;
-import app.entity.Specialty;
+import app.model.dto.request.SpecialtyRequest;
+import app.model.dto.response.SpecialtyResponse;
+import app.model.entity.Specialty;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

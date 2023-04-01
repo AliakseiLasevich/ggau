@@ -1,10 +1,10 @@
 package app.service;
 
-import app.converters.DisciplineMapper;
+import app.model.mapper.DisciplineMapper;
 import app.dao.interfaces.DisciplineRepository;
-import app.dto.request.DisciplineRequest;
-import app.dto.response.DisciplineResponse;
-import app.entity.Discipline;
+import app.model.dto.request.DisciplineRequest;
+import app.model.dto.response.DisciplineResponse;
+import app.model.entity.Discipline;
 import app.exception.DisciplineException;
 import app.exception.ErrorMessages;
 import app.service.interfaces.DisciplineService;

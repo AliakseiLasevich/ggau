@@ -1,9 +1,7 @@
 package app.controller;
 
-import app.dto.request.CabinetsRequest;
-import app.dto.response.CabinetResponse;
-import app.exception.CabinetException;
-import app.exception.ErrorMessages;
+import app.model.dto.request.CabinetsRequest;
+import app.model.dto.response.CabinetResponse;
 import app.service.interfaces.CabinetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

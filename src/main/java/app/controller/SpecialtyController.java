@@ -1,7 +1,7 @@
 package app.controller;
 
-import app.dto.request.SpecialtyRequest;
-import app.dto.response.SpecialtyResponse;
+import app.model.dto.request.SpecialtyRequest;
+import app.model.dto.response.SpecialtyResponse;
 import app.service.interfaces.SpecialtyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

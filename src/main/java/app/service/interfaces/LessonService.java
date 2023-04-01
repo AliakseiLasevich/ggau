@@ -1,7 +1,7 @@
 package app.service.interfaces;
 
-import app.dto.request.LessonRequest;
-import app.dto.response.LessonResponse;
+import app.model.dto.request.LessonRequest;
+import app.model.dto.response.LessonResponse;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;

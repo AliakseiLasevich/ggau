@@ -1,8 +1,8 @@
 package app.dao.interfaces;
 
 
-import app.entity.StudentCourse;
-import app.entity.StudentGroup;
+import app.model.entity.StudentCourse;
+import app.model.entity.StudentGroup;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

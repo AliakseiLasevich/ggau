@@ -1,6 +1,6 @@
 package app.dao.interfaces;
 
-import app.entity.Teacher;
+import app.model.entity.Teacher;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

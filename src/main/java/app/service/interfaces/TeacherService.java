@@ -1,7 +1,7 @@
 package app.service.interfaces;
 
-import app.dto.request.TeacherRequest;
-import app.dto.response.TeacherResponse;
+import app.model.dto.request.TeacherRequest;
+import app.model.dto.response.TeacherResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

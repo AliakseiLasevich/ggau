@@ -1,11 +1,11 @@
 package app.service;
 
-import app.converters.CabinetMapper;
+import app.model.mapper.CabinetMapper;
 import app.dao.interfaces.CabinetRepository;
-import app.dto.request.CabinetsRequest;
-import app.dto.response.CabinetResponse;
-import app.entity.Building;
-import app.entity.Cabinet;
+import app.model.dto.request.CabinetsRequest;
+import app.model.dto.response.CabinetResponse;
+import app.model.entity.Building;
+import app.model.entity.Cabinet;
 import app.exception.CabinetException;
 import app.exception.ErrorMessages;
 import app.service.interfaces.BuildingService;

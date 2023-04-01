@@ -1,11 +1,11 @@
 package app.service;
 
-import app.converters.CathedraMapper;
+import app.model.mapper.CathedraMapper;
 import app.dao.interfaces.CathedraRepository;
-import app.dto.request.CathedraRequest;
-import app.dto.response.CathedraResponse;
-import app.entity.Cathedra;
-import app.entity.Faculty;
+import app.model.dto.request.CathedraRequest;
+import app.model.dto.response.CathedraResponse;
+import app.model.entity.Cathedra;
+import app.model.entity.Faculty;
 import app.exception.CathedraException;
 import app.exception.ErrorMessages;
 import app.service.interfaces.CathedraService;

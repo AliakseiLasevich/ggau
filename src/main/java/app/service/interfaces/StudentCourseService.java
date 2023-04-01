@@ -1,9 +1,8 @@
 package app.service.interfaces;
 
-import app.dto.request.StudentCourseRequest;
-import app.dto.response.SpecialtyResponse;
-import app.dto.response.StudentCourseResponse;
-import app.entity.StudentCourse;
+import app.model.dto.request.StudentCourseRequest;
+import app.model.dto.response.StudentCourseResponse;
+import app.model.entity.StudentCourse;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

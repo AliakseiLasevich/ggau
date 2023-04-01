@@ -1,6 +1,6 @@
 package app.config;
 
-import app.dto.response.ErrorMessage;
+import app.model.dto.response.ErrorMessage;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

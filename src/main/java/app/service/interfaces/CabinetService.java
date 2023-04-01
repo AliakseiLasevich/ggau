@@ -1,7 +1,7 @@
 package app.service.interfaces;
 
-import app.dto.request.CabinetsRequest;
-import app.dto.response.CabinetResponse;
+import app.model.dto.request.CabinetsRequest;
+import app.model.dto.response.CabinetResponse;
 
 import java.util.List;
 

@@ -1,11 +1,11 @@
 package app.service;
 
-import app.converters.StudentSubgroupMapper;
+import app.model.mapper.StudentSubgroupMapper;
 import app.dao.interfaces.StudentSubgroupRepository;
-import app.dto.request.StudentSubgroupRequest;
-import app.dto.response.StudentSubgroupResponse;
-import app.entity.StudentGroup;
-import app.entity.StudentSubgroup;
+import app.model.dto.request.StudentSubgroupRequest;
+import app.model.dto.response.StudentSubgroupResponse;
+import app.model.entity.StudentGroup;
+import app.model.entity.StudentSubgroup;
 import app.exception.ErrorMessages;
 import app.exception.StudentSubgroupException;
 import app.service.interfaces.StudentGroupService;

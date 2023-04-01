@@ -1,7 +1,7 @@
 package app.controller;
 
-import app.dto.request.TeacherRequest;
-import app.dto.response.TeacherResponse;
+import app.model.dto.request.TeacherRequest;
+import app.model.dto.response.TeacherResponse;
 import app.service.interfaces.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

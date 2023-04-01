@@ -1,8 +1,8 @@
 package app.service.interfaces;
 
-import app.dto.request.StudentGroupRequest;
-import app.dto.response.StudentGroupResponse;
-import app.entity.StudentGroup;
+import app.model.dto.request.StudentGroupRequest;
+import app.model.dto.response.StudentGroupResponse;
+import app.model.entity.StudentGroup;
 
 import java.util.List;
 

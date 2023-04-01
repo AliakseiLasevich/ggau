@@ -1,7 +1,7 @@
 package app.controller;
 
-import app.dto.request.BuildingRequest;
-import app.dto.response.BuildingResponse;
+import app.model.dto.request.BuildingRequest;
+import app.model.dto.response.BuildingResponse;
 import app.service.interfaces.BuildingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

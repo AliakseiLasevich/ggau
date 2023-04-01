@@ -1,7 +1,7 @@
 package app.controller;
 
-import app.dto.request.DisciplineRequest;
-import app.dto.response.DisciplineResponse;
+import app.model.dto.request.DisciplineRequest;
+import app.model.dto.response.DisciplineResponse;
 import app.service.interfaces.DisciplineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

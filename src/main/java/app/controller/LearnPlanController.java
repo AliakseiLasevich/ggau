@@ -1,7 +1,7 @@
 package app.controller;
 
-import app.dto.request.LearnPlanRequest;
-import app.dto.response.LearnPlanResponse;
+import app.model.dto.request.LearnPlanRequest;
+import app.model.dto.response.LearnPlanResponse;
 import app.service.interfaces.LearnPlanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;

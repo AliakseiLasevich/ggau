@@ -1,7 +1,7 @@
 package app.controller;
 
-import app.dto.request.StudentCourseRequest;
-import app.dto.response.StudentCourseResponse;
+import app.model.dto.request.StudentCourseRequest;
+import app.model.dto.response.StudentCourseResponse;
 import app.service.interfaces.StudentCourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

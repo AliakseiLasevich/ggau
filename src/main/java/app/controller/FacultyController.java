@@ -1,9 +1,7 @@
 package app.controller;
 
-import app.dto.request.FacultyRequest;
-import app.dto.response.FacultyResponse;
-import app.exception.ErrorMessages;
-import app.exception.FacultyException;
+import app.model.dto.request.FacultyRequest;
+import app.model.dto.response.FacultyResponse;
 import app.service.interfaces.FacultyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

@@ -1,11 +1,11 @@
 package app.service;
 
-import app.converters.TeacherMapper;
+import app.model.mapper.TeacherMapper;
 import app.dao.interfaces.TeacherRepository;
-import app.dto.request.TeacherRequest;
-import app.dto.response.TeacherResponse;
-import app.entity.Cathedra;
-import app.entity.Teacher;
+import app.model.dto.request.TeacherRequest;
+import app.model.dto.response.TeacherResponse;
+import app.model.entity.Cathedra;
+import app.model.entity.Teacher;
 import app.exception.ErrorMessages;
 import app.exception.TeacherException;
 import app.service.interfaces.CathedraService;
