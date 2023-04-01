@@ -1,6 +1,5 @@
 package app.model.entity;
 
-import app.model.Interfaces.EntityInterface;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -24,7 +23,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class StudentGroup implements Serializable, EntityInterface {
+public class StudentGroup implements Serializable {
 
     @Id
     @Column(name = "id")

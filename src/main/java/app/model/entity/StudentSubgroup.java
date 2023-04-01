@@ -1,6 +1,5 @@
 package app.model.entity;
 
-import app.model.Interfaces.EntityInterface;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -22,7 +21,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @NoArgsConstructor
-public class StudentSubgroup implements Serializable, EntityInterface {
+public class StudentSubgroup implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,6 +1,5 @@
 package app.model.entity;
 
-import app.model.Interfaces.EntityInterface;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -25,7 +24,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 //@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-public class Building implements Serializable, EntityInterface {
+public class Building implements Serializable {
 
     @Id
     @Column(name = "id")

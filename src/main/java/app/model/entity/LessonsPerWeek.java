@@ -1,6 +1,5 @@
 package app.model.entity;
 
-import app.model.Interfaces.EntityInterface;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -16,7 +15,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class LessonsPerWeek implements EntityInterface {
+public class LessonsPerWeek {
 
     @Id
     @Column(name = "id")

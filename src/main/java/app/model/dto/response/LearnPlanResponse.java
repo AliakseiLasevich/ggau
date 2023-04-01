@@ -1,6 +1,5 @@
 package app.model.dto.response;
 
-import app.model.Interfaces.ResponseInterface;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,7 +10,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class LearnPlanResponse implements ResponseInterface {
+public class LearnPlanResponse {
 
     private LocalDate startDate;
     private LocalDate endDate;

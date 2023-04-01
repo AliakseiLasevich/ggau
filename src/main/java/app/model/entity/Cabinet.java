@@ -1,6 +1,5 @@
 package app.model.entity;
 
-import app.model.Interfaces.EntityInterface;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -21,7 +20,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Cabinet implements Serializable, EntityInterface {
+public class Cabinet implements Serializable {
 
     @Id
     @Column(name = "id")

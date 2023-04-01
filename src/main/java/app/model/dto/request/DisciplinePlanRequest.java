@@ -1,7 +1,5 @@
 package app.model.dto.request;
 
-import app.model.Interfaces.RequestInterface;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,7 +10,7 @@ import java.util.Map;
 @Getter
 @Setter
 @NoArgsConstructor
-public class DisciplinePlanRequest implements RequestInterface {
+public class DisciplinePlanRequest {
 
     private String disciplinePublicId;
     private int hoursSummary;

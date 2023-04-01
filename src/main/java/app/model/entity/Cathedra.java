@@ -1,6 +1,5 @@
 package app.model.entity;
 
-import app.model.Interfaces.EntityInterface;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.Column;
@@ -27,7 +26,7 @@ import java.util.List;
 @NoArgsConstructor
 @Table(name = "cathedras")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-public class Cathedra implements Serializable, EntityInterface {
+public class Cathedra implements Serializable {
 
     @Id
     @Column(name = "id")

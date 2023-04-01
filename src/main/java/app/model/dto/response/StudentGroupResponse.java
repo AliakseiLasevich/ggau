@@ -1,6 +1,5 @@
 package app.model.dto.response;
 
-import app.model.Interfaces.ResponseInterface;
 import lombok.AllArgsConstructor;
 
 import lombok.Getter;
@@ -13,7 +12,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class StudentGroupResponse implements ResponseInterface {
+public class StudentGroupResponse {
 
     private String publicId;
     private int number;

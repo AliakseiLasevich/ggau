@@ -1,6 +1,5 @@
 package app.model.dto.response;
 
-import app.model.Interfaces.ResponseInterface;
 import lombok.AllArgsConstructor;
 
 import lombok.Getter;
@@ -11,7 +10,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class SpecialtyResponse implements ResponseInterface {
+public class SpecialtyResponse {
 
     private String publicId;
     private String name;

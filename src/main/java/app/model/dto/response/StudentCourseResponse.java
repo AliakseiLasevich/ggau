@@ -1,6 +1,5 @@
 package app.model.dto.response;
 
-import app.model.Interfaces.ResponseInterface;
 import lombok.AllArgsConstructor;
 
 import lombok.Getter;
@@ -12,7 +11,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class StudentCourseResponse implements ResponseInterface {
+public class StudentCourseResponse {
 
     private String publicId;
     private int courseNumber;

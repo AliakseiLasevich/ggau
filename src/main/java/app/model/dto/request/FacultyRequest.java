@@ -1,7 +1,6 @@
 package app.model.dto.request;
 
 
-import app.model.Interfaces.RequestInterface;
 import lombok.AllArgsConstructor;
 
 import lombok.Getter;
@@ -12,7 +11,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class FacultyRequest implements RequestInterface {
+public class FacultyRequest {
 
     private String publicId;
     private String name;

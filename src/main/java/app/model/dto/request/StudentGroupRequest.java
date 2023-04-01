@@ -1,6 +1,5 @@
 package app.model.dto.request;
 
-import app.model.Interfaces.RequestInterface;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class StudentGroupRequest implements RequestInterface {
+public class StudentGroupRequest {
 
     private int number;
     private String courseId;

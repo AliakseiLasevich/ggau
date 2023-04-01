@@ -1,6 +1,5 @@
 package app.model.dto.response;
 
-import app.model.Interfaces.ResponseInterface;
 import app.model.entity.LessonsPerWeek;
 
 import lombok.Getter;
@@ -13,7 +12,7 @@ import java.util.Map;
 @Getter
 @Setter
 @NoArgsConstructor
-public class DisciplinePlanResponse implements ResponseInterface {
+public class DisciplinePlanResponse {
     private String publicId;
     private DisciplineResponse discipline;
     private int hoursSummary;

@@ -1,7 +1,5 @@
 package app.model.dto.response;
 
-import app.model.Interfaces.ResponseInterface;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,7 +10,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 
-public class ErrorMessage implements ResponseInterface {
+public class ErrorMessage {
     private LocalDateTime timestamp;
     private String message;
     private String details;

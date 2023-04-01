@@ -1,6 +1,5 @@
 package app.model.dto.response;
 
-import app.model.Interfaces.ResponseInterface;
 import app.model.entity.LessonType;
 
 import lombok.Getter;
@@ -13,7 +12,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class LessonResponse implements ResponseInterface {
+public class LessonResponse {
 
     private String publicId;
     private LessonType type;
