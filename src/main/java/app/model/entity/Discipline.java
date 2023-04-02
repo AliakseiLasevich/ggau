@@ -11,15 +11,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.io.Serializable;
-
 
 @Entity
 @Table(name = "disciplines")
 @Getter
 @Setter
 @NoArgsConstructor
-public class Discipline implements Serializable {
+public class Discipline {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

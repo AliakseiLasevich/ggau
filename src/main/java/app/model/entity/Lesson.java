@@ -17,7 +17,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -26,7 +25,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Lesson implements Serializable {
+public class Lesson {
 
     @Id
     @Column(name = "id")

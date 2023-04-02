@@ -13,14 +13,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.io.Serializable;
 
 @Entity
 @Table(name = "cabinets")
 @Getter
 @Setter
 @NoArgsConstructor
-public class Cabinet implements Serializable {
+public class Cabinet {
 
     @Id
     @Column(name = "id")

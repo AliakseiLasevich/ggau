@@ -14,14 +14,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.io.Serializable;
 
 @Entity
 @Table(name = "student_subgroups")
 @Getter
 @Setter
 @NoArgsConstructor
-public class StudentSubgroup implements Serializable {
+public class StudentSubgroup {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
