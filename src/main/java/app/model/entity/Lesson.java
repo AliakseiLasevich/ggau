@@ -29,8 +29,8 @@ public class Lesson {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(generator = "custom-id")
+    private String id;
 
     @Column(name = "public_id")
     private String publicId;
@@ -42,8 +42,8 @@ public class Lesson {
     private LessonType type;
 
     //  1/8 lesson per day
-    @Column(name = "order")
-    private int order;
+    @Column(name = "order_number")
+    private int orderNumber;
 
     @Column(name = "date_time")
     private LocalDateTime dateTime;

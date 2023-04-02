@@ -19,6 +19,9 @@ import java.util.stream.Collectors;
 public class BuildingServiceImpl implements BuildingService {
 
     @Autowired
+    BuildingMapper buildingMapper;
+
+    @Autowired
     BuildingRepository buildingRepository;
 
     @Override
@@ -42,14 +45,26 @@ public class BuildingServiceImpl implements BuildingService {
 
     @Override
     public BuildingResponse createBuilding(BuildingRequest buildingRequest) {
-        checkBuildingNotExist(buildingRequest);
-        Building building = BuildingMapper.INSTANCE.requestToEntity(buildingRequest);
-        building.setPublicId(UUID.randomUUID().toString());
-        buildingRepository.save(building);
-        return BuildingMapper.INSTANCE.entityToResponse(building);
+        validateRequest(buildingRequest);
+        validateBuildingNotExist(buildingRequest);
+        Building building = saveBuilding(buildingRequest);
+        return buildingMapper.entityToResponse(building);
     }
 
-    private void checkBuildingNotExist(BuildingRequest buildingRequest) {
+    private Building saveBuilding(BuildingRequest buildingRequest) {
+        Building building = buildingMapper.requestToEntity(buildingRequest);
+        building.setPublicId(UUID.randomUUID().toString());
+        buildingRepository.save(building);
+        return building;
+    }
+
+    private void validateRequest(BuildingRequest buildingRequest) {
+        if (buildingRequest == null) {
+            throw new BuildingException("Building can't be null");
+        }
+    }
+
+    private void validateBuildingNotExist(BuildingRequest buildingRequest) {
         Building b = buildingRepository.findByNameAndActiveTrue(buildingRequest.getName());
         if (b != null) {
             throw new BuildingException(ErrorMessages.RECORD_ALREADY_EXISTS.getErrorMessage());

@@ -7,7 +7,7 @@
 
     <changeSet id="1" author="Aliaksei Lasevich">
         <createTable tableName="buildings">
-            <column name="id" type="bigint" autoIncrement="true">
+            <column name="id" type="VARCHAR(50)" autoIncrement="true">
                 <constraints primaryKey="true" primaryKeyName="buildings_pkey"/>
             </column>
             <column name="public_id" type="VARCHAR(255)">
@@ -42,7 +42,7 @@
             <column name="active" type="boolean">
                 <constraints nullable="false"/>
             </column>
-            <column name="building_id" type="bigint">
+            <column name="building_id" type="VARCHAR(50)">
                 <constraints nullable="false" foreignKeyName="building_fk"
                              referencedTableName="buildings"
                              referencedColumnNames="id"/>
@@ -364,7 +364,7 @@
 
     <changeSet id="13" author="Aliaksei Lasevich">
         <createTable tableName="lessons">
-            <column name="id" type="bigint" autoIncrement="true">
+            <column name="id" type="VARCHAR(50)">
                 <constraints primaryKey="true" primaryKeyName="lessons_pkey"/>
             </column>
             <column name="public_id" type="VARCHAR(255)">
@@ -376,7 +376,7 @@
             <column name="type" type="VARCHAR(100)">
                 <constraints nullable="false"/>
             </column>
-            <column name="order" type="INT(2)">
+            <column name="order_number" type="INT(2)">
                 <constraints nullable="false"/>
             </column>
             <column name="date_time" type="DATETIME">
@@ -404,7 +404,7 @@
 
     <changeSet id="15" author="Aliaksei Lasevich">
         <createTable tableName="lessons_student_subgroups">
-            <column name="lesson_id" type="bigint">
+            <column name="lesson_id" type="VARCHAR(50)">
                 <constraints nullable="false" foreignKeyName="lessons_std_subgroups_fk"
                              referencedTableName="lessons"
                              referencedColumnNames="id"/>
