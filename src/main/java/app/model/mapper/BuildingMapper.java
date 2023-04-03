@@ -8,6 +8,4 @@ import org.mapstruct.factory.Mappers;
 
 @Mapper(uses = BuildingMapper.class, componentModel = "spring")
 public interface BuildingMapper extends AbstractMapper<Building, BuildingRequest, BuildingResponse> {
-
-    BuildingMapper INSTANCE = Mappers.getMapper(BuildingMapper.class);
 }

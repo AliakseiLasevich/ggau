@@ -10,9 +10,9 @@ import java.util.List;
 @Service
 public interface BuildingService {
 
-    List<BuildingResponse> findBuildings();
+    List<BuildingResponse> getAll();
 
-    BuildingResponse findById(String publicId);
+    BuildingResponse getById(String publicId);
 
     BuildingResponse createBuilding(BuildingRequest buildingRequest);
 
