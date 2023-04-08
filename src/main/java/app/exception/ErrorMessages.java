@@ -1,5 +1,10 @@
 package app.exception;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@Getter
+@AllArgsConstructor
 public enum ErrorMessages {
     NO_FACULTY_FOUND("Данный факультет не найден."),
     NO_CATHEDRA_FOUND("Данная кафедра не найдена."),
@@ -13,21 +18,7 @@ public enum ErrorMessages {
     NO_DISCIPLINE_FOUND("Учебная дисциплина не найдена."),
     NO_LEARN_PLAN_FOUND("Учебный план не найден."),
     MISSING_REQUIRED_FIELD("Не достаточно данных. Проверьте правильность ввода."),
-    RECORD_ALREADY_EXISTS("Запись уже содержится в базе данных.");
-
-
+    RECORD_ALREADY_EXISTS("Запись уже содержится в базе данных: %s");
 
     private String errorMessage;
-
-    ErrorMessages(String errorMessage) {
-        this.errorMessage = errorMessage;
-    }
-
-    public String getErrorMessage() {
-        return errorMessage;
-    }
-
-    public void setErrorMessage(String errorMessage) {
-        this.errorMessage = errorMessage;
-    }
 }

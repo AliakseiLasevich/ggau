@@ -3,7 +3,8 @@ package app.controller;
 import app.model.dto.request.BuildingRequest;
 import app.model.dto.response.BuildingResponse;
 import app.service.interfaces.BuildingService;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,10 +21,9 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/rest/buildings")
+@RequiredArgsConstructor
 public class BuildingController {
-
-    @Autowired
-    private BuildingService buildingService;
+    private final BuildingService buildingService;
 
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseStatus(HttpStatus.OK)
@@ -38,7 +38,7 @@ public class BuildingController {
 
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseStatus(HttpStatus.CREATED)
-    public BuildingResponse postBuilding(@RequestBody BuildingRequest buildingRequest) {
+    public BuildingResponse postBuilding(@RequestBody @Valid BuildingRequest buildingRequest) {
         return buildingService.createBuilding(buildingRequest);
     }
 
