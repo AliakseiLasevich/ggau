@@ -43,14 +43,14 @@ public class CathedraService {
     }
 
     @Transactional
-    public CathedraResponse createCathedra(CathedraRequest cathedraRequest, String facultyId) {
+    public CathedraResponse createCathedra(CathedraRequest cathedraRequest) {
         Cathedra cathedra = cathedraRepository.findByNameAndActiveTrue(cathedraRequest.getName());
         if (cathedra != null) {
             throw new CathedraException(ErrorMessages.RECORD_ALREADY_EXISTS.getErrorMessage());
         }
         cathedra = cathedraMapper.requestToEntity(cathedraRequest);
         cathedra.setPublicId(UUID.randomUUID().toString());
-        Faculty faculty = facultyService.findEntityByPublicId(facultyId);
+        Faculty faculty = facultyService.findEntityByPublicId(cathedraRequest.getFacultyId());
         cathedra.setFaculty(faculty);
         Cathedra saved = cathedraRepository.save(cathedra);
         return cathedraMapper.entityToResponse(saved);

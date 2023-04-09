@@ -84,16 +84,16 @@ class CathedraServiceTest {
         Cathedra cathedra = createCathedra();
         when(cathedraRepository.findByNameAndActiveTrue(cathedraRequest.getName())).thenReturn(null);
         when(cathedraMapper.requestToEntity(cathedraRequest)).thenReturn(cathedra);
-        when(facultyService.findEntityByPublicId("1")).thenReturn(faculty);
+        when(facultyService.findEntityByPublicId("faculty-id-123")).thenReturn(faculty);
         when(cathedraRepository.save(cathedra)).thenReturn(cathedra);
         when(cathedraMapper.entityToResponse(any())).thenReturn(CathedraResponse.builder().build());
         // when
-        CathedraResponse result = cathedraService.createCathedra(cathedraRequest, "1");
+        CathedraResponse result = cathedraService.createCathedra(cathedraRequest);
 
         // then
         verify(cathedraRepository, times(1)).findByNameAndActiveTrue(cathedraRequest.getName());
         verify(cathedraMapper, times(1)).requestToEntity(cathedraRequest);
-        verify(facultyService, times(1)).findEntityByPublicId("1");
+        verify(facultyService, times(1)).findEntityByPublicId("faculty-id-123");
         verify(cathedraRepository, times(1)).save(cathedra);
         verify(cathedraMapper, times(1)).entityToResponse(any());
 
@@ -106,7 +106,7 @@ class CathedraServiceTest {
         Cathedra cathedra = createCathedra();
         when(cathedraRepository.findByNameAndActiveTrue(cathedraRequest.getName())).thenReturn(cathedra);
 
-        assertThrows(CathedraException.class, () -> cathedraService.createCathedra(cathedraRequest, "1"));
+        assertThrows(CathedraException.class, () -> cathedraService.createCathedra(cathedraRequest));
     }
 
     public Faculty createFaculty() {

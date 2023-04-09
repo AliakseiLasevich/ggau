@@ -3,8 +3,8 @@ package app.controller;
 import app.model.dto.request.DisciplineRequest;
 import app.model.dto.response.DisciplineResponse;
 import app.service.DisciplineService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -24,7 +24,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DisciplineController {
 
-    @Autowired
     private final DisciplineService disciplineService;
 
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
@@ -40,12 +39,12 @@ public class DisciplineController {
 
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseStatus(code = HttpStatus.CREATED)
-    public DisciplineResponse createDiscipline(@RequestBody DisciplineRequest disciplineRequest) {
+    public DisciplineResponse createDiscipline(@RequestBody @Valid DisciplineRequest disciplineRequest) {
         return disciplineService.createDiscipline(disciplineRequest);
     }
 
     @PutMapping("/{publicId}")
-    public DisciplineResponse updateDiscipline(@RequestBody DisciplineRequest disciplineRequest, @PathVariable String publicId) {
+    public DisciplineResponse updateDiscipline(@RequestBody @Valid DisciplineRequest disciplineRequest, @PathVariable String publicId) {
         return disciplineService.updateDiscipline(disciplineRequest, publicId);
     }
 

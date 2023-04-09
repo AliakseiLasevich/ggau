@@ -3,7 +3,8 @@ package app.controller;
 import app.model.dto.request.CathedraRequest;
 import app.model.dto.response.CathedraResponse;
 import app.service.CathedraService;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,11 +20,11 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/rest/cathedras")
 public class CathedraController {
 
-    @Autowired
-    private CathedraService cathedraService;
+    private final CathedraService cathedraService;
 
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseStatus(HttpStatus.OK)
@@ -31,16 +32,15 @@ public class CathedraController {
         return cathedraService.getAll();
     }
 
-    @PostMapping(value = "/faculties/{facultyId}", consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseStatus(HttpStatus.CREATED)
-    public void postCathedra(@RequestBody CathedraRequest cathedraRequest, @PathVariable String facultyId) {
-        cathedraService.createCathedra(cathedraRequest, facultyId);
+    public void postCathedra(@RequestBody @Valid CathedraRequest cathedraRequest) {
+        cathedraService.createCathedra(cathedraRequest);
     }
 
     @PutMapping("/{publicId}")
     @ResponseStatus(HttpStatus.OK)
-    public void putCathedra(@RequestBody CathedraRequest cathedraRequest,
-                            @PathVariable String publicId) {
+    public void putCathedra(@RequestBody @Valid CathedraRequest cathedraRequest, @PathVariable String publicId) {
         cathedraService.updateCathedra(cathedraRequest, publicId);
     }
 
