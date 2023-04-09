@@ -8,8 +8,6 @@ import app.model.dto.response.CabinetResponse;
 import app.model.entity.Building;
 import app.model.entity.Cabinet;
 import app.model.mapper.CabinetMapper;
-import app.service.interfaces.BuildingService;
-import app.service.interfaces.CabinetService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -23,12 +21,11 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class CabinetServiceImpl implements CabinetService {
+public class CabinetService {
     private final CabinetRepository cabinetRepository;
     private final BuildingService buildingService;
     private final CabinetMapper cabinetMapper;
 
-    @Override
     public CabinetResponse findById(String publicId) {
         Cabinet cabinet = getCabinet(publicId);
         return cabinetMapper.entityToResponse(cabinet);
@@ -42,14 +39,12 @@ public class CabinetServiceImpl implements CabinetService {
                 });
     }
 
-    @Override
     public List<CabinetResponse> findAll() {
         return cabinetRepository.findByActiveTrueAndBuildingActiveTrue().stream()
                 .map(cabinetMapper::entityToResponse)
                 .collect(Collectors.toList());
     }
 
-    @Override
     @Transactional
     public CabinetResponse createCabinet(CabinetRequest cabinetRequest) {
         Building building = buildingService.getBuildingById(cabinetRequest.getBuildingId());
@@ -65,7 +60,6 @@ public class CabinetServiceImpl implements CabinetService {
         return cabinetMapper.entityToResponse(cabinet);
     }
 
-    @Override
     @Transactional
     public CabinetResponse updateCabinet(CabinetRequest cabinetRequest, String publicId) {
         Cabinet cabinet = getCabinet(publicId);
@@ -79,7 +73,6 @@ public class CabinetServiceImpl implements CabinetService {
         return cabinetMapper.entityToResponse(cabinet);
     }
 
-    @Override
     @Transactional
     public void deleteCabinet(String publicId) {
         Cabinet cabinet = getCabinet(publicId);

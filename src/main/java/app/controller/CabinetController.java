@@ -2,7 +2,7 @@ package app.controller;
 
 import app.model.dto.request.CabinetRequest;
 import app.model.dto.response.CabinetResponse;
-import app.service.interfaces.CabinetService;
+import app.service.CabinetService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

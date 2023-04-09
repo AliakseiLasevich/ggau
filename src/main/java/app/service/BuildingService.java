@@ -7,7 +7,6 @@ import app.model.dto.request.BuildingRequest;
 import app.model.dto.response.BuildingResponse;
 import app.model.entity.Building;
 import app.model.mapper.BuildingMapper;
-import app.service.interfaces.BuildingService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -18,13 +17,11 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class BuildingServiceImpl implements BuildingService {
+public class BuildingService {
 
     private final BuildingMapper buildingMapper;
     private final BuildingRepository buildingRepository;
 
-
-    @Override
     public List<BuildingResponse> getAll() {
         var buildings = buildingRepository.findAllByActiveTrue();
         return buildings.stream()
@@ -32,13 +29,13 @@ public class BuildingServiceImpl implements BuildingService {
                 .collect(Collectors.toList());
     }
 
-    @Override
+
     public BuildingResponse getById(String publicId) {
         var building = getBuildingById(publicId);
         return buildingMapper.entityToResponse(building);
     }
 
-    @Override
+
     public BuildingResponse createBuilding(BuildingRequest buildingRequest) {
         validateBuildingByName(buildingRequest);
         var building = buildingRepository.save(buildingMapper.requestToEntity(buildingRequest));
@@ -53,7 +50,7 @@ public class BuildingServiceImpl implements BuildingService {
         }
     }
 
-    @Override
+
     public BuildingResponse updateBuilding(BuildingRequest buildingRequest, String publicId) {
         Building buildingToUpdate = getBuildingById(publicId);
         buildingToUpdate.setName(buildingRequest.getName());
@@ -61,7 +58,7 @@ public class BuildingServiceImpl implements BuildingService {
         return buildingMapper.entityToResponse(buildingToUpdate);
     }
 
-    @Override
+
     public void deleteBuilding(String publicId) {
         Building buildingToUpdate = getBuildingById(publicId);
         buildingToUpdate.setActive(false);

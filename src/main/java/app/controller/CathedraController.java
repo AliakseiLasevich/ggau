@@ -2,7 +2,7 @@ package app.controller;
 
 import app.model.dto.request.CathedraRequest;
 import app.model.dto.response.CathedraResponse;
-import app.service.interfaces.CathedraService;
+import app.service.CathedraService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

@@ -8,7 +8,6 @@ import app.model.dto.response.CathedraResponse;
 import app.model.entity.Cathedra;
 import app.model.entity.Faculty;
 import app.model.mapper.CathedraMapper;
-import app.service.interfaces.CathedraService;
 import app.service.interfaces.FacultyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,13 +19,12 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class CathedraServiceImpl implements CathedraService {
+public class CathedraService {
 
     private final CathedraRepository cathedraRepository;
     private final FacultyService facultyService;
     private final CathedraMapper cathedraMapper;
 
-    @Override
     public Cathedra findByPublicId(String cathedraId) {
         return getCathedra(cathedraId);
     }
@@ -35,7 +33,6 @@ public class CathedraServiceImpl implements CathedraService {
         return cathedraRepository.findByPublicIdAndActiveTrue(cathedraId).orElseThrow(() -> new CathedraException("Cathedra not found: " + cathedraId));
     }
 
-    @Override
     public List<CathedraResponse> getAll() {
         List<Cathedra> cathedras = cathedraRepository.findAllByActiveTrue();
         return cathedras.stream()
@@ -43,7 +40,6 @@ public class CathedraServiceImpl implements CathedraService {
                 .collect(Collectors.toList());
     }
 
-    @Override
     @Transactional
     public Cathedra createCathedra(CathedraRequest cathedraRequest, String facultyId) {
         Cathedra cathedra = cathedraRepository.findByNameAndActiveTrue(cathedraRequest.getName());
@@ -57,7 +53,7 @@ public class CathedraServiceImpl implements CathedraService {
         return cathedraRepository.save(cathedra);
     }
 
-    @Override
+
     @Transactional
     public Cathedra updateCathedra(CathedraRequest cathedraRequest, String publicId) {
         Cathedra cathedra = getCathedra(publicId);
@@ -68,7 +64,6 @@ public class CathedraServiceImpl implements CathedraService {
     }
 
 
-    @Override
     @Transactional
     public void deleteCathedra(String publicId) {
         Cathedra cathedra = getCathedra(publicId);

@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class CathedraServiceImplTest {
+class CathedraServiceTest {
 
 
     @Mock
@@ -36,7 +36,7 @@ class CathedraServiceImplTest {
     private CathedraMapper cathedraMapper;
 
     @InjectMocks
-    private CathedraServiceImpl cathedraService;
+    private CathedraService cathedraService;
 
     private static final String PUBLIC_ID = "12345";
 

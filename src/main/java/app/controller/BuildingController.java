@@ -2,7 +2,7 @@ package app.controller;
 
 import app.model.dto.request.BuildingRequest;
 import app.model.dto.response.BuildingResponse;
-import app.service.interfaces.BuildingService;
+import app.service.BuildingService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

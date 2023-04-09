@@ -8,7 +8,6 @@ import app.model.entity.Cathedra;
 import app.model.entity.Teacher;
 import app.exception.ErrorMessages;
 import app.exception.TeacherException;
-import app.service.interfaces.CathedraService;
 import app.service.interfaces.TeacherService;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;

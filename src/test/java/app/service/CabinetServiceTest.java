@@ -8,7 +8,6 @@ import app.model.entity.Building;
 import app.model.entity.Cabinet;
 import app.model.enums.CabinetType;
 import app.model.mapper.CabinetMapper;
-import app.service.interfaces.BuildingService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -30,7 +29,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class CabinetServiceImplTest {
+class CabinetServiceTest {
 
     @Mock
     private CabinetRepository cabinetRepository;
@@ -42,7 +41,7 @@ class CabinetServiceImplTest {
     private CabinetMapper cabinetMapper;
 
     @InjectMocks
-    private CabinetServiceImpl cabinetService;
+    private CabinetService cabinetService;
 
     private static final String CABINET_ID = "cabinet-id";
     private static final String BUILDING_ID = "building-id";

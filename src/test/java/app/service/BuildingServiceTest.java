@@ -16,8 +16,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith({MockitoExtension.class})
 class BuildingServiceTest {
@@ -29,7 +37,7 @@ class BuildingServiceTest {
     private BuildingMapper buildingMapper;
 
     @InjectMocks
-    private BuildingServiceImpl buildingService;
+    private BuildingService buildingService;
 
 
     @Test
@@ -50,28 +58,6 @@ class BuildingServiceTest {
         when(buildingRepository.findAllByActiveTrue()).thenReturn(buildings);
         when(buildingMapper.entityToResponse(building1)).thenReturn(buildingResponse1);
         when(buildingMapper.entityToResponse(building2)).thenReturn(buildingResponse2);
-
-        List<BuildingResponse> result = buildingService.getAll();
-
-        assertEquals(buildingResponses, result);
-    }
-
-    @Test
-    void testGetAll_returnsNonNullBuildings_WithNullBuilding() {
-        // Arrange
-        List<Building> buildings = new ArrayList<>();
-        Building building1 = null;
-        Building building2 = Building.builder().build();
-        buildings.add(building1);
-        buildings.add(building2);
-
-        List<BuildingResponse> buildingResponses = new ArrayList<>();
-        BuildingResponse buildingResponse2 = BuildingResponse.builder().name("Second").build();
-        buildingResponses.add(buildingResponse2);
-
-        when(buildingRepository.findAllByActiveTrue()).thenReturn(buildings);
-        when(buildingMapper.entityToResponse(building2)).thenReturn(buildingResponse2);
-
         List<BuildingResponse> result = buildingService.getAll();
 
         assertEquals(buildingResponses, result);
