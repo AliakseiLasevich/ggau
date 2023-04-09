@@ -43,7 +43,7 @@ public class BuildingController {
     }
 
     @PutMapping(value = "/{publicId}", consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public BuildingResponse putBuilding(@RequestBody BuildingRequest buildingRequest, @PathVariable String publicId) {
+    public BuildingResponse putBuilding(@RequestBody @Valid BuildingRequest buildingRequest, @PathVariable String publicId) {
         return buildingService.updateBuilding(buildingRequest, publicId);
     }
 

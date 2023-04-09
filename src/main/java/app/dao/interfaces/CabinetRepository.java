@@ -7,15 +7,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface CabinetRepository extends JpaRepository<Cabinet, Long> {
 
     List<Cabinet> findByActiveTrueAndBuildingActiveTrue();
 
-    Cabinet findByPublicIdAndActiveTrue(String publicId);
-
-    List<Cabinet> findAllByBuildingAndActiveTrue(Building building);
+    Optional<Cabinet> findByPublicIdAndActiveTrue(String publicId);
 
     Cabinet findByNumberAndBuildingAndActiveTrue(String number, Building building);
 

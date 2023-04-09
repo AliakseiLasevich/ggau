@@ -13,7 +13,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -29,10 +28,7 @@ public class BuildingServiceImpl implements BuildingService {
     public List<BuildingResponse> getAll() {
         var buildings = buildingRepository.findAllByActiveTrue();
         return buildings.stream()
-                .map(building -> Optional.ofNullable(building)
-                        .map(buildingMapper::entityToResponse))
-                .filter(Optional::isPresent)
-                .map(Optional::get)
+                .map(buildingMapper::entityToResponse)
                 .collect(Collectors.toList());
     }
 

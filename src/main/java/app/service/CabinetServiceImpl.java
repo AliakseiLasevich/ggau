@@ -1,16 +1,18 @@
 package app.service;
 
-import app.model.mapper.CabinetMapper;
 import app.dao.interfaces.CabinetRepository;
-import app.model.dto.request.CabinetsRequest;
+import app.exception.CabinetException;
+import app.exception.ErrorMessages;
+import app.model.dto.request.CabinetRequest;
 import app.model.dto.response.CabinetResponse;
 import app.model.entity.Building;
 import app.model.entity.Cabinet;
-import app.exception.CabinetException;
-import app.exception.ErrorMessages;
+import app.model.mapper.CabinetMapper;
 import app.service.interfaces.BuildingService;
 import app.service.interfaces.CabinetService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,34 +21,25 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
-@Transactional
 @RequiredArgsConstructor
-
+@Slf4j
 public class CabinetServiceImpl implements CabinetService {
-
     private final CabinetRepository cabinetRepository;
-
     private final BuildingService buildingService;
-
     private final CabinetMapper cabinetMapper;
-
-//    @Autowired
-//    public CabinetServiceImpl(CabinetRepository cabinetRepository, BuildingService buildingService) {
-//        this.cabinetRepository = cabinetRepository;
-//        this.buildingService = buildingService;
-//    }
 
     @Override
     public CabinetResponse findById(String publicId) {
-        Cabinet cabinet = cabinetRepository.findByPublicIdAndActiveTrue(publicId);
-        checkCabinetExists(cabinet);
+        Cabinet cabinet = getCabinet(publicId);
         return cabinetMapper.entityToResponse(cabinet);
     }
 
-    private void checkCabinetExists(Cabinet cabinet) {
-        if (cabinet == null) {
-            throw new CabinetException(ErrorMessages.NO_CABINET_FOUND.getErrorMessage());
-        }
+    private Cabinet getCabinet(String publicId) {
+        return cabinetRepository.findByPublicIdAndActiveTrue(publicId)
+                .orElseThrow(() -> {
+                    log.error("Cabinet not found: " + publicId);
+                    return new CabinetException("Cabinet not found: " + publicId);
+                });
     }
 
     @Override
@@ -57,44 +50,39 @@ public class CabinetServiceImpl implements CabinetService {
     }
 
     @Override
-    public List<CabinetResponse> findByBuilding(String buildingId) {
-        Building building = buildingService.findEntityByPublicId(buildingId);
-        return cabinetRepository.findAllByBuildingAndActiveTrue(building).stream()
-                .map(cabinetMapper::entityToResponse)
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public CabinetResponse createCabinet(CabinetsRequest cabinetsRequest) {
-        Building building = buildingService.findEntityByPublicId(cabinetsRequest.getBuildingId());
-        Cabinet cabinet = cabinetRepository.findByNumberAndBuildingAndActiveTrue(cabinetsRequest.getNumber(), building);
+    @Transactional
+    public CabinetResponse createCabinet(CabinetRequest cabinetRequest) {
+        Building building = buildingService.getBuildingById(cabinetRequest.getBuildingId());
+        Cabinet cabinet = cabinetRepository.findByNumberAndBuildingAndActiveTrue(cabinetRequest.getNumber(), building);
         if (cabinet != null) {
             throw new CabinetException(ErrorMessages.RECORD_ALREADY_EXISTS.getErrorMessage());
         }
-        cabinet = cabinetMapper.requestToEntity(cabinetsRequest);
+        cabinet = cabinetMapper.requestToEntity(cabinetRequest);
         cabinet.setPublicId(UUID.randomUUID().toString());
         cabinet.setBuilding(building);
         cabinetRepository.save(cabinet);
+        log.info("Кабинет создан: " + cabinet.getNumber() + "/" + cabinet.getBuilding().getName());
         return cabinetMapper.entityToResponse(cabinet);
     }
 
     @Override
-    public CabinetResponse updateCabinet(CabinetsRequest cabinetsRequest, String publicId) {
-        Cabinet cabinet = cabinetRepository.findByPublicIdAndActiveTrue(publicId);
-        checkCabinetExists(cabinet);
-        Building building = buildingService.findEntityByPublicId(cabinetsRequest.getBuildingId());
-        cabinet.setNumber(cabinetsRequest.getNumber());
-        cabinet.setBuilding(building);
-        cabinet.setMaxStudents(cabinetsRequest.getMaxStudents());
-        cabinet.setType(cabinetsRequest.getType());
+    @Transactional
+    public CabinetResponse updateCabinet(CabinetRequest cabinetRequest, String publicId) {
+        Cabinet cabinet = getCabinet(publicId);
+        if (StringUtils.equals(cabinetRequest.getBuildingId(), cabinet.getBuilding().getPublicId())) {
+            throw new CabinetException("Cabinet can't be moved to other building");
+        }
+        cabinet.setNumber(cabinetRequest.getNumber());
+        cabinet.setMaxStudents(cabinetRequest.getMaxStudents());
+        cabinet.setType(cabinetRequest.getType());
         cabinetRepository.save(cabinet);
         return cabinetMapper.entityToResponse(cabinet);
     }
 
     @Override
+    @Transactional
     public void deleteCabinet(String publicId) {
-        Cabinet cabinet = cabinetRepository.findByPublicIdAndActiveTrue(publicId);
-        checkCabinetExists(cabinet);
+        Cabinet cabinet = getCabinet(publicId);
         cabinet.setActive(false);
         cabinetRepository.save(cabinet);
     }
