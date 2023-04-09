@@ -166,7 +166,7 @@ class CabinetServiceTest {
                 .build();
 
         Cabinet cabinet = Cabinet.builder()
-                .id(1L)
+                .id("1L")
                 .number(CABINET_NUMBER)
                 .maxStudents(MAX_STUDENTS)
                 .type(CABINET_TYPE)

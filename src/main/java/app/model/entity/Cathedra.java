@@ -32,7 +32,7 @@ public class Cathedra {
     @Column(name = "id")
     @GeneratedValue(generator = "custom-id")
     @GenericGenerator(name = "custom-id", strategy = "app.common.CustomIdGenerator")
-    private Long id;
+    private String id;
 
     @Column(name = "public_id")
     private String publicId;

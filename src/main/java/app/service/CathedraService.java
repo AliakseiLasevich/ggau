@@ -10,6 +10,7 @@ import app.model.entity.Faculty;
 import app.model.mapper.CathedraMapper;
 import app.service.interfaces.FacultyService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class CathedraService {
 
     private final CathedraRepository cathedraRepository;
@@ -41,7 +43,7 @@ public class CathedraService {
     }
 
     @Transactional
-    public Cathedra createCathedra(CathedraRequest cathedraRequest, String facultyId) {
+    public CathedraResponse createCathedra(CathedraRequest cathedraRequest, String facultyId) {
         Cathedra cathedra = cathedraRepository.findByNameAndActiveTrue(cathedraRequest.getName());
         if (cathedra != null) {
             throw new CathedraException(ErrorMessages.RECORD_ALREADY_EXISTS.getErrorMessage());
@@ -50,7 +52,8 @@ public class CathedraService {
         cathedra.setPublicId(UUID.randomUUID().toString());
         Faculty faculty = facultyService.findEntityByPublicId(facultyId);
         cathedra.setFaculty(faculty);
-        return cathedraRepository.save(cathedra);
+        Cathedra saved = cathedraRepository.save(cathedra);
+        return cathedraMapper.entityToResponse(saved);
     }
 
 

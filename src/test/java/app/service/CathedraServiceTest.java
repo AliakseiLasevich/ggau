@@ -86,16 +86,17 @@ class CathedraServiceTest {
         when(cathedraMapper.requestToEntity(cathedraRequest)).thenReturn(cathedra);
         when(facultyService.findEntityByPublicId("1")).thenReturn(faculty);
         when(cathedraRepository.save(cathedra)).thenReturn(cathedra);
-
+        when(cathedraMapper.entityToResponse(any())).thenReturn(CathedraResponse.builder().build());
         // when
-        Cathedra result = cathedraService.createCathedra(cathedraRequest, "1");
+        CathedraResponse result = cathedraService.createCathedra(cathedraRequest, "1");
 
         // then
         verify(cathedraRepository, times(1)).findByNameAndActiveTrue(cathedraRequest.getName());
         verify(cathedraMapper, times(1)).requestToEntity(cathedraRequest);
         verify(facultyService, times(1)).findEntityByPublicId("1");
         verify(cathedraRepository, times(1)).save(cathedra);
-        assertEquals(cathedra, result);
+        verify(cathedraMapper, times(1)).entityToResponse(any());
+
     }
 
 
@@ -148,7 +149,7 @@ class CathedraServiceTest {
     void updateCathedra_shouldUpdateCathedraNameAndFaculty() {
         String publicId = "cathedra_public_id";
         Cathedra cathedra = Cathedra.builder()
-                .id(1L)
+                .id("1L")
                 .publicId(publicId)
                 .name("Old Cathedra Name")
                 .active(true)

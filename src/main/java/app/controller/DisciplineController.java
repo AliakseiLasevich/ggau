@@ -2,20 +2,30 @@ package app.controller;
 
 import app.model.dto.request.DisciplineRequest;
 import app.model.dto.response.DisciplineResponse;
-import app.service.interfaces.DisciplineService;
+import app.service.DisciplineService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/rest/disciplines")
+@RequiredArgsConstructor
 public class DisciplineController {
 
     @Autowired
-    private DisciplineService disciplineService;
+    private final DisciplineService disciplineService;
 
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseStatus(code = HttpStatus.OK)

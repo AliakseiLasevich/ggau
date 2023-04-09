@@ -3,6 +3,8 @@ package app.common;
 import app.model.entity.Building;
 import app.model.entity.Cabinet;
 import app.model.entity.Cathedra;
+import app.model.entity.Discipline;
+import app.model.entity.DisciplinePlan;
 import app.model.entity.Faculty;
 import org.hibernate.engine.spi.SharedSessionContractImplementor;
 import org.hibernate.id.IdentifierGenerator;
@@ -24,6 +26,12 @@ public class CustomIdGenerator implements IdentifierGenerator {
             prefix = "CATH";
         } else if (obj instanceof Faculty) {
             prefix = "FCLT";
+        } else if (obj instanceof Discipline) {
+            prefix = "DSPL";
+        } else if (obj instanceof DisciplinePlan) {
+            prefix = "DPLN";
+        } else if (obj instanceof DisciplinePlan) {
+            prefix = "DPLN";
         }
 
         String id;
