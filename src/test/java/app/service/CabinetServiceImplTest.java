@@ -19,9 +19,15 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class CabinetServiceImplTest {
@@ -42,7 +48,7 @@ class CabinetServiceImplTest {
     private static final String BUILDING_ID = "building-id";
 
     @Test
-     testFindById() {
+    void testFindById() {
 
         Cabinet cabinet = new Cabinet();
         cabinet.setPublicId(CABINET_ID);
@@ -60,7 +66,7 @@ class CabinetServiceImplTest {
     }
 
     @Test
-     testFindById_cabinetNotFound() {
+    void testFindById_cabinetNotFound() {
 
         when(cabinetRepository.findByPublicIdAndActiveTrue(CABINET_ID)).thenReturn(Optional.empty());
 
@@ -68,7 +74,7 @@ class CabinetServiceImplTest {
     }
 
     @Test
-     testFindAll() {
+    void testFindAll() {
 
         Building building = new Building();
         building.setId(BUILDING_ID);
@@ -121,7 +127,7 @@ class CabinetServiceImplTest {
     }
 
     @Test
-     testCreateCabinet_duplicateCabinetNumber_throwsException() {
+    void testCreateCabinet_duplicateCabinetNumber_throwsException() {
         String buildingId = "building-id-1";
         String cabinetNumber = "101";
         CabinetRequest cabinetRequest = CabinetRequest.builder()
@@ -141,7 +147,7 @@ class CabinetServiceImplTest {
     }
 
     @Test
-     testCreateCabinet_success() {
+    void testCreateCabinet_success() {
         String BUILDING_ID = "building_id";
         String CABINET_NUMBER = "cabinet_number";
         int MAX_STUDENTS = 50;
@@ -200,7 +206,7 @@ class CabinetServiceImplTest {
     }
 
     @Test
-     testUpdateCabinet_successfulUpdate() {
+    void testUpdateCabinet_successfulUpdate() {
 
         Building building = getBuilding();
         Cabinet cabinet = getCabinet(building);
@@ -256,7 +262,7 @@ class CabinetServiceImplTest {
     }
 
     @Test
-     testUpdateCabinet_differentBuilding_throwsException() {
+    void testUpdateCabinet_differentBuilding_throwsException() {
         Building building = getBuilding();
         Cabinet cabinet = getCabinet(building);
         CabinetRequest cabinetRequest = getCabinetRequest(building);
@@ -268,7 +274,7 @@ class CabinetServiceImplTest {
     }
 
     @Test
-     testUpdateCabinet_cabinetNotFound() {
+    void testUpdateCabinet_cabinetNotFound() {
         Cabinet cabinet = getCabinet(getBuilding());
         CabinetRequest cabinetRequest = getCabinetRequest(getBuilding());
         when(cabinetRepository.findByPublicIdAndActiveTrue(cabinet.getPublicId()))
@@ -302,6 +308,4 @@ class CabinetServiceImplTest {
         assertThrows(CabinetException.class, () -> cabinetService.deleteCabinet(publicId));
         verify(cabinetRepository, never()).save(any());
     }
-
-
 }

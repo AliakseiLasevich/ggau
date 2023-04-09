@@ -1,14 +1,14 @@
 package app.service;
 
-import app.model.mapper.FacultyMapper;
 import app.dao.interfaces.FacultyRepository;
+import app.exception.ErrorMessages;
+import app.exception.FacultyException;
 import app.model.dto.request.FacultyRequest;
 import app.model.dto.response.FacultyResponse;
 import app.model.entity.Faculty;
-import app.exception.ErrorMessages;
-import app.exception.FacultyException;
-import app.service.interfaces.CathedraService;
+import app.model.mapper.FacultyMapper;
 import app.service.interfaces.FacultyService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,22 +17,18 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class FacultyServiceImpl implements FacultyService {
 
     private final FacultyRepository facultyRepository;
-
-    private final CathedraService cathedraService;
-
-    public FacultyServiceImpl(FacultyRepository facultyRepository, CathedraService cathedraService) {
-        this.facultyRepository = facultyRepository;
-        this.cathedraService = cathedraService;
-    }
+    //    private final CathedraService cathedraService;
+    private final FacultyMapper facultyMapper;
 
     @Transactional
     public List<FacultyResponse> findAll() {
         List<Faculty> faculties = facultyRepository.findAllByActiveTrue();
         return faculties.stream()
-                .map(FacultyMapper.INSTANCE::entityToResponse)
+                .map(facultyMapper::entityToResponse)
                 .collect(Collectors.toList());
     }
 
@@ -49,42 +45,45 @@ public class FacultyServiceImpl implements FacultyService {
         if (facultyRepository.findByNameAndActiveTrue(facultyRequest.getName()) != null) {
             throw new FacultyException(ErrorMessages.RECORD_ALREADY_EXISTS.getErrorMessage());
         }
-        Faculty facultyEntity = FacultyMapper.INSTANCE.requestToEntity(facultyRequest);
+        Faculty facultyEntity = facultyMapper.requestToEntity(facultyRequest);
         String uuid = UUID.randomUUID().toString();
         facultyEntity.setPublicId(uuid);
         Faculty storedFaculty = facultyRepository.save(facultyEntity);
-        return FacultyMapper.INSTANCE.entityToResponse(storedFaculty);
+        return facultyMapper.entityToResponse(storedFaculty);
     }
 
     @Transactional
     @Override
     public FacultyResponse updateFaculty(FacultyRequest facultyRequest) {
-        Faculty faculty = facultyRepository.findByPublicIdAndActiveTrue(facultyRequest.getPublicId());
-        if (faculty != null) {
-            faculty.setName(facultyRequest.getName());
-            facultyRepository.save(faculty);
-        } else throw new FacultyException(ErrorMessages.NO_FACULTY_FOUND.getErrorMessage());
-        return FacultyMapper.INSTANCE.entityToResponse(faculty);
+        Faculty faculty = getFaculty(facultyRequest.getPublicId());
+
+        faculty.setName(facultyRequest.getName());
+        facultyRepository.save(faculty);
+
+        return facultyMapper.entityToResponse(faculty);
     }
 
     @Override
     public FacultyResponse findByPublicId(String publicId) {
-        return FacultyMapper.INSTANCE.entityToResponse(facultyRepository.findByPublicIdAndActiveTrue(publicId));
+        return facultyMapper.entityToResponse(getFaculty(publicId));
     }
 
     @Override
     public Faculty findEntityByPublicId(String facultyId) {
-        return facultyRepository.findByPublicIdAndActiveTrue(facultyId);
+        return getFaculty(facultyId);
+    }
+
+    private Faculty getFaculty(String facultyId) {
+        return facultyRepository.findByPublicIdAndActiveTrue(facultyId).orElseThrow(() -> new FacultyException("Faculty not found: " + facultyId));
     }
 
     @Transactional
     @Override
     public void deleteFaculty(String publicId) {
-        Faculty faculty = facultyRepository.findByPublicIdAndActiveTrue(publicId);
-        if (faculty != null) {
-            faculty.setActive(false);
-            facultyRepository.save(faculty);
-        } else throw new FacultyException("No such faculty");
-        cathedraService.deactivateCathedrasByFaculty(faculty);
+        Faculty faculty = getFaculty(publicId);
+        faculty.setActive(false);
+        facultyRepository.save(faculty);
+        //TODO check if required
+//        cathedraService.deactivateCathedrasByFaculty(faculty);
     }
 }

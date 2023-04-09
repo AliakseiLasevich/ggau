@@ -1,17 +1,16 @@
 package app.service;
 
-import app.model.mapper.CathedraMapper;
 import app.dao.interfaces.CathedraRepository;
+import app.exception.CathedraException;
+import app.exception.ErrorMessages;
 import app.model.dto.request.CathedraRequest;
 import app.model.dto.response.CathedraResponse;
 import app.model.entity.Cathedra;
 import app.model.entity.Faculty;
-import app.exception.CathedraException;
-import app.exception.ErrorMessages;
+import app.model.mapper.CathedraMapper;
 import app.service.interfaces.CathedraService;
 import app.service.interfaces.FacultyService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,77 +19,60 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
-@Transactional
+@RequiredArgsConstructor
 public class CathedraServiceImpl implements CathedraService {
 
     private final CathedraRepository cathedraRepository;
-
     private final FacultyService facultyService;
+    private final CathedraMapper cathedraMapper;
 
-    @Autowired
-    @Lazy
-    public CathedraServiceImpl(CathedraRepository cathedraRepository, FacultyService facultyService) {
-        this.cathedraRepository = cathedraRepository;
-        this.facultyService = facultyService;
+    @Override
+    public Cathedra findByPublicId(String cathedraId) {
+        return getCathedra(cathedraId);
+    }
+
+    private Cathedra getCathedra(String cathedraId) {
+        return cathedraRepository.findByPublicIdAndActiveTrue(cathedraId).orElseThrow(() -> new CathedraException("Cathedra not found: " + cathedraId));
     }
 
     @Override
-    public List<CathedraResponse> findAll() {
+    public List<CathedraResponse> getAll() {
         List<Cathedra> cathedras = cathedraRepository.findAllByActiveTrue();
         return cathedras.stream()
-                .map(CathedraMapper.INSTANCE::entityToResponse)
+                .map(cathedraMapper::entityToResponse)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public void createCathedra(CathedraRequest cathedraRequest, String facultyId) {
+    @Transactional
+    public Cathedra createCathedra(CathedraRequest cathedraRequest, String facultyId) {
         Cathedra cathedra = cathedraRepository.findByNameAndActiveTrue(cathedraRequest.getName());
         if (cathedra != null) {
             throw new CathedraException(ErrorMessages.RECORD_ALREADY_EXISTS.getErrorMessage());
         }
-        cathedra = CathedraMapper.INSTANCE.requestToEntity(cathedraRequest);
+        cathedra = cathedraMapper.requestToEntity(cathedraRequest);
         cathedra.setPublicId(UUID.randomUUID().toString());
         Faculty faculty = facultyService.findEntityByPublicId(facultyId);
         cathedra.setFaculty(faculty);
-        cathedraRepository.save(cathedra);
+        return cathedraRepository.save(cathedra);
     }
 
     @Override
-    public void updateCathedra(CathedraRequest cathedraRequest, String publicId) {
-        Cathedra cathedra = cathedraRepository.findByPublicIdAndActiveTrue(publicId);
-        checkCathedraForNull(cathedra);
+    @Transactional
+    public Cathedra updateCathedra(CathedraRequest cathedraRequest, String publicId) {
+        Cathedra cathedra = getCathedra(publicId);
         cathedra.setName(cathedraRequest.getName());
         Faculty f = facultyService.findEntityByPublicId(cathedraRequest.getFacultyId());
         cathedra.setFaculty(f);
-        cathedraRepository.save(cathedra);
+        return cathedraRepository.save(cathedra);
     }
 
 
     @Override
+    @Transactional
     public void deleteCathedra(String publicId) {
-        Cathedra cathedra = cathedraRepository.findByPublicIdAndActiveTrue(publicId);
-        checkCathedraForNull(cathedra);
+        Cathedra cathedra = getCathedra(publicId);
         cathedra.setActive(false);
         cathedraRepository.save(cathedra);
-    }
-
-    @Override
-    public void deactivateCathedrasByFaculty(Faculty faculty) {
-        List<Cathedra> cathedrasToDeactivate = cathedraRepository.findAllByFaculty(faculty);
-        cathedrasToDeactivate.stream()
-                .peek(cathedra -> cathedra.setActive(false))
-                .forEach(cathedra -> cathedraRepository.save(cathedra));
-    }
-
-
-    private void checkCathedraForNull(Cathedra cathedra) {
-        if (cathedra == null) {
-            throw new CathedraException(ErrorMessages.NO_CATHEDRA_FOUND.getErrorMessage());
-        }
-    }
-
-    @Override
-    public Cathedra findByPublicId(String cathedraId) {
-        return cathedraRepository.findByPublicIdAndActiveTrue(cathedraId);
     }
 }

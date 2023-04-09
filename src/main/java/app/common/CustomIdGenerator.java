@@ -2,6 +2,8 @@ package app.common;
 
 import app.model.entity.Building;
 import app.model.entity.Cabinet;
+import app.model.entity.Cathedra;
+import app.model.entity.Faculty;
 import org.hibernate.engine.spi.SharedSessionContractImplementor;
 import org.hibernate.id.IdentifierGenerator;
 import org.hibernate.query.Query;
@@ -15,10 +17,14 @@ public class CustomIdGenerator implements IdentifierGenerator {
     public Serializable generate(SharedSessionContractImplementor session, Object obj) {
         String prefix = ""; // default prefix
         if (obj instanceof Building) {
-            prefix = "BLD";
+            prefix = "BLDN";
         } else if (obj instanceof Cabinet) {
-            prefix = "CBN";
-        } // add more cases for other entities
+            prefix = "CBNT";
+        } else if (obj instanceof Cathedra) {
+            prefix = "CATH";
+        } else if (obj instanceof Faculty) {
+            prefix = "FCLT";
+        }
 
         String id;
         boolean unique = false;

@@ -6,6 +6,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface FacultyRepository extends PagingAndSortingRepository<Faculty, Long>, CrudRepository<Faculty, Long> {
@@ -13,5 +14,5 @@ public interface FacultyRepository extends PagingAndSortingRepository<Faculty, L
 
     Faculty findByNameAndActiveTrue(String name);
 
-    Faculty findByPublicIdAndActiveTrue(String publicId);
+    Optional<Faculty> findByPublicIdAndActiveTrue(String publicId);
 }
