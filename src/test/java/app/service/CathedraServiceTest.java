@@ -8,7 +8,6 @@ import app.model.dto.response.FacultyResponse;
 import app.model.entity.Cathedra;
 import app.model.entity.Faculty;
 import app.model.mapper.CathedraMapper;
-import app.service.interfaces.FacultyService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

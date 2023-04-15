@@ -1,17 +1,17 @@
 package app.service;
 
-import app.model.mapper.StudentCourseMapper;
 import app.dao.interfaces.StudentCourseRepository;
+import app.exception.ErrorMessages;
+import app.exception.StudentCourseException;
 import app.model.dto.request.StudentCourseRequest;
 import app.model.dto.response.StudentCourseResponse;
 import app.model.entity.Faculty;
 import app.model.entity.Specialty;
 import app.model.entity.StudentCourse;
-import app.exception.ErrorMessages;
-import app.exception.StudentCourseException;
-import app.service.interfaces.FacultyService;
+import app.model.mapper.StudentCourseMapper;
 import app.service.interfaces.SpecialtyService;
 import app.service.interfaces.StudentCourseService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,17 +19,12 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class StudentCourseServiceImpl implements StudentCourseService {
 
     private final StudentCourseRepository studentCourseRepository;
     private final SpecialtyService specialtyService;
     private final FacultyService facultyService;
-
-    public StudentCourseServiceImpl(StudentCourseRepository studentCourseRepository, SpecialtyService specialtyService, FacultyService facultyService) {
-        this.studentCourseRepository = studentCourseRepository;
-        this.specialtyService = specialtyService;
-        this.facultyService = facultyService;
-    }
 
     @Override
     public StudentCourseResponse createStudentCourse(StudentCourseRequest studentCourseRequest) {

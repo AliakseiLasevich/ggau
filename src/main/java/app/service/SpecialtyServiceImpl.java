@@ -1,16 +1,15 @@
 package app.service;
 
-import app.model.mapper.SpecialtyMapper;
 import app.dao.interfaces.SpecialtyRepository;
+import app.exception.ErrorMessages;
+import app.exception.SpecialtyException;
 import app.model.dto.request.SpecialtyRequest;
 import app.model.dto.response.SpecialtyResponse;
 import app.model.entity.Faculty;
 import app.model.entity.Specialty;
-import app.exception.ErrorMessages;
-import app.exception.SpecialtyException;
-import app.service.interfaces.FacultyService;
+import app.model.mapper.SpecialtyMapper;
 import app.service.interfaces.SpecialtyService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,17 +17,12 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class SpecialtyServiceImpl implements SpecialtyService {
 
     private final SpecialtyRepository specialtyRepository;
 
     private final FacultyService facultyService;
-
-    @Autowired
-    public SpecialtyServiceImpl(SpecialtyRepository specialtyRepository, FacultyService facultyService) {
-        this.specialtyRepository = specialtyRepository;
-        this.facultyService = facultyService;
-    }
 
     @Override
     public SpecialtyResponse findById(String publicId) {

@@ -11,7 +11,7 @@
 
     </parent>
     <groupId>by.ggau</groupId>
-    <artifactId>planner</artifactId>
+    <artifactId>ggau</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>planner</name>
     <description>ggau planer backend</description>
@@ -78,7 +78,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
-
 
     </dependencies>
 

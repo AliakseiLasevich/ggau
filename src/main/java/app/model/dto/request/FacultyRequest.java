@@ -1,8 +1,8 @@
 package app.model.dto.request;
 
 
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,6 +14,8 @@ import lombok.Setter;
 public class FacultyRequest {
 
     private String publicId;
+
+    @NotNull
     private String name;
 
 }

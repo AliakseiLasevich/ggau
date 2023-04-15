@@ -8,13 +8,10 @@ import app.model.entity.Faculty;
 import app.model.entity.LearnPlan;
 import app.exception.ErrorMessages;
 import app.exception.LearnPlanException;
-import app.service.interfaces.FacultyService;
 import app.service.interfaces.LearnPlanService;
 import app.service.interfaces.SpecialtyService;
 import app.service.interfaces.StudentCourseService;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

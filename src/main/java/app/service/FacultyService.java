@@ -7,7 +7,6 @@ import app.model.dto.request.FacultyRequest;
 import app.model.dto.response.FacultyResponse;
 import app.model.entity.Faculty;
 import app.model.mapper.FacultyMapper;
-import app.service.interfaces.FacultyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,13 +17,12 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class FacultyServiceImpl implements FacultyService {
+public class FacultyService {
 
     private final FacultyRepository facultyRepository;
     //    private final CathedraService cathedraService;
     private final FacultyMapper facultyMapper;
 
-    @Transactional
     public List<FacultyResponse> findAll() {
         List<Faculty> faculties = facultyRepository.findAllByActiveTrue();
         return faculties.stream()
@@ -33,7 +31,6 @@ public class FacultyServiceImpl implements FacultyService {
     }
 
 
-    @Transactional
     public Faculty findById(Long id) {
         return facultyRepository
                 .findById(id)
@@ -53,22 +50,17 @@ public class FacultyServiceImpl implements FacultyService {
     }
 
     @Transactional
-    @Override
     public FacultyResponse updateFaculty(FacultyRequest facultyRequest) {
         Faculty faculty = getFaculty(facultyRequest.getPublicId());
-
         faculty.setName(facultyRequest.getName());
         facultyRepository.save(faculty);
-
         return facultyMapper.entityToResponse(faculty);
     }
 
-    @Override
     public FacultyResponse findByPublicId(String publicId) {
         return facultyMapper.entityToResponse(getFaculty(publicId));
     }
 
-    @Override
     public Faculty findEntityByPublicId(String facultyId) {
         return getFaculty(facultyId);
     }
@@ -78,7 +70,6 @@ public class FacultyServiceImpl implements FacultyService {
     }
 
     @Transactional
-    @Override
     public void deleteFaculty(String publicId) {
         Faculty faculty = getFaculty(publicId);
         faculty.setActive(false);

@@ -8,7 +8,6 @@ import app.model.dto.response.CathedraResponse;
 import app.model.entity.Cathedra;
 import app.model.entity.Faculty;
 import app.model.mapper.CathedraMapper;
-import app.service.interfaces.FacultyService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

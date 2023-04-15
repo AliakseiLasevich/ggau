@@ -6,6 +6,8 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum ErrorMessages {
+
+    //TODO перевести в константы. енам не нужен
     NO_FACULTY_FOUND("Данный факультет не найден."),
     NO_CATHEDRA_FOUND("Данная кафедра не найдена."),
     NO_TEACHER_FOUND("Преподаватель не найден."),
