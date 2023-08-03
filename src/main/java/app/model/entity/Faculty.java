@@ -1,5 +1,6 @@
 package app.model.entity;
 
+import app.model.entity.interfaces.GeneratedId;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -24,13 +25,13 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "faculties")
-public class Faculty {
+public class Faculty implements GeneratedId {
 
     @Id
     @Column(name = "id")
     @GeneratedValue(generator = "custom-id")
     @GenericGenerator(name = "custom-id", strategy = "app.common.CustomIdGenerator")
-    private Long id;
+    private String id;
 
     @Column(name = "public_id")
     private String publicId;
@@ -52,4 +53,8 @@ public class Faculty {
         active = true;
     }
 
+    @Override
+    public String getPrefix() {
+        return "FCLTY";
+    }
 }

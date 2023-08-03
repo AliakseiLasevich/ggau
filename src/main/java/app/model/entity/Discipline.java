@@ -1,5 +1,6 @@
 package app.model.entity;
 
+import app.model.entity.interfaces.GeneratedId;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -21,7 +22,7 @@ import org.hibernate.annotations.GenericGenerator;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Discipline {
+public class Discipline implements GeneratedId {
 
     @Id
     @Column(name = "id")
@@ -41,5 +42,10 @@ public class Discipline {
     @PrePersist
     public void setDefaultActiveValue() {
         active = true;
+    }
+
+    @Override
+    public String getPrefix() {
+        return "DSPLN";
     }
 }

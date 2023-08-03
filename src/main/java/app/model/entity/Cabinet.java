@@ -1,5 +1,6 @@
 package app.model.entity;
 
+import app.model.entity.interfaces.GeneratedId;
 import app.model.enums.CabinetType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -24,7 +25,7 @@ import org.hibernate.annotations.GenericGenerator;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Cabinet {
+public class Cabinet implements GeneratedId {
 
     @Id
     @Column(name = "id")
@@ -54,5 +55,10 @@ public class Cabinet {
     @PrePersist
     public void setDefaultActiveValue() {
         active = true;
+    }
+
+    @Override
+    public String getPrefix() {
+        return "CABNT";
     }
 }

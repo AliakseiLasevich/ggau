@@ -12,7 +12,7 @@ public interface LessonMapper {
 
     LessonMapper INSTANCE = Mappers.getMapper(LessonMapper.class);
 
-    Lesson requestToEntity(LessonRequest lessonRequest);
+//    Lesson requestToEntity(LessonRequest lessonRequest);
 
     LessonResponse entityToResponse(Lesson lesson);
 

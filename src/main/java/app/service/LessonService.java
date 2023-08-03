@@ -1,14 +1,13 @@
 package app.service;
 
-import app.model.mapper.LessonMapper;
 import app.dao.interfaces.LessonRepository;
 import app.model.dto.request.LessonRequest;
 import app.model.dto.response.LessonResponse;
 import app.model.entity.Lesson;
-import app.service.interfaces.LessonService;
+import app.model.mapper.LessonMapper;
 import app.service.interfaces.StudentCourseService;
 import app.service.interfaces.StudentSubgroupService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -16,22 +15,17 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class LessonServiceImpl implements LessonService {
+@RequiredArgsConstructor
+public class LessonService {
 
     private final LessonRepository lessonRepository;
 
     private final StudentCourseService studentCourseService;
 
     private final StudentSubgroupService studentSubgroupService;
+    private final LessonMapper lessonMapper;
 
-    @Autowired
-    public LessonServiceImpl(LessonRepository lessonRepository, StudentCourseService studentCourseService, StudentSubgroupService studentSubgroupService) {
-        this.lessonRepository = lessonRepository;
-        this.studentCourseService = studentCourseService;
-        this.studentSubgroupService = studentSubgroupService;
-    }
 
-    @Override
     public List<LessonResponse> findAll() {
         List<Lesson> lessons = lessonRepository.findAllByActiveTrue();
         return lessons.stream()
@@ -39,12 +33,15 @@ public class LessonServiceImpl implements LessonService {
                 .collect(Collectors.toList());
     }
 
-    @Override
     public LessonResponse createLesson(LessonRequest lessonRequest) {
+//        Lesson l = Lesson.builder()
+//                .cabinet(lessonRequest.)
+//                .build();
+//        return lessonMapper.entityToResponse(le);
         return null;
     }
 
-    @Override
+
     public List<LessonResponse> getLessonsByStudentsCourseAndDate(String courseId, LocalDate firstDate, LocalDate lastDate) {
         List<Lesson> lessons = lessonRepository.findAllByStudentCourseAndDateRange(courseId, firstDate, lastDate);
         return lessons.stream().map(LessonMapper.INSTANCE::entityToResponse).collect(Collectors.toList());

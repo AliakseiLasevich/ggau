@@ -1,8 +1,8 @@
-public_id,name,active
-korpus_glavnyj,Главный корпус,true
-korpus_ekonomicheskij,Экономический корпус,true
-korpus_itf,Корпус ИТФ,true
-korpus_veterinarnyj,Ветеринарный корпус,true
-korpus_staryj,Старый корпус,true
-korpus_rastenievodstva,Корпус растениеводства,true
-korpus_mechanizatsii,Корпус механизации,true
+id,public_id,name,active
+BLDNGmain,korpus_glavnyj,Главный корпус,true
+BLDNGeconomics,korpus_ekonomicheskij,Экономический корпус,true
+BLDNGitf,korpus_itf,Корпус ИТФ,true
+BLDNGvet,korpus_veterinarnyj,Ветеринарный корпус,true
+BLDNGold,korpus_staryj,Старый корпус,true
+BLDNGrastenievodstvo,korpus_rastenievodstva,Корпус растениеводства,true
+BLDNGmechanization,korpus_mechanizatsii,Корпус механизации,true

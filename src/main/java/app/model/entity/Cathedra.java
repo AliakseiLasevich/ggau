@@ -1,5 +1,6 @@
 package app.model.entity;
 
+import app.model.entity.interfaces.GeneratedId;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -26,7 +27,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "cathedras")
-public class Cathedra {
+public class Cathedra implements GeneratedId {
 
     @Id
     @Column(name = "id")
@@ -55,4 +56,8 @@ public class Cathedra {
         active = true;
     }
 
+    @Override
+    public String getPrefix() {
+        return "CTHDR";
+    }
 }

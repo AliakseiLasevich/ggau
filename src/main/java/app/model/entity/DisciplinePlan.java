@@ -1,5 +1,6 @@
 package app.model.entity;
 
+import app.model.entity.interfaces.GeneratedId;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -17,6 +18,7 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 
 import java.time.LocalDate;
 import java.util.Map;
@@ -26,12 +28,13 @@ import java.util.Map;
 @NoArgsConstructor
 @Entity
 @Table(name = "discipline_plan")
-public class DisciplinePlan {
+public class DisciplinePlan implements GeneratedId {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(generator = "custom-id")
+    @GenericGenerator(name = "custom-id", strategy = "app.common.CustomIdGenerator")
+    private String id;
 
     @Column(name = "public_id")
     private String publicId;
@@ -104,5 +107,10 @@ public class DisciplinePlan {
     @PrePersist
     public void setDefaultActiveValue() {
         active = true;
+    }
+
+    @Override
+    public String getPrefix() {
+        return "DPLAN";
     }
 }

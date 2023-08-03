@@ -1,31 +1,30 @@
-public_id,name,active,faculty_id
-cathedra_mechanizatsii,Кафедра механизации с/х производства,true,1
-cathedra_fizvospitaniya_sporta,Кафедра физвоспитания и спорта,true,1
-cathedra_obschego_zemledeliya,Кафедра общего земледелия,true,1
-cathedra_botaniki_fiziologii_rastenij,Кафедра ботаники и физиологии растений,true,1
-cathedra_plodoovoschevodstva_lugovodstva,Кафедра плодоовощеводства и луговодства,true,1
-cathedra_rastenievodstva,Кафедра растениеводства,true,1
-cathedra_fizpotalogii_chim_zaschity,Кафедра фитопатологии и химической защиты растений,true,2
-cathedra_entomologii_bio_zaschity_rastenij,Кафедра энтомологии и биологической защиты растений,true,2
-cathedra_agrochimii_pochvovedenia_ekologii,Кафедра агрохимии почвоведения и сельхозэкологии,true,2
-cathedra_anatomii_zhyvotnych,Кафедра анатомии животных,true,3
-cathedra_akusherstva_terapii,Кафедра акушерства и терапии,true,3
-cathedra_gigieny_zhyvotnych,Кафедра гигиены животных,true,3
-cathedra_farmakologii_fiziologii,Кафедра фармакологии и физиологии,true,3
-cathedra_mikrobiologii_epizoologii,Кафедра микробиологии и эпизоотологии,true,3
-cathedra_kormleniya_zhyvotnych,Кафедра кормления с/х животных,true,4
-cathedra_chastnoy_zootechnii,Кафедра частной зоотехнии,true,4
-cathedra_genetiki_i_razvedeniya_zhivotnych,Кафедра генетики и разведения с/х животных,true,4
-cathedra_chimii,Кафедра химии,true,5
-cathedra_technologii_hraneniya_pererab_rasteniy,Кафедра технологии хранения и переработки растительного сырья,true,5
-cathedra_technologii_hraneniya_pererab_zhyvotnogo_s,Кафедра технологии хранения и переработки животного сырья,true,5
-cathedra_tech_mechaniki_matematiki,Кафедра технической механики и математики,true,5
-cathedra_tech_obesp_prozivodstva_prod_zhivotnovodstva,Кафедра технического обеспечения производства и переработки продукции животноводства,true,5
-cathedra_organizatsii_proizvodstva,Кафедра организации производства в АПК,true,6
-cathedra_ekonomiki,Кафедра экономики АПК,true,6
-cathedra_informatiki,Кафедра информатики и ЭММ в АПК,true,6
-cathedra_ekonom_teorii,Кафедра экономической теории,true,6
-cathedra_menedzhmenta_marketinga_prava,Кафедра менеджмента маркетинга и права,true,6
-cathedra_buch_ucheta,Кафедра бухгалтерского учёта и контроля в АПК,true,7
-cathedra_finansov_analiza,Кафедра финансов и анализа в АПК,true,7
-cathedra_obschestvennych_nauk,Кафедра общественных наук,true,7
+id,public_id,name,active,faculty_id
+CTHDRmech,cathedra_mechanizatsii,Кафедра механизации с/х производства,true,FCLTYagronom
+CTHDRfizkult,cathedra_fizvospitaniya_sporta,Кафедра физвоспитания и спорта,true,FCLTYagronom
+CTHDRzemledel,cathedra_obschego_zemledeliya,Кафедра общего земледелия,true,FCLTYagronom
+CTHDRbotaniki,cathedra_botaniki_fiziologii_rastenij,Кафедра ботаники и физиологии растений,true,FCLTYagronom
+CTHDRovoschevodstva,cathedra_plodoovoschevodstva_lugovodstva,Кафедра плодоовощеводства и луговодства,true,FCLTYagronom
+CTHDRrastenievodstva,cathedra_rastenievodstva,Кафедра растениеводства,true,FCLTYagronom
+CTHDRfiziopatalogii,cathedra_fizpotalogii_chim_zaschity,Кафедра фитопатологии и химической защиты растений,true,FCLTYfzr
+CTHDRentomologii,cathedra_entomologii_bio_zaschity_rastenij,Кафедра энтомологии и биологической защиты растений,true,FCLTYfzr
+CTHDRagrochimii,cathedra_agrochimii_pochvovedenia_ekologii,Кафедра агрохимии почвоведения и сельхозэкологии,true,FCLTYfzr
+CTHDRanatomiizhiv,cathedra_anatomii_zhyvotnych,Кафедра анатомии животных,true,FCLTYvet
+CTHDRakusherstva,cathedra_akusherstva_terapii,Кафедра акушерства и терапии,true,FCLTYvet
+CTHDRgigienyzhiv,cathedra_gigieny_zhyvotnych,Кафедра гигиены животных,true,FCLTYvet
+CTHDRfarmakologii,cathedra_farmakologii_fiziologii,Кафедра фармакологии и физиологии,true,FCLTYvet
+CTHDRmicrobiologii,cathedra_mikrobiologii_epizoologii,Кафедра микробиологии и эпизоотологии,true,FCLTYvet
+CTHDRkormleniazhiv,cathedra_kormleniya_zhyvotnych,Кафедра кормления с/х животных,true,FCLTYbiotech
+CTHDRzootechnii,cathedra_chastnoy_zootechnii,Кафедра частной зоотехнии,true,FCLTYbiotech
+CTHDRgenetiki,cathedra_genetiki_i_razvedeniya_zhivotnych,Кафедра генетики и разведения с/х животных,true,FCLTYbiotech
+CTHDRhimiii,cathedra_chimii,Кафедра химии,true,FCLTYitf
+CTHDRhraneniya,cathedra_technologii_hraneniya_pererab_rasteniy,Кафедра технологии хранения и переработки растительного сырья,true,FCLTYitf
+CTHDRmatematiki,cathedra_tech_mechaniki_matematiki,Кафедра технической механики и математики,true,FCLTYitf
+CTHDRtechobespprva,cathedra_tech_obesp_prozivodstva_prod_zhivotnovodstva,Кафедра технического обеспечения производства и переработки продукции животноводства,true,FCLTYitf
+CTHDRorgproizvodstva,cathedra_organizatsii_proizvodstva,Кафедра организации производства в АПК,true,FCLTYeconomics
+CTHDRekonomiki,cathedra_ekonomiki,Кафедра экономики АПК,true,FCLTYeconomics
+CTHDRinformatiki,cathedra_informatiki,Кафедра информатики и ЭММ в АПК,true,FCLTYeconomics
+CTHDRekteorii,cathedra_ekonom_teorii,Кафедра экономической теории,true,FCLTYeconomics
+CTHDRmanagement,cathedra_menedzhmenta_marketinga_prava,Кафедра менеджмента маркетинга и права,true,FCLTYeconomics
+CTHDRbuchuchet,cathedra_buch_ucheta,Кафедра бухгалтерского учёта и контроля в АПК,true,FCLTYbuhgalter
+CTHDRfinansovanaliza,cathedra_finansov_analiza,Кафедра финансов и анализа в АПК,true,FCLTYbuhgalter
+CTHDRobschnauk,cathedra_obschestvennych_nauk,Кафедра общественных наук,true,FCLTYbuhgalter

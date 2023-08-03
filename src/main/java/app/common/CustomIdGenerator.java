@@ -1,11 +1,6 @@
 package app.common;
 
-import app.model.entity.Building;
-import app.model.entity.Cabinet;
-import app.model.entity.Cathedra;
-import app.model.entity.Discipline;
-import app.model.entity.DisciplinePlan;
-import app.model.entity.Faculty;
+import app.model.entity.interfaces.GeneratedId;
 import org.hibernate.engine.spi.SharedSessionContractImplementor;
 import org.hibernate.id.IdentifierGenerator;
 import org.hibernate.query.Query;
@@ -17,38 +12,28 @@ public class CustomIdGenerator implements IdentifierGenerator {
 
     @Override
     public Serializable generate(SharedSessionContractImplementor session, Object obj) {
-        String prefix = ""; // default prefix
-        if (obj instanceof Building) {
-            prefix = "BLDN";
-        } else if (obj instanceof Cabinet) {
-            prefix = "CBNT";
-        } else if (obj instanceof Cathedra) {
-            prefix = "CATH";
-        } else if (obj instanceof Faculty) {
-            prefix = "FCLT";
-        } else if (obj instanceof Discipline) {
-            prefix = "DSPL";
-        } else if (obj instanceof DisciplinePlan) {
-            prefix = "DPLN";
-        } else if (obj instanceof DisciplinePlan) {
-            prefix = "DPLN";
-        }
+        validateObjHasPrefix(obj);
+        String prefix = ((GeneratedId) obj).getPrefix();
+        return generateUniqueId(session, obj.getClass().getName(), prefix);
+    }
 
-        String id;
-        boolean unique = false;
-        while (!unique) {
-            id = generateRandomId(prefix);
-            unique = isIdUnique(session, obj.getClass().getName(), id);
-            if (unique) {
-                return id;
-            }
+    private void validateObjHasPrefix(Object obj) {
+        if (!(obj instanceof GeneratedId)) {
+            throw new IllegalStateException("All entities must have id prefix");
         }
-        return null;
+    }
+
+    private String generateUniqueId(SharedSessionContractImplementor session, String className, String prefix) {
+        String id = generateRandomId(prefix);
+        while (!isIdUnique(session, className, id)) {
+            id = generateRandomId(prefix);
+        }
+        return id;
     }
 
     private String generateRandomId(String prefix) {
         int length = 20 - prefix.length();
-        String characters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        String characters = "0123456789";
         Random random = new Random();
         StringBuilder builder = new StringBuilder();
         builder.append(prefix);

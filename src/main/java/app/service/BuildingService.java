@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -38,8 +39,10 @@ public class BuildingService {
 
     public BuildingResponse createBuilding(BuildingRequest buildingRequest) {
         validateBuildingByName(buildingRequest);
-        var building = buildingRepository.save(buildingMapper.requestToEntity(buildingRequest));
-        return buildingMapper.entityToResponse(building);
+        var entity = buildingMapper.requestToEntity(buildingRequest);
+        entity.setPublicId(UUID.randomUUID().toString());
+        var savedEntity = buildingRepository.save(entity);
+        return buildingMapper.entityToResponse(savedEntity);
     }
 
     private void validateBuildingByName(BuildingRequest buildingRequest) {

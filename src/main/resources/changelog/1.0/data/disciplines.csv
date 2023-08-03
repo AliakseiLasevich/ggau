@@ -1,5 +1,5 @@
-public_id,name,active,cathedra_id,note
-ivanov_temp_12345,Иванов Иван Иванович,true,1,Заведующий кафедрой
-petrov_temp_12345,Петров Пётр Петрович,true,2,Декан ИТФ
-sidorov_temp_12345,Сидоров Семён Семёнович,true,2,Старший преподаватель
+id,public_id,name,active,cathedra_id,note
+DSCPLsome1,ivanov_temp_12345,Иванов Иван Иванович,true,1,Заведующий кафедрой
+DSCPLsome2,petrov_temp_12345,Петров Пётр Петрович,true,2,Декан ИТФ
+DSCPLsome3,sidorov_temp_12345,Сидоров Семён Семёнович,true,2,Старший преподаватель
 

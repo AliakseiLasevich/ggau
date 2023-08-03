@@ -1,5 +1,5 @@
-public_id,name,code,active,faculty_id
-ecomomists_specialty,Экономика и организация,#123-345,true,6
-buchgalter_specialty,Бухгалтерский учёт,#999-555,true,6
-agronom_specialty,Агрономия,#111-000,true,1
+id,public_id,name,code,active,faculty_id
+SPCLTeconomists,ecomomists_specialty,Экономика и организация,#123-345,true,FCLTYagronom
+SPCLTbuchgaltera,buchgalter_specialty,Бухгалтерский учёт,#999-555,true,FCLTYagronom
+SPCLTagronomy,agronom_specialty,Агрономия,#111-000,true,FCLTYagronom
 

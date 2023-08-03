@@ -7,7 +7,7 @@
 
     <changeSet id="1" author="Aliaksei Lasevich">
         <createTable tableName="buildings">
-            <column name="id" type="VARCHAR(50)" autoIncrement="true">
+            <column name="id" type="VARCHAR(20)">
                 <constraints primaryKey="true" primaryKeyName="buildings_pkey"/>
             </column>
             <column name="public_id" type="VARCHAR(255)">
@@ -24,7 +24,7 @@
 
     <changeSet id="2" author="Aliaksei Lasevich">
         <createTable tableName="cabinets">
-            <column name="id" type="bigint" autoIncrement="true">
+            <column name="id" type="VARCHAR(20)">
                 <constraints primaryKey="true" primaryKeyName="cabinets_pkey"/>
             </column>
             <column name="public_id" type="VARCHAR(255)">
@@ -52,7 +52,7 @@
 
     <changeSet id="3" author="Aliaksei Lasevich">
         <createTable tableName="faculties">
-            <column name="id" type="bigint" autoIncrement="true">
+            <column name="id" type="VARCHAR(20)">
                 <constraints primaryKey="true" primaryKeyName="faculties_pkey"/>
             </column>
             <column name="public_id" type="VARCHAR(255)">
@@ -69,7 +69,7 @@
 
     <changeSet id="4" author="Aliaksei Lasevich">
         <createTable tableName="cathedras">
-            <column name="id" type="bigint" autoIncrement="true">
+            <column name="id" type="VARCHAR(20)">
                 <constraints primaryKey="true" primaryKeyName="cathedras_pkey"/>
             </column>
             <column name="public_id" type="VARCHAR(255)">
@@ -81,7 +81,7 @@
             <column name="active" type="boolean">
                 <constraints nullable="false"/>
             </column>
-            <column name="faculty_id" type="bigint">
+            <column name="faculty_id" type="varchar(20)">
                 <constraints nullable="false" foreignKeyName="faculty_fk"
                              referencedTableName="faculties"
                              referencedColumnNames="id"/>
@@ -91,7 +91,7 @@
 
     <changeSet id="5" author="Aliaksei Lasevich">
         <createTable tableName="teachers">
-            <column name="id" type="bigint" autoIncrement="true">
+            <column name="id" type="VARCHAR(20)">
                 <constraints primaryKey="true" primaryKeyName="teachers_pkey"/>
             </column>
             <column name="public_id" type="VARCHAR(255)">
@@ -106,7 +106,7 @@
             <column name="active" type="boolean">
                 <constraints nullable="false"/>
             </column>
-            <column name="cathedra_id" type="bigint">
+            <column name="cathedra_id" type="VARCHAR(20)">
                 <constraints nullable="false" foreignKeyName="cathedra_fk"
                              referencedTableName="cathedras"
                              referencedColumnNames="id"/>
@@ -116,7 +116,7 @@
 
     <changeSet id="6" author="Aliaksei Lasevich">
         <createTable tableName="specialties">
-            <column name="id" type="bigint" autoIncrement="true">
+            <column name="id" type="VARCHAR(20)">
                 <constraints primaryKey="true" primaryKeyName="specialties_pkey"/>
             </column>
             <column name="public_id" type="VARCHAR(255)">
@@ -131,7 +131,7 @@
             <column name="active" type="boolean">
                 <constraints nullable="false"/>
             </column>
-            <column name="faculty_id" type="bigint">
+            <column name="faculty_id" type="VARCHAR(20)">
                 <constraints nullable="false" foreignKeyName="faculties_specialty_fk"
                              referencedTableName="faculties"
                              referencedColumnNames="id"/>
@@ -141,7 +141,7 @@
 
     <changeSet id="7" author="Aliaksei Lasevich">
         <createTable tableName="disciplines">
-            <column name="id" type="bigint" autoIncrement="true">
+            <column name="id" type="VARCHAR(20)">
                 <constraints primaryKey="true" primaryKeyName="disciplines_pkey"/>
             </column>
             <column name="public_id" type="VARCHAR(255)">
@@ -158,7 +158,7 @@
 
     <changeSet id="7a" author="Aliaksei Lasevich">
         <createTable tableName="student_courses">
-            <column name="id" type="bigint" autoIncrement="true">
+            <column name="id" type="VARCHAR(20)">
                 <constraints primaryKey="true" primaryKeyName="student_courses_pkey"/>
             </column>
             <column name="public_id" type="VARCHAR(255)">
@@ -170,7 +170,7 @@
             <column name="active" type="boolean">
                 <constraints nullable="false"/>
             </column>
-            <column name="specialty_id" type="bigint">
+            <column name="specialty_id" type="VARCHAR(20)">
                 <constraints nullable="false" foreignKeyName="student_course_specialty_fk"
                              referencedTableName="specialties"
                              referencedColumnNames="id"/>
@@ -180,7 +180,7 @@
 
     <changeSet id="8" author="Aliaksei Lasevich">
         <createTable tableName="student_groups">
-            <column name="id" type="bigint" autoIncrement="true">
+            <column name="id" type="VARCHAR(20)">
                 <constraints primaryKey="true" primaryKeyName="student_groups_pkey"/>
             </column>
             <column name="public_id" type="VARCHAR(255)">
@@ -192,7 +192,7 @@
             <column name="active" type="boolean">
                 <constraints nullable="false"/>
             </column>
-            <column name="student_course_id" type="bigint">
+            <column name="student_course_id" type="VARCHAR(20)">
                 <constraints nullable="false" foreignKeyName="student_group_student_course_fk"
                              referencedTableName="student_courses"
                              referencedColumnNames="id"/>
@@ -202,7 +202,7 @@
 
     <changeSet id="9" author="Aliaksei Lasevich">
         <createTable tableName="student_subgroups">
-            <column name="id" type="bigint" autoIncrement="true">
+            <column name="id" type="VARCHAR(20)">
                 <constraints primaryKey="true" primaryKeyName="student_subgroups_pkey"/>
             </column>
             <column name="public_id" type="VARCHAR(255)">
@@ -217,7 +217,7 @@
             <column name="active" type="boolean">
                 <constraints nullable="false"/>
             </column>
-            <column name="student_group_id" type="bigint">
+            <column name="student_group_id" type="VARCHAR(20)">
                 <constraints nullable="false" foreignKeyName="student_subgroup_to_group_fk"
                              referencedTableName="student_groups"
                              referencedColumnNames="id"/>
@@ -227,7 +227,7 @@
 
     <changeSet id="10" author="Aliaksei Lasevich">
         <createTable tableName="learn_plan">
-            <column name="id" type="bigint" autoIncrement="true">
+            <column name="id" type="VARCHAR(20)">
                 <constraints primaryKey="true" primaryKeyName="learn_plan_pkey"/>
             </column>
             <column name="public_id" type="VARCHAR(255)">
@@ -242,12 +242,12 @@
             <column name="active" type="boolean">
                 <constraints nullable="false"/>
             </column>
-            <column name="student_course_id" type="bigint">
+            <column name="student_course_id" type="VARCHAR(20)">
                 <constraints nullable="false" foreignKeyName="learn_plan_course_fk"
                              referencedTableName="student_courses"
                              referencedColumnNames="id"/>
             </column>
-            <column name="faculty_id" type="bigint">
+            <column name="faculty_id" type="VARCHAR(20)">
                 <constraints nullable="false" foreignKeyName="learn_plan_faculty_fk"
                              referencedTableName="faculties"
                              referencedColumnNames="id"/>
@@ -257,13 +257,13 @@
 
     <changeSet id="11" author="Aliaksei Lasevich">
         <createTable tableName="discipline_plan">
-            <column name="id" type="bigint" autoIncrement="true">
+            <column name="id" type="VARCHAR(20)">
                 <constraints primaryKey="true" primaryKeyName="discipline_plan_pkey"/>
             </column>
             <column name="public_id" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="discipline_id" type="bigint">
+            <column name="discipline_id" type="VARCHAR(20)">
                 <constraints nullable="false" foreignKeyName="discipline_discipline_plan_fk"
                              referencedTableName="disciplines"
                              referencedColumnNames="id"/>
@@ -316,7 +316,7 @@
             <column name="course_work" type="boolean">
                 <constraints nullable="true"/>
             </column>
-            <column name="learn_plan_id" type="bigint">
+            <column name="learn_plan_id" type="VARCHAR(20)">
                 <constraints nullable="false" foreignKeyName="learn_plan_discipline_fk"
                              referencedTableName="learn_plan"
                              referencedColumnNames="id"/>
@@ -329,7 +329,7 @@
 
     <changeSet id="12" author="Aliaksei Lasevich">
         <createTable tableName="lessons_per_week">
-            <column name="id" type="bigint" autoIncrement="true">
+            <column name="id" type="VARCHAR(20)">
                 <constraints primaryKey="true" primaryKeyName="lessons_per_week_pkey"/>
             </column>
             <column name="lecture" type="INT(4)">
@@ -344,12 +344,12 @@
         </createTable>
 
         <createTable tableName="date_lessons_per_week_mapping">
-            <column name="discipline_plan_id" type="bigint">
+            <column name="discipline_plan_id" type="VARCHAR(20)">
                 <constraints nullable="false" foreignKeyName="discipline_plan_mapping_fk"
                              referencedTableName="discipline_plan"
                              referencedColumnNames="id"/>
             </column>
-            <column name="lesson_per_week_id" type="bigint">
+            <column name="lesson_per_week_id" type="VARCHAR(20)">
                 <constraints nullable="false" foreignKeyName="lesson_per_week_mapping_fk"
                              referencedTableName="lessons_per_week"
                              referencedColumnNames="id"
@@ -383,17 +383,17 @@
                 <constraints nullable="false"/>
             </column>
 
-            <column name="discipline_id" type="bigint">
+            <column name="discipline_id" type="VARCHAR(20)">
                 <constraints nullable="false" foreignKeyName="lessons_discipline_fk"
                              referencedTableName="disciplines"
                              referencedColumnNames="id"/>
             </column>
-            <column name="teacher_id" type="bigint">
+            <column name="teacher_id" type="VARCHAR(20)">
                 <constraints nullable="false" foreignKeyName="lessons_teachers_fk"
                              referencedTableName="teachers"
                              referencedColumnNames="id"/>
             </column>
-            <column name="cabinet_id" type="bigint">
+            <column name="cabinet_id" type="VARCHAR(20)">
                 <constraints nullable="false" foreignKeyName="lessons_cabinets_fk"
                              referencedTableName="cabinets"
                              referencedColumnNames="id"/>
@@ -409,7 +409,7 @@
                              referencedTableName="lessons"
                              referencedColumnNames="id"/>
             </column>
-            <column name="students_subgroup_id" type="bigint">
+            <column name="students_subgroup_id" type="VARCHAR(20)">
                 <constraints nullable="false" foreignKeyName="std_subgroup_lessons_fk"
                              referencedTableName="student_subgroups"
                              referencedColumnNames="id"/>
