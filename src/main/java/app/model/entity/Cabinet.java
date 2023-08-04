@@ -4,6 +4,9 @@ import app.model.entity.interfaces.GeneratedId;
 import app.model.enums.CabinetType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
@@ -31,12 +34,13 @@ public class Cabinet extends BaseEntity implements GeneratedId {
     private int maxStudents;
 
     @Column(name = "type")
+    @Enumerated(EnumType.STRING)
     private CabinetType type;
 
     @Column(name = "active")
     private boolean active;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "building_id")
     private Building building;
 

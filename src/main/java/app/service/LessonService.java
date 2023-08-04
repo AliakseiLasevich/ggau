@@ -42,8 +42,8 @@ public class LessonService {
     }
 
 
-    public List<LessonResponse> getLessonsByStudentsCourseAndDate(String courseId, LocalDate firstDate, LocalDate lastDate) {
-        List<Lesson> lessons = lessonRepository.findAllByStudentCourseAndDateRange(courseId, firstDate, lastDate);
+    public List<LessonResponse> getLessonsBetweenDates(LocalDate firstDate, LocalDate lastDate) {
+        List<Lesson> lessons = lessonRepository.findAllLessonsBetweenDates(firstDate, lastDate);
         return lessons.stream().map(LessonMapper.INSTANCE::entityToResponse).collect(Collectors.toList());
     }
 }

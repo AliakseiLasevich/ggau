@@ -36,8 +36,6 @@ import java.util.List;
 @EntityListeners(AuditingEntityListener.class)
 public class Building extends BaseEntity implements GeneratedId {
 
-
-
     @Column(name = "name")
     private String name;
 

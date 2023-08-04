@@ -33,6 +33,7 @@ public class Lesson extends BaseEntity implements GeneratedId {
     @Column(name = "active")
     private boolean active;
 
+    @Column(name = "type")
     @Enumerated(EnumType.STRING)
     private LessonType type;
 

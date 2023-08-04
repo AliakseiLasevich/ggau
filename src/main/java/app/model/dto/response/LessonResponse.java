@@ -14,8 +14,8 @@ import java.util.List;
 public class LessonResponse {
 
     private String publicId;
-    private LessonType type;
-    private int order;
+    private String type;
+    private long orderNumber;
     private LocalDate date;
     private DisciplineResponse discipline;
     private TeacherResponse teacher;

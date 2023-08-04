@@ -1,9 +1,9 @@
 package app.model.mapper;
 
-import app.model.dto.request.LessonRequest;
 import app.model.dto.response.LessonResponse;
 import app.model.entity.Lesson;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 
@@ -14,6 +14,8 @@ public interface LessonMapper {
 
 //    Lesson requestToEntity(LessonRequest lessonRequest);
 
+    @Mapping(source = "lesson.cabinet.building.name", target = "cabinet.buildingName")
+    @Mapping(source = "lesson.cabinet.building.publicId", target = "cabinet.buildingId")
     LessonResponse entityToResponse(Lesson lesson);
 
 }
