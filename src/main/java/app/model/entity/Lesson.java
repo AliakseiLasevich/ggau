@@ -17,6 +17,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -39,8 +40,8 @@ public class Lesson extends BaseEntity implements GeneratedId {
     @Column(name = "order_number")
     private int orderNumber;
 
-    @Column(name = "date_time")
-    private LocalDateTime dateTime;
+    @Column(name = "date")
+    private LocalDate date;
 
     @OneToOne
     @JoinColumn(name = "discipline_id")

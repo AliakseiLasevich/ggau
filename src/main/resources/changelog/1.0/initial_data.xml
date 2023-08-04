@@ -61,4 +61,16 @@
                   separator=","
                   tableName="student_subgroups"/>
     </changeSet>
+
+    <changeSet id="data_11_lessons" author="Aliaksei Lasevich">
+        <loadData file="changelog/1.0/data/lessons.csv"
+                  separator=","
+                  tableName="lessons"/>
+    </changeSet>
+
+    <changeSet id="data_12_lessons_student_subgroups" author="Aliaksei Lasevich">
+        <loadData file="changelog/1.0/data/lessons_student_subgroups.csv"
+                  separator=","
+                  tableName="lessons_student_subgroups"/>
+    </changeSet>
 </databaseChangeLog>

@@ -379,7 +379,7 @@
             <column name="order_number" type="INT(2)">
                 <constraints nullable="false"/>
             </column>
-            <column name="date_time" type="DATETIME">
+            <column name="date" type="DATE">
                 <constraints nullable="false"/>
             </column>
 
