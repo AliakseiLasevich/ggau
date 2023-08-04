@@ -1,0 +1,8 @@
+id,public_id,number,active,student_course_id
+STGRPfirstec1,first-group-ec,1,1,STCRSfirstec
+STGRPsecondec1,second-group-ec,2,1,STCRSfirstec
+STGRPfirstec2,first-group-2ec,1,1,STCRSsecondec
+STGRPsecondec2,second-group-2ec,2,1,STCRSsecondec
+STGRPfirstrast1,first-group-rast,1,1,STCRSfirstrast
+STGRPfirstrast2,second-group-rast,2,1,STCRSfirstrast
+STGRPfirstrast3,third-group-rast,3,1,STCRSfirstrast

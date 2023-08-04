@@ -1,0 +1,7 @@
+id,public_id,course_number,active,specialty_id
+STCRSfirstec,first-ec-course,1,1,SPCLTeconomists
+STCRSsecondec,first-ec-course,2,1,SPCLTeconomists
+STCRSthirdec,first-ec-course,3,1,SPCLTeconomists
+STCRSfirstrast,first-rast-course,1,1,SPCLTagronomy
+STCRSsecondrast,first-rast-course,2,1,SPCLTagronomy
+STCRSthirdrast,first-rast-course,3,1,SPCLTagronomy

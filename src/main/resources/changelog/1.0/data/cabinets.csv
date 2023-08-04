@@ -1,0 +1,7 @@
+id,public_id,number,max_students,type,active,building_id
+CABNTfirstmain,firstmaincabnt,1,100,LECTURE,1,BLDNGmain
+CABNTsecondmain,secondmaincabnt,2,10,PRACTICE,1,BLDNGmain
+CABNTthirdmain,thirdmaincabnt,3,20,LAB,1,BLDNGmain
+CABNTfirstold,firstoldcabnt,1,80,LECTURE,1,BLDNGold
+CABNTsecondold,secondoldcabnt,2,22,PRACTICE,1,BLDNGold
+CABNTthirdold,thirdoldcabnt,3,25,LAB,1,BLDNGold

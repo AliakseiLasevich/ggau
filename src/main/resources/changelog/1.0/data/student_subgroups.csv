@@ -1,0 +1,11 @@
+id,public_id,name,students_count,active,student_group_id
+SUBGRec-firstgr-A,ec-first-a,А,10,1,STGRPfirstec1
+SUBGRec-firstgr-B,ec-first-B,Б,10,1,STGRPfirstec1
+SUBGRec-firstgr-V,ec-first-V,В,10,1,STGRPfirstec1
+SUBGRec-secgr-A,ec-sec-a,А,5,1,STGRPsecondec1
+SUBGRec-secgr-B,ec-sec-B,Б,10,1,STGRPsecondec1
+SUBGRrast-first1-A,rast1-rast-A,А,15,1,STGRPfirstrast1
+SUBGRrast-first2-A,rast2-rast-A,А,21,1,STGRPfirstrast2
+SUBGRrast-first3-A,rast3-rast-A,А,8,1,STGRPfirstrast3
+
+

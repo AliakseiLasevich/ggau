@@ -1,10 +1,9 @@
 package app.model.entity;
 
+import app.model.entity.interfaces.GeneratedId;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
@@ -13,7 +12,6 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.GenericGenerator;
 
 import java.util.List;
 
@@ -22,7 +20,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class StudentGroup extends BaseEntity {
+public class StudentGroup extends BaseEntity implements GeneratedId {
 
     @Column(name = "number")
     private int number;
@@ -40,5 +38,10 @@ public class StudentGroup extends BaseEntity {
     @PrePersist
     public void setDefaultActiveValue() {
         active = true;
+    }
+
+    @Override
+    public String getPrefix() {
+        return "STGRP";
     }
 }

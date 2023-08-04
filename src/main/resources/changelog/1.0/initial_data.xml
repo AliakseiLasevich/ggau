@@ -32,4 +32,33 @@
                   tableName="specialties"/>
     </changeSet>
 
+    <changeSet id="data_6_cabinets" author="Aliaksei Lasevich">
+        <loadData file="changelog/1.0/data/cabinets.csv"
+                  separator=","
+                  tableName="cabinets"/>
+    </changeSet>
+
+    <changeSet id="data_7_disciplines" author="Aliaksei Lasevich">
+        <loadData file="changelog/1.0/data/disciplines.csv"
+                  separator=","
+                  tableName="disciplines"/>
+    </changeSet>
+
+    <changeSet id="data_8_student_courses" author="Aliaksei Lasevich">
+        <loadData file="changelog/1.0/data/student_courses.csv"
+                  separator=","
+                  tableName="student_courses"/>
+    </changeSet>
+
+    <changeSet id="data_9_student_groups" author="Aliaksei Lasevich">
+        <loadData file="changelog/1.0/data/student_groups.csv"
+                  separator=","
+                  tableName="student_groups"/>
+    </changeSet>
+
+    <changeSet id="data_10_student_subgroups" author="Aliaksei Lasevich">
+        <loadData file="changelog/1.0/data/student_subgroups.csv"
+                  separator=","
+                  tableName="student_subgroups"/>
+    </changeSet>
 </databaseChangeLog>

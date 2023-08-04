@@ -1,14 +1,13 @@
 package app.service;
 
-import app.model.mapper.LearnPlanMapper;
 import app.dao.interfaces.LearnPlanRepository;
+import app.exception.ErrorMessages;
+import app.exception.LearnPlanException;
 import app.model.dto.request.LearnPlanRequest;
 import app.model.dto.response.LearnPlanResponse;
 import app.model.entity.Faculty;
 import app.model.entity.LearnPlan;
-import app.exception.ErrorMessages;
-import app.exception.LearnPlanException;
-import app.service.interfaces.LearnPlanService;
+import app.model.mapper.LearnPlanMapper;
 import app.service.interfaces.SpecialtyService;
 import app.service.interfaces.StudentCourseService;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +20,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class LearnPlanServiceImpl implements LearnPlanService {
+public class LearnPlanService {
 
     private final LearnPlanRepository learnPlanRepository;
     private final FacultyService facultyService;
@@ -31,7 +30,6 @@ public class LearnPlanServiceImpl implements LearnPlanService {
 
 
     //TODO REFACTORING
-    @Override
     @Transactional
     public LearnPlanResponse createLearnPlan(LearnPlanRequest learnPlanRequest) {
         LearnPlan learnPlan = LearnPlanMapper.INSTANCE.requestToEntity(learnPlanRequest);
@@ -62,7 +60,6 @@ public class LearnPlanServiceImpl implements LearnPlanService {
         return LearnPlanMapper.INSTANCE.entityToResponse(learnPlan);
     }
 
-    @Override
     public LearnPlanResponse getLearnPlanByPublicId(String publicId) {
         LearnPlan learnPlan = learnPlanRepository.findByPublicId(publicId);
         checkLearnPlanExists(learnPlan);
@@ -75,7 +72,6 @@ public class LearnPlanServiceImpl implements LearnPlanService {
         }
     }
 
-    @Override
     public List<LearnPlanResponse> getLearnPlansByDateInclude(LocalDate date) {
         List<LearnPlan> learnPlans = learnPlanRepository.findByDateInclude(date);
         return learnPlans.stream()
@@ -83,7 +79,6 @@ public class LearnPlanServiceImpl implements LearnPlanService {
                 .collect(Collectors.toList());
     }
 
-    @Override
     public List<LearnPlanResponse> getAllLearnPlans() {
         List<LearnPlan> learnPlans = learnPlanRepository.findAllByActiveTrue();
         return learnPlans.stream()
@@ -91,7 +86,6 @@ public class LearnPlanServiceImpl implements LearnPlanService {
                 .collect(Collectors.toList());
     }
 
-    @Override
     public void deleteLearnPlan(String publicId) {
         LearnPlan learnPlan = learnPlanRepository.findByPublicId(publicId);
         checkLearnPlanExists(learnPlan);
@@ -99,7 +93,6 @@ public class LearnPlanServiceImpl implements LearnPlanService {
         learnPlanRepository.save(learnPlan);
     }
 
-    @Override
     public LearnPlanResponse getLearnPlanByDateAndStudentCourse(LocalDate date, String courseId) {
         LearnPlan learnPlan = learnPlanRepository.findByDateIncludeAndStudentCourse(date, courseId);
         if (learnPlan == null) {
