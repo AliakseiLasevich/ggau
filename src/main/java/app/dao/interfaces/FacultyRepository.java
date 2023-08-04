@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface FacultyRepository extends PagingAndSortingRepository<Faculty, Long>, CrudRepository<Faculty, Long> {
+public interface FacultyRepository extends PagingAndSortingRepository<Faculty, String>, CrudRepository<Faculty, String> {
     List<Faculty> findAllByActiveTrue();
 
     Faculty findByNameAndActiveTrue(String name);

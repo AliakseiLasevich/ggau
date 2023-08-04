@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface CabinetRepository extends JpaRepository<Cabinet, Long> {
+public interface CabinetRepository extends JpaRepository<Cabinet, String> {
 
     List<Cabinet> findByActiveTrueAndBuildingActiveTrue();
 

@@ -21,16 +21,7 @@ import org.hibernate.annotations.GenericGenerator;
 @Getter
 @Setter
 @NoArgsConstructor
-public class StudentSubgroup {
-
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(generator = "custom-id")
-    @GenericGenerator(name = "custom-id", strategy = "app.common.CustomIdGenerator")
-    private String id;
-
-    @Column(name = "public_id")
-    private String publicId;
+public class StudentSubgroup  extends BaseEntity {
 
     @Column(name = "name")
     private String name;

@@ -1,18 +1,16 @@
 package app.service;
 
-import app.model.mapper.TeacherMapper;
 import app.dao.interfaces.TeacherRepository;
+import app.exception.ErrorMessages;
+import app.exception.TeacherException;
 import app.model.dto.request.TeacherRequest;
 import app.model.dto.response.TeacherResponse;
 import app.model.entity.Cathedra;
 import app.model.entity.Teacher;
-import app.exception.ErrorMessages;
-import app.exception.TeacherException;
-import app.service.interfaces.TeacherService;
+import app.model.mapper.TeacherMapper;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,17 +21,12 @@ import java.util.stream.Collectors;
 @Service
 @Setter
 @RequiredArgsConstructor
-@AllArgsConstructor
-public class TeacherServiceImpl implements TeacherService {
+public class TeacherService {
 
-    @Autowired
-    private TeacherRepository teacherRepository;
-    private CathedraService cathedraService;
+    private final TeacherRepository teacherRepository;
+    private final CathedraService cathedraService;
+    private final TeacherMapper teacherMapper;
 
-    @Autowired
-    private TeacherMapper teacherMapper;
-
-    @Override
     public TeacherResponse findById(String publicId) {
         Teacher teacher = teacherRepository.findByPublicIdAndActiveTrue(publicId);
         if (teacher == null) {
@@ -43,7 +36,6 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Transactional
-    @Override
     public List<TeacherResponse> findAll() {
         List<Teacher> teachers = teacherRepository.findAllWithCathedras();
         return teachers.stream().
@@ -51,7 +43,6 @@ public class TeacherServiceImpl implements TeacherService {
                 .collect(Collectors.toList());
     }
 
-    @Override
     public TeacherResponse createTeacher(TeacherRequest teacherRequest) {
         Teacher teacher = teacherMapper.requestToEntity(teacherRequest);
         teacher.setPublicId(UUID.randomUUID().toString());
@@ -62,7 +53,6 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
 
-    @Override
     public TeacherResponse updateTeacher(TeacherRequest teacherRequest, String publicId) {
         Teacher teacher = teacherRepository.findByPublicIdAndActiveTrue(publicId);
         if (teacher == null) {
@@ -75,7 +65,6 @@ public class TeacherServiceImpl implements TeacherService {
         return teacherMapper.entityToResponse(teacher);
     }
 
-    @Override
     public void deleteTeacher(String publicId) {
         Teacher teacher = teacherRepository.findByPublicIdAndActiveTrue(publicId);
         if (teacher == null) {

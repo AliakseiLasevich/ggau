@@ -27,16 +27,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "cathedras")
-public class Cathedra implements GeneratedId {
-
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(generator = "custom-id")
-    @GenericGenerator(name = "custom-id", strategy = "app.common.CustomIdGenerator")
-    private String id;
-
-    @Column(name = "public_id")
-    private String publicId;
+public class Cathedra extends BaseEntity  implements GeneratedId {
 
     @Column(name = "name")
     private String name;

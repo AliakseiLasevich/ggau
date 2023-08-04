@@ -3,6 +3,7 @@ package app.controller;
 import app.model.dto.request.StudentSubgroupRequest;
 import app.model.dto.response.StudentSubgroupResponse;
 import app.service.interfaces.StudentSubgroupService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -12,10 +13,9 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/rest/studentSubgroups")
+@RequiredArgsConstructor
 public class StudentSubGroupController {
-
-    @Autowired
-    StudentSubgroupService studentSubgroupService;
+    private final StudentSubgroupService studentSubgroupService;
 
     @GetMapping(value = "/{publicId}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public StudentSubgroupResponse getStudentSubgroupById(@PathVariable("publicId") String publicId) {

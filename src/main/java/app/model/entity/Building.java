@@ -34,16 +34,9 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-public class Building implements GeneratedId {
+public class Building extends BaseEntity implements GeneratedId {
 
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(generator = "custom-id")
-    @GenericGenerator(name = "custom-id", strategy = "app.common.CustomIdGenerator")
-    private String id;
 
-    @Column(name = "public_id")
-    private String publicId;
 
     @Column(name = "name")
     private String name;

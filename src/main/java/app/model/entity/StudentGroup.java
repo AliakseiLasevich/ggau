@@ -4,7 +4,6 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -23,16 +22,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class StudentGroup {
-
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(generator = "custom-id")
-    @GenericGenerator(name = "custom-id", strategy = "app.common.CustomIdGenerator")
-    private String id;
-
-    @Column(name = "public_id")
-    private String publicId;
+public class StudentGroup extends BaseEntity {
 
     @Column(name = "number")
     private int number;

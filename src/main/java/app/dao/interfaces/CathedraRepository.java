@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface CathedraRepository extends JpaRepository<Cathedra, Long> {
+public interface CathedraRepository extends JpaRepository<Cathedra, String> {
 
     Optional<Cathedra> findByPublicIdAndActiveTrue(String publicId);
 

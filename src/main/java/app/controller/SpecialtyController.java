@@ -3,6 +3,7 @@ package app.controller;
 import app.model.dto.request.SpecialtyRequest;
 import app.model.dto.response.SpecialtyResponse;
 import app.service.interfaces.SpecialtyService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -12,10 +13,9 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/rest/specialties")
+@RequiredArgsConstructor
 public class SpecialtyController {
-
-    @Autowired
-    private SpecialtyService specialtyService;
+    private final SpecialtyService specialtyService;
 
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseStatus(HttpStatus.OK)

@@ -22,16 +22,7 @@ import org.hibernate.annotations.GenericGenerator;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Teacher {
-
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(generator = "custom-id")
-    @GenericGenerator(name = "custom-id", strategy = "app.common.CustomIdGenerator")
-    private String id;
-
-    @Column(name = "public_id")
-    private String publicId;
+public class Teacher extends BaseEntity {
 
     @Column(name = "name")
     private String name;

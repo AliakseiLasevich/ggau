@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface DisciplineRepository extends JpaRepository<Discipline, Long> {
+public interface DisciplineRepository extends JpaRepository<Discipline, String> {
 
     Optional<Discipline> findByPublicIdAndActiveTrue(String publicId);
 

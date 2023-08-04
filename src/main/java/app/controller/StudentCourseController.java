@@ -3,6 +3,7 @@ package app.controller;
 import app.model.dto.request.StudentCourseRequest;
 import app.model.dto.response.StudentCourseResponse;
 import app.service.interfaces.StudentCourseService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -12,10 +13,9 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/rest/student_courses")
+@RequiredArgsConstructor
 public class StudentCourseController {
-
-    @Autowired
-    private StudentCourseService studentCourseService;
+    private final StudentCourseService studentCourseService;
 
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseStatus(HttpStatus.CREATED)

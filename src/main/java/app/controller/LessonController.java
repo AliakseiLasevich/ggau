@@ -23,7 +23,6 @@ import java.util.List;
 @RequestMapping("/rest/lessons")
 @RequiredArgsConstructor
 public class LessonController {
-
     private final LessonService lessonService;
 
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})

@@ -11,7 +11,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Repository
-public interface LearnPlanRepository extends JpaRepository<LearnPlan, Long> {
+public interface LearnPlanRepository extends JpaRepository<LearnPlan, String> {
 
     LearnPlan findByPublicId(String publicId);
 

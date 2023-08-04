@@ -31,7 +31,7 @@ public class FacultyService {
     }
 
 
-    public Faculty findById(Long id) {
+    public Faculty findById(String id) {
         return facultyRepository
                 .findById(id)
                 .orElseThrow((() -> new FacultyException(ErrorMessages.NO_FACULTY_FOUND.getErrorMessage())));

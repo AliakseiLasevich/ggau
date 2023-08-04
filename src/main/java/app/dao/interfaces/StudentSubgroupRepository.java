@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface StudentSubgroupRepository extends JpaRepository<StudentSubgroup, Long> {
+public interface StudentSubgroupRepository extends JpaRepository<StudentSubgroup, String> {
 
     StudentSubgroup findByNameAndStudentGroupAndActiveTrue(String name, StudentGroup studentGroup);
 

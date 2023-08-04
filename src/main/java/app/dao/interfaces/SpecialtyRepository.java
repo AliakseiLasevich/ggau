@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface SpecialtyRepository extends JpaRepository<Specialty, Long> {
+public interface SpecialtyRepository extends JpaRepository<Specialty, String> {
 
     List<Specialty> findAllByActiveTrue();
 
