@@ -1,15 +1,15 @@
 package app.service;
 
-import app.model.mapper.StudentSubgroupMapper;
 import app.dao.interfaces.StudentSubgroupRepository;
+import app.exception.ErrorMessages;
+import app.exception.StudentSubgroupException;
 import app.model.dto.request.StudentSubgroupRequest;
 import app.model.dto.response.StudentSubgroupResponse;
 import app.model.entity.StudentGroup;
 import app.model.entity.StudentSubgroup;
-import app.exception.ErrorMessages;
-import app.exception.StudentSubgroupException;
+import app.model.mapper.StudentSubgroupMapper;
 import app.service.interfaces.StudentGroupService;
-import app.service.interfaces.StudentSubgroupService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,18 +18,22 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
-public class StudentSubgroupServiceImpl implements StudentSubgroupService {
+@Slf4j
+public class StudentSubgroupService {
 
     private final StudentSubgroupRepository studentSubgroupRepository;
     private final StudentGroupService studentGroupService;
 
     @Autowired
-    public StudentSubgroupServiceImpl(StudentSubgroupRepository studentSubgroupRepository, StudentGroupService studentGroupService) {
+    public StudentSubgroupService(StudentSubgroupRepository studentSubgroupRepository, StudentGroupService studentGroupService) {
         this.studentSubgroupRepository = studentSubgroupRepository;
         this.studentGroupService = studentGroupService;
     }
 
-    @Override
+    List<StudentSubgroup> findEntitiesByPublicIds(List<String> publicIds) {
+        return studentSubgroupRepository.findByPublicIdsAndActiveTrue(publicIds);
+    }
+
     public StudentSubgroupResponse findByPublicId(String publicId) {
         StudentSubgroup studentSubgroup = getStudentSubgroup(publicId);
         return StudentSubgroupMapper.INSTANCE.entityToResponse(studentSubgroup);
@@ -43,7 +47,6 @@ public class StudentSubgroupServiceImpl implements StudentSubgroupService {
         return studentSubgroup;
     }
 
-    @Override
     public StudentSubgroupResponse createStudentsSubgroup(StudentSubgroupRequest studentSubgroupRequest) {
         StudentGroup studentGroup = studentGroupService.findEntityByPublicId(studentSubgroupRequest.getStudentGroupId());
         StudentSubgroup studentSubgroup = studentSubgroupRepository.findByNameAndStudentGroupAndActiveTrue(studentSubgroupRequest.getName(), studentGroup);
@@ -57,7 +60,6 @@ public class StudentSubgroupServiceImpl implements StudentSubgroupService {
         return StudentSubgroupMapper.INSTANCE.entityToResponse(studentSubgroup);
     }
 
-    @Override
     public StudentSubgroupResponse updateStudentsSubgroup(StudentSubgroupRequest studentSubgroupRequest, String publicId) {
         StudentSubgroup studentSubgroup = getStudentSubgroup(publicId);
         studentSubgroup.setName(studentSubgroupRequest.getName());
@@ -68,14 +70,12 @@ public class StudentSubgroupServiceImpl implements StudentSubgroupService {
         return StudentSubgroupMapper.INSTANCE.entityToResponse(studentSubgroup);
     }
 
-    @Override
     public void deleteStudentSubgroup(String publicId) {
         StudentSubgroup studentSubgroup = getStudentSubgroup(publicId);
         studentSubgroup.setActive(false);
         studentSubgroupRepository.save(studentSubgroup);
     }
 
-    @Override
     public List<StudentSubgroupResponse> findByGroupId(String publicId) {
         StudentGroup studentGroup = studentGroupService.findEntityByPublicId(publicId);
         List<StudentSubgroup> studentSubgroups = studentSubgroupRepository.findAllByStudentGroupAndActiveTrue(studentGroup);
@@ -83,5 +83,4 @@ public class StudentSubgroupServiceImpl implements StudentSubgroupService {
                 .map(StudentSubgroupMapper.INSTANCE::entityToResponse)
                 .collect(Collectors.toList());
     }
-
 }

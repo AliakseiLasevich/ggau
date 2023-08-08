@@ -12,6 +12,8 @@ import app.model.mapper.FacultyMapper;
 import app.model.mapper.FacultyMapperImpl;
 import app.model.mapper.TeacherMapper;
 import app.model.mapper.TeacherMapperImpl;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.json.JsonMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
@@ -50,6 +52,13 @@ public class Beans {
     TeacherMapper teacherMapper() {
         return new TeacherMapperImpl() {
         };
+    }
+
+    @Bean
+    ObjectMapper objectMapper() {
+        return JsonMapper.builder()
+                .findAndAddModules()
+                .build();
     }
 
 }

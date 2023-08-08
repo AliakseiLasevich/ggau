@@ -24,8 +24,12 @@ public class DisciplineService {
     private final DisciplineRepository disciplineRepository;
 
 
-    public Discipline findEntityByPublicId(String publicId) {
-        return getDiscipline(publicId);
+    Discipline findEntityByPublicId(String publicId) {
+        return disciplineRepository.findByPublicIdAndActiveTrue(publicId)
+                .orElseThrow(() -> {
+                    log.error("Discipline not found: {}", publicId);
+                    throw new DisciplineException("Discipline not found: " + publicId);
+                });
     }
 
     public List<DisciplineResponse> findAll() {
@@ -44,28 +48,25 @@ public class DisciplineService {
         Discipline discipline = disciplineMapper.requestToEntity(disciplineRequest);
         discipline.setPublicId(UUID.randomUUID().toString());
         Discipline saved = disciplineRepository.save(discipline);
-        log.info("New discipline created: " + discipline.getName());
+        log.info("New discipline created: {}", discipline.getName());
         return disciplineMapper.entityToResponse(saved);
     }
 
     @Transactional
     public DisciplineResponse updateDiscipline(DisciplineRequest disciplineRequest, String publicId) {
-        Discipline discipline = getDiscipline(publicId);
+        Discipline discipline = findEntityByPublicId(publicId);
         discipline.setName(disciplineRequest.getName());
         Discipline updated = disciplineRepository.save(discipline);
-        log.info("discipline was updated: " + discipline.getName());
+        log.info("discipline was updated: {}", discipline.getName());
         return disciplineMapper.entityToResponse(updated);
     }
 
     @Transactional
     public void deleteDiscipline(String publicId) {
-        Discipline discipline = getDiscipline(publicId);
+        Discipline discipline = findEntityByPublicId(publicId);
         discipline.setActive(false);
         disciplineRepository.save(discipline);
-        log.info("Discipline was removed: " + discipline.getName());
+        log.info("Discipline was removed: {}", discipline.getName());
     }
 
-    private Discipline getDiscipline(String publicId) {
-        return disciplineRepository.findByPublicIdAndActiveTrue(publicId).orElseThrow(() -> new DisciplineException("Discipline not found: " + publicId));
-    }
 }

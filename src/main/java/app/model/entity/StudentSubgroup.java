@@ -11,14 +11,16 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 
 @Entity
 @Table(name = "student_subgroups")
 @Getter
 @Setter
+@SuperBuilder
 @NoArgsConstructor
-public class StudentSubgroup  extends BaseEntity implements GeneratedId {
+public class StudentSubgroup extends BaseEntity implements GeneratedId {
 
     @Column(name = "name")
     private String name;

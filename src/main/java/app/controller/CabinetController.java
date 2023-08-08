@@ -35,7 +35,7 @@ public class CabinetController {
     @GetMapping(value = "/{publicId}", produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseStatus(HttpStatus.OK)
     public CabinetResponse findCabinet(@PathVariable("publicId") String publicId) {
-        return cabinetService.findById(publicId);
+        return cabinetService.findByPublicId(publicId);
     }
 
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})

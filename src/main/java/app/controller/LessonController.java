@@ -4,6 +4,8 @@ import app.exception.LessonException;
 import app.model.dto.request.LessonRequest;
 import app.model.dto.response.LessonResponse;
 import app.service.LessonService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -28,13 +30,8 @@ public class LessonController {
 
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseStatus(code = HttpStatus.CREATED)
-    public LessonResponse createLesson(@RequestBody LessonRequest lessonRequest) {
+    public LessonResponse createLesson(@RequestBody @Valid LessonRequest lessonRequest) throws JsonProcessingException {
         return lessonService.createLesson(lessonRequest);
-    }
-
-    @GetMapping("/lessons")
-    public List<LessonResponse> lessons() {
-        return lessonService.findAll();
     }
 
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})

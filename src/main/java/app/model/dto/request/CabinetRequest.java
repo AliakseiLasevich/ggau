@@ -3,8 +3,8 @@ package app.model.dto.request;
 import app.model.enums.CabinetType;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -18,16 +18,16 @@ import lombok.Setter;
 @AllArgsConstructor
 public class CabinetRequest {
 
-    @NotNull
+    @NotEmpty
     private String number;
 
-    @Min(1)
+    @Positive
     private int maxStudents;
 
-    @NotNull
+    @NotEmpty
     @Enumerated(EnumType.STRING)
     private CabinetType type;
 
-    @NotNull
+    @NotEmpty
     private String buildingId;
 }

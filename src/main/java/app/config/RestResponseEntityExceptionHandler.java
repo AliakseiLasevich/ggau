@@ -1,13 +1,12 @@
 package app.config;
 
-import app.model.dto.response.ErrorMessage;
+import app.exception.errors.ErrorMessage;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
-
 
 import java.time.LocalDateTime;
 

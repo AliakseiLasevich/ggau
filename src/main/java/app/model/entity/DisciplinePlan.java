@@ -13,16 +13,16 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
 import java.util.Map;
 
+@Entity
 @Getter
 @Setter
-@NoArgsConstructor
-@Entity
+@SuperBuilder
 @Table(name = "discipline_plan")
 public class DisciplinePlan extends BaseEntity implements GeneratedId {
 

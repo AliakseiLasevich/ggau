@@ -10,14 +10,16 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
 import java.util.List;
 
+@Entity
 @Getter
 @Setter
+@SuperBuilder
 @NoArgsConstructor
-@Entity
 @Table(name = "learn_plan")
 public class LearnPlan extends BaseEntity {
 

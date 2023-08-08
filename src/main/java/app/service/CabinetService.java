@@ -3,6 +3,7 @@ package app.service;
 import app.dao.interfaces.CabinetRepository;
 import app.exception.CabinetException;
 import app.exception.ErrorMessages;
+import app.exception.errors.ErrorMessage;
 import app.model.dto.request.CabinetRequest;
 import app.model.dto.response.CabinetResponse;
 import app.model.entity.Building;
@@ -14,7 +15,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -26,12 +29,12 @@ public class CabinetService {
     private final BuildingService buildingService;
     private final CabinetMapper cabinetMapper;
 
-    public CabinetResponse findById(String publicId) {
-        Cabinet cabinet = getCabinet(publicId);
+    public CabinetResponse findByPublicId(String publicId) {
+        Cabinet cabinet = findEntityByPublicId(publicId);
         return cabinetMapper.entityToResponse(cabinet);
     }
 
-    private Cabinet getCabinet(String publicId) {
+    Cabinet findEntityByPublicId(String publicId) {
         return cabinetRepository.findByPublicIdAndActiveTrue(publicId)
                 .orElseThrow(() -> {
                     log.error("Cabinet not found: " + publicId);
@@ -62,7 +65,7 @@ public class CabinetService {
 
     @Transactional
     public CabinetResponse updateCabinet(CabinetRequest cabinetRequest, String publicId) {
-        Cabinet cabinet = getCabinet(publicId);
+        Cabinet cabinet = findEntityByPublicId(publicId);
         if (StringUtils.equals(cabinetRequest.getBuildingId(), cabinet.getBuilding().getPublicId())) {
             throw new CabinetException("Cabinet can't be moved to other building");
         }
@@ -75,8 +78,16 @@ public class CabinetService {
 
     @Transactional
     public void deleteCabinet(String publicId) {
-        Cabinet cabinet = getCabinet(publicId);
+        Cabinet cabinet = findEntityByPublicId(publicId);
         cabinet.setActive(false);
         cabinetRepository.save(cabinet);
+    }
+
+    public void validateCabinetOverlapping(String id, int orderNumber, LocalDate date, List<ErrorMessage> errorMessages) {
+        Optional<Cabinet> cabinetOptional = cabinetRepository.getByParameters(id, orderNumber, date);
+        cabinetOptional.ifPresent(cabinet -> {
+            log.error("Кабинет с указанными параметрами уже занят {}", cabinet);
+            errorMessages.add(new ErrorMessage("Кабинет с указанными параметрами уже занят"));
+        });
     }
 }

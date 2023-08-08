@@ -3,8 +3,6 @@ package app.model.entity;
 import app.model.entity.interfaces.GeneratedId;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
@@ -12,7 +10,7 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.GenericGenerator;
+import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 
@@ -20,6 +18,7 @@ import java.util.List;
 @Table(name = "specialties")
 @Getter
 @Setter
+@SuperBuilder
 @NoArgsConstructor
 public class Specialty extends BaseEntity implements GeneratedId {
 
