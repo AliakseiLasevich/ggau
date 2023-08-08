@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -50,7 +49,7 @@ public class StudentCourseServiceImpl implements StudentCourseService {
         List<StudentCourse> studentCourses = studentCourseRepository.findAllByActiveTrue();
         return studentCourses.stream()
                 .map(StudentCourseMapper.INSTANCE::entityToResponse)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
@@ -90,7 +89,7 @@ public class StudentCourseServiceImpl implements StudentCourseService {
         List<StudentCourse> studentCourses = studentCourseRepository.findAllBySpecialty_FacultyAndActiveTrue(faculty);
         return studentCourses.stream()
                 .map(StudentCourseMapper.INSTANCE::entityToResponse)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override

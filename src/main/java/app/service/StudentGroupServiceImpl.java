@@ -1,20 +1,19 @@
 package app.service;
 
-import app.model.mapper.StudentGroupMapper;
 import app.dao.interfaces.StudentGroupRepository;
+import app.exception.ErrorMessages;
+import app.exception.StudentGroupException;
 import app.model.dto.request.StudentGroupRequest;
 import app.model.dto.response.StudentGroupResponse;
 import app.model.entity.StudentCourse;
 import app.model.entity.StudentGroup;
-import app.exception.ErrorMessages;
-import app.exception.StudentGroupException;
+import app.model.mapper.StudentGroupMapper;
 import app.service.interfaces.StudentCourseService;
 import app.service.interfaces.StudentGroupService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 public class StudentGroupServiceImpl implements StudentGroupService {
@@ -33,7 +32,7 @@ public class StudentGroupServiceImpl implements StudentGroupService {
         List<StudentGroup> studentGroups = studentGroupRepository.findAllByActiveTrue();
         return studentGroups.stream()
                 .map(StudentGroupMapper.INSTANCE::entityToResponse)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
@@ -98,6 +97,6 @@ public class StudentGroupServiceImpl implements StudentGroupService {
         List<StudentGroup> studentGroups = studentGroupRepository.findAllByStudentCourseAndActiveTrue(course);
         return studentGroups.stream()
                 .map(StudentGroupMapper.INSTANCE::entityToResponse)
-                .collect(Collectors.toList());
+                .toList();
     }
 }

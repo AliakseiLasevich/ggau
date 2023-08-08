@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -28,7 +27,7 @@ public class BuildingService {
         var buildings = buildingRepository.findAllByActiveTrue();
         return buildings.stream()
                 .map(buildingMapper::entityToResponse)
-                .collect(Collectors.toList());
+                .toList();
     }
 
 

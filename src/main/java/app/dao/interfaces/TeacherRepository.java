@@ -25,7 +25,7 @@ public interface TeacherRepository extends JpaRepository<Teacher, String> {
                      AND l.orderNumber = :orderNumber
                      AND l.date = :date
             """)
-    Optional<Teacher> findByParameters(@Param("teacherId")String id,  @Param("orderNumber")int orderNumber, @Param("date")LocalDate date);
+    Optional<Teacher> findByParameters(@Param("teacherId") String id, @Param("orderNumber") int orderNumber, @Param("date") LocalDate date);
 
 //    @Query("""
 //            SELECT t FROM Teacher c

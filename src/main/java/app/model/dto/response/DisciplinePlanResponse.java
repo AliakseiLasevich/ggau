@@ -1,7 +1,6 @@
 package app.model.dto.response;
 
 import app.model.entity.LessonsPerWeek;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

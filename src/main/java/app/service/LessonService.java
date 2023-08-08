@@ -23,7 +23,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -90,7 +89,7 @@ public class LessonService {
             log.error("Подгруппы не найдены: {}", lessonRequest.getStudentSubgroupIds());
             throw new LessonException("Подгруппы c указанными id не найдены");
         }
-        List<String> studentSubgroupIds = studentSubgroups.stream().map(StudentSubgroup::getId).collect(Collectors.toList());
+        List<String> studentSubgroupIds = studentSubgroups.stream().map(StudentSubgroup::getId).toList();
         List<Lesson> lessons = findLessonsByParams(studentSubgroupIds, lessonRequestOrderNumber, date);
         if (!lessons.isEmpty()) {
             log.error("Подгруппы указанных студентов с указанными параметрами уже заняты {}", studentSubgroups);
@@ -102,7 +101,7 @@ public class LessonService {
 
     public List<LessonResponse> getLessonsBetweenDates(LocalDate firstDate, LocalDate lastDate) {
         List<Lesson> lessons = lessonRepository.findAllLessonsBetweenDates(firstDate, lastDate);
-        return lessons.stream().map(LessonMapper.INSTANCE::entityToResponse).collect(Collectors.toList());
+        return lessons.stream().map(LessonMapper.INSTANCE::entityToResponse).toList();
     }
 
     List<Lesson> findLessonsByParams(List<String> studentSubgroupIds, int orderNumber, LocalDate date) {

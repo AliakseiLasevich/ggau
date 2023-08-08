@@ -7,7 +7,7 @@ import java.util.UUID;
 @UtilityClass
 public class PublicIdGenerator {
 
-    public static final String generatePublicId(){
+    public static String generatePublicId() {
         return UUID.randomUUID().toString();
     }
 }

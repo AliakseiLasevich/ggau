@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -37,7 +36,7 @@ public class SpecialtyServiceImpl implements SpecialtyService {
                 .findAllByActiveTrue()
                 .stream()
                 .map(SpecialtyMapper.INSTANCE::entityToResponse)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
@@ -93,7 +92,7 @@ public class SpecialtyServiceImpl implements SpecialtyService {
         List<Specialty> specialties = specialtyRepository.findByFacultyAndActiveTrue(faculty);
         return specialties.stream()
                 .map(SpecialtyMapper.INSTANCE::entityToResponse)
-                .collect(Collectors.toList());
+                .toList();
     }
 }
 
