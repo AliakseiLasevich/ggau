@@ -18,7 +18,6 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -46,9 +45,9 @@ public class TeacherService {
     @Transactional
     public List<TeacherResponse> findAll() {
         List<Teacher> teachers = teacherRepository.findAllWithCathedras();
-        return teachers.stream().
-                map(teacherMapper::entityToResponse)
-                .collect(Collectors.toList());
+        return teachers.stream()
+                .map(teacherMapper::entityToResponse)
+                .toList();
     }
 
     public TeacherResponse createTeacher(TeacherRequest teacherRequest) {

@@ -46,16 +46,11 @@ public class LessonService {
     public LessonResponse createLesson(LessonRequest lessonRequest) throws JsonProcessingException {
         int lessonRequestOrderNumber = lessonRequest.getOrderNumber();
         LocalDate date = lessonRequest.getDate();
-
         List<ErrorMessage> errorMessages = new ArrayList<>();
-        Cabinet cabinet = cabinetService.findEntityByPublicId(lessonRequest.getCabinetId());
-        cabinetService.validateCabinetOverlapping(cabinet.getId(), lessonRequestOrderNumber, date, errorMessages);
 
-        Teacher teacher = teacherService.findEntityByPublicId(lessonRequest.getTeacherId());
-        teacherService.validateTeacherOverlapping(teacher.getId(), lessonRequestOrderNumber, date, errorMessages);
-
+        Cabinet cabinet = getCabinet(lessonRequest, lessonRequestOrderNumber, date, errorMessages);
+        Teacher teacher = getTeacher(lessonRequest, lessonRequestOrderNumber, date, errorMessages);
         List<StudentSubgroup> studentSubgroups = getStudentSubgroups(lessonRequest, lessonRequestOrderNumber, date, errorMessages);
-
         Discipline discipline = disciplineService.findEntityByPublicId(lessonRequest.getDisciplineId());
 
         Lesson lesson = Lesson.builder()
@@ -71,11 +66,22 @@ public class LessonService {
                 .build();
 
         if (!errorMessages.isEmpty()) {
-            log.error("Занятие содержит накладки: {}, {}", lesson, errorMessages);
             throw new LessonException(objectMapper.writeValueAsString(errorMessages));
         }
         lessonRepository.save(lesson);
         return lessonMapper.entityToResponse(lesson);
+    }
+
+    private Teacher getTeacher(LessonRequest lessonRequest, int lessonRequestOrderNumber, LocalDate date, List<ErrorMessage> errorMessages) {
+        Teacher teacher = teacherService.findEntityByPublicId(lessonRequest.getTeacherId());
+        teacherService.validateTeacherOverlapping(teacher.getId(), lessonRequestOrderNumber, date, errorMessages);
+        return teacher;
+    }
+
+    private Cabinet getCabinet(LessonRequest lessonRequest, int lessonRequestOrderNumber, LocalDate date, List<ErrorMessage> errorMessages) {
+        Cabinet cabinet = cabinetService.findEntityByPublicId(lessonRequest.getCabinetId());
+        cabinetService.validateCabinetOverlapping(cabinet.getId(), lessonRequestOrderNumber, date, errorMessages);
+        return cabinet;
     }
 
     private List<StudentSubgroup> getStudentSubgroups(LessonRequest lessonRequest, int lessonRequestOrderNumber, LocalDate date, List<ErrorMessage> errorMessages) {
@@ -99,7 +105,6 @@ public class LessonService {
         return lessons.stream().map(LessonMapper.INSTANCE::entityToResponse).collect(Collectors.toList());
     }
 
-    @Transactional
     List<Lesson> findLessonsByParams(List<String> studentSubgroupIds, int orderNumber, LocalDate date) {
         return lessonRepository.findLessonsByParams(studentSubgroupIds, orderNumber, date);
     }

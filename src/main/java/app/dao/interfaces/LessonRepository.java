@@ -40,6 +40,7 @@ public interface LessonRepository extends JpaRepository<Lesson, String> {
                 WHERE ss.id IN (:studentSubgroupIds)
                 AND l.orderNumber = :orderNumber
                 AND l.date = :date
+                AND ss.active = true
             """)
     List<Lesson> findLessonsByParams(@Param("studentSubgroupIds") List<String> studentSubgroupIds,
                                      @Param("orderNumber") int orderNumber,
