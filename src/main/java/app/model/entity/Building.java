@@ -1,6 +1,5 @@
 package app.model.entity;
 
-import app.model.entity.interfaces.GeneratedId;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -24,7 +23,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-public class Building extends BaseEntity implements GeneratedId {
+public class Building extends PublicEntity {
 
     @Column(name = "name")
     private String name;

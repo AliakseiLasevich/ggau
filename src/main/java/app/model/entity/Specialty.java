@@ -1,6 +1,5 @@
 package app.model.entity;
 
-import app.model.entity.interfaces.GeneratedId;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
@@ -20,7 +19,7 @@ import java.util.List;
 @Setter
 @SuperBuilder
 @NoArgsConstructor
-public class Specialty extends BaseEntity implements GeneratedId {
+public class Specialty extends PublicEntity {
 
     @Column(name = "name")
     private String name;

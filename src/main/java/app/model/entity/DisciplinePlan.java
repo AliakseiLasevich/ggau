@@ -1,6 +1,5 @@
 package app.model.entity;
 
-import app.model.entity.interfaces.GeneratedId;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -24,7 +23,7 @@ import java.util.Map;
 @Setter
 @SuperBuilder
 @Table(name = "discipline_plan")
-public class DisciplinePlan extends BaseEntity implements GeneratedId {
+public class DisciplinePlan extends PublicEntity {
 
     @OneToOne(cascade = CascadeType.ALL)
     private Discipline discipline;

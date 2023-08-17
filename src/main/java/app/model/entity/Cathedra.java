@@ -1,6 +1,5 @@
 package app.model.entity;
 
-import app.model.entity.interfaces.GeneratedId;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -22,7 +21,7 @@ import java.util.List;
 @SuperBuilder
 @NoArgsConstructor
 @Table(name = "cathedras")
-public class Cathedra extends BaseEntity implements GeneratedId {
+public class Cathedra extends PublicEntity {
 
     @Column(name = "name")
     private String name;

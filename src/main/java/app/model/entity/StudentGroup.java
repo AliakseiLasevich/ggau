@@ -1,6 +1,5 @@
 package app.model.entity;
 
-import app.model.entity.interfaces.GeneratedId;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -22,7 +21,7 @@ import java.util.List;
 @Setter
 @SuperBuilder
 @NoArgsConstructor
-public class StudentGroup extends BaseEntity implements GeneratedId {
+public class StudentGroup extends PublicEntity {
 
     @Column(name = "number")
     private int number;

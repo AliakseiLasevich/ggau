@@ -1,6 +1,5 @@
 package app.model.entity;
 
-import app.model.entity.interfaces.GeneratedId;
 import app.model.enums.CabinetType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -25,7 +24,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @ToString(exclude = "building")
-public class Cabinet extends BaseEntity implements GeneratedId {
+public class Cabinet extends PublicEntity {
 
     @Column(name = "number")
     private String number;

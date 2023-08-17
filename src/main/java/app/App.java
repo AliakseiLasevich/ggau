@@ -22,13 +22,22 @@ public class App extends SpringBootServletInitializer {
         return builder.sources(App.class);
     }
 
+
+//       Use it for the very first run to generate admin user
 //    @Bean
-//    public BCryptPasswordEncoder bCryptPasswordEncoder() {
-//        return new BCryptPasswordEncoder();
+//    public CommandLineRunner commandLineRunner(
+//            AuthenticationService service
+//    ) {
+//        return args -> {
+//            var admin = RegisterRequest.builder()
+//                    .name("admin")
+//                    .lastname("Admin")
+//                    .login("admin")
+//                    .password("password")
+//                    .role(ADMIN)
+//                    .build();
+//            System.out.println("Admin token: " + service.register(admin).getAccessToken());
+//        };
 //    }
-//
-//    @Bean
-//    public SpringApplicationContext springApplicationContext() {
-//        return new SpringApplicationContext();
-//    }
+
 }

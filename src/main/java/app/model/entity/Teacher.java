@@ -21,7 +21,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @ToString(exclude = {"cathedra"})
-public class Teacher extends BaseEntity {
+public class Teacher extends PublicEntity {
 
     @Column(name = "name")
     private String name;
@@ -39,5 +39,10 @@ public class Teacher extends BaseEntity {
     @PrePersist
     public void setDefaultActiveValue() {
         active = true;
+    }
+
+    @Override
+    public String getPrefix() {
+        return "BLDNG";
     }
 }

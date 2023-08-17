@@ -6,6 +6,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,7 +22,7 @@ import java.util.List;
 @SuperBuilder
 @NoArgsConstructor
 @Table(name = "learn_plan")
-public class LearnPlan extends BaseEntity {
+public class LearnPlan extends PublicEntity {
 
     @Column(name = "start_date")
     private LocalDate startDate;
@@ -41,8 +42,13 @@ public class LearnPlan extends BaseEntity {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "learnPlan")
     private List<DisciplinePlan> disciplinePlan;
 
-//    @PrePersist
-//    public void setDefaultActiveValue() {
-//        active = true;
-////    }
+    @Override
+    public String getPrefix() {
+        return "LPLAN";
+    }
+
+    @PrePersist
+    public void setDefaultActiveValue() {
+        active = true;
+    }
 }

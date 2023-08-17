@@ -417,5 +417,60 @@
         </createTable>
     </changeSet>
 
+    <changeSet id="16" author="Aliaksei Lasevich">
+        <createTable tableName="users">
+            <column name="id" type="VARCHAR(20)">
+                <constraints primaryKey="true"
+                             primaryKeyName="users_pkey"/>
+            </column>
+            <column name="public_id" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="login" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="VARCHAR(64)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="lastname" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="active" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="17" author="Aliaksei Lasevich">
+        <createTable tableName="tokens">
+            <column name="id" type="VARCHAR(20)">
+                <constraints primaryKey="true"
+                             primaryKeyName="token_pkey"/>
+            </column>
+            <column name="token" type="VARCHAR(1000)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="token_type" type="VARCHAR(1000)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="revoked" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+            <column name="expired" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="VARCHAR(20)">
+                <constraints nullable="false" foreignKeyName="token_user_fk"
+                             referencedTableName="users"
+                             referencedColumnNames="id"/>
+            </column>
+        </createTable>
+    </changeSet>
 
 </databaseChangeLog>

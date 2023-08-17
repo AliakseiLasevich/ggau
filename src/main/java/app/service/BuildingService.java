@@ -53,14 +53,12 @@ public class BuildingService {
         }
     }
 
-
     public BuildingResponse updateBuilding(BuildingRequest buildingRequest, String publicId) {
         Building buildingToUpdate = getBuildingById(publicId);
         buildingToUpdate.setName(buildingRequest.getName());
         buildingRepository.save(buildingToUpdate);
         return buildingMapper.entityToResponse(buildingToUpdate);
     }
-
 
     @Transactional
     public void deleteBuilding(String publicId) {

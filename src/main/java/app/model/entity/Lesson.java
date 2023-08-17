@@ -1,6 +1,5 @@
 package app.model.entity;
 
-import app.model.entity.interfaces.GeneratedId;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -27,7 +26,7 @@ import java.util.List;
 @SuperBuilder
 @NoArgsConstructor
 @ToString
-public class Lesson extends BaseEntity implements GeneratedId {
+public class Lesson extends PublicEntity {
 
     @Column(name = "active")
     private boolean active;
