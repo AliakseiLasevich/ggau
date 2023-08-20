@@ -4,6 +4,7 @@ package app.service;
 import app.config.JwtService;
 import app.dao.interfaces.TokenRepository;
 import app.dao.interfaces.UserRepository;
+import app.model.dto.TokenDto;
 import app.model.dto.request.AuthenticationRequest;
 import app.model.dto.request.RegisterRequest;
 import app.model.dto.response.AuthenticationResponse;
@@ -16,6 +17,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -46,14 +48,16 @@ public class AuthenticationService {
         var savedUser = repository.save(user);
         var jwtToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);
-        saveUserToken(savedUser, jwtToken);
+        saveUserToken(savedUser, jwtToken.getToken());
         return AuthenticationResponse.builder()
                 .accessToken(jwtToken)
                 .refreshToken(refreshToken)
+                .name(user.getName())
+                .lastname(user.getLastname())
                 .build();
     }
 
-    public AuthenticationResponse authenticate(AuthenticationRequest request) {
+    public AuthenticationResponse authenticate(AuthenticationRequest request) throws BadCredentialsException {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getLogin(),
@@ -62,12 +66,14 @@ public class AuthenticationService {
         );
         var user = repository.findByLogin(request.getLogin())
                 .orElseThrow();
-        var jwtToken = jwtService.generateToken(user);
+        var accessToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);
         revokeAllUserTokens(user);
-        saveUserToken(user, jwtToken);
+        saveUserToken(user, accessToken.getToken());
         return AuthenticationResponse.builder()
-                .accessToken(jwtToken)
+                .name(user.getName())
+                .lastname(user.getLastname())
+                .accessToken(accessToken)
                 .refreshToken(refreshToken)
                 .build();
     }
@@ -112,10 +118,15 @@ public class AuthenticationService {
             if (jwtService.isTokenValid(refreshToken, user)) {
                 var accessToken = jwtService.generateToken(user);
                 revokeAllUserTokens(user);
-                saveUserToken(user, accessToken);
+                saveUserToken(user, accessToken.getToken());
                 var authResponse = AuthenticationResponse.builder()
                         .accessToken(accessToken)
-                        .refreshToken(refreshToken)
+                        .refreshToken(TokenDto.builder()
+                                .token(refreshToken)
+                                .expiresIn(jwtService.extractExpiration(refreshToken).getTime())
+                                .build())
+                        .name(user.getName())
+                        .lastname(user.getLastname())
                         .build();
                 new ObjectMapper().writeValue(response.getOutputStream(), authResponse);
             }

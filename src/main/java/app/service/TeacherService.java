@@ -79,7 +79,7 @@ public class TeacherService {
         Optional<Teacher> teacherOptional = teacherRepository.findByParameters(id, orderNumber, date);
         teacherOptional.ifPresent(teacher -> {
             log.error("Преподаватель с указанными параметрами уже занят {}", teacher);
-            errorMessages.add(new ErrorMessage("Преподаватель с указанными параметрами уже занят"));
+            errorMessages.add(ErrorMessage.builder().message("Преподаватель с указанными параметрами уже занят").build());
         });
     }
 }

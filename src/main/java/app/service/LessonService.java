@@ -93,7 +93,7 @@ public class LessonService {
         List<Lesson> lessons = findLessonsByParams(studentSubgroupIds, lessonRequestOrderNumber, date);
         if (!lessons.isEmpty()) {
             log.error("Подгруппы указанных студентов с указанными параметрами уже заняты {}", studentSubgroups);
-            errorMessages.add(new ErrorMessage("Подгруппы указанных студентов с указанными параметрами уже заняты"));
+            errorMessages.add(ErrorMessage.builder().message("Подгруппы указанных студентов с указанными параметрами уже заняты").build());
         }
         return studentSubgroups;
     }

@@ -86,7 +86,7 @@ public class CabinetService {
         Optional<Cabinet> cabinetOptional = cabinetRepository.getByParameters(id, orderNumber, date);
         cabinetOptional.ifPresent(cabinet -> {
             log.error("Кабинет с указанными параметрами уже занят {}", cabinet);
-            errorMessages.add(new ErrorMessage("Кабинет с указанными параметрами уже занят"));
+            errorMessages.add(ErrorMessage.builder().message("Кабинет с указанными параметрами уже занят").build());
         });
     }
 }
