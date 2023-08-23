@@ -10,6 +10,10 @@ import app.model.mapper.DisciplineMapper;
 import app.model.mapper.DisciplineMapperImpl;
 import app.model.mapper.FacultyMapper;
 import app.model.mapper.FacultyMapperImpl;
+import app.model.mapper.SpecialtyMapper;
+import app.model.mapper.SpecialtyMapperImpl;
+import app.model.mapper.StudentCourseMapper;
+import app.model.mapper.StudentCourseMapperImpl;
 import app.model.mapper.TeacherMapper;
 import app.model.mapper.TeacherMapperImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -51,6 +55,18 @@ public class Beans {
     @Bean
     TeacherMapper teacherMapper() {
         return new TeacherMapperImpl() {
+        };
+    }
+
+    @Bean
+    SpecialtyMapper specialtyMapper() {
+        return new SpecialtyMapperImpl() {
+        };
+    }
+
+    @Bean
+    StudentCourseMapper studentCourseMapper() {
+        return new StudentCourseMapperImpl() {
         };
     }
 

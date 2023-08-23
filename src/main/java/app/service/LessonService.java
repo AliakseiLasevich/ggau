@@ -11,7 +11,6 @@ import app.model.entity.Lesson;
 import app.model.entity.StudentSubgroup;
 import app.model.entity.Teacher;
 import app.model.mapper.LessonMapper;
-import app.service.interfaces.StudentCourseService;
 import app.utils.PublicIdGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

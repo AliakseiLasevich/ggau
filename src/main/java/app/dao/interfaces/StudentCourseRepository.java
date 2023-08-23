@@ -15,6 +15,7 @@ public interface StudentCourseRepository extends JpaRepository<StudentCourse, St
     List<StudentCourse> findAllByActiveTrue();
 
     List<StudentCourse> findAllBySpecialty_FacultyAndActiveTrue(Faculty faculty);
+    List<StudentCourse> findAllBySpecialty(Specialty specialty);
 
     StudentCourse findByCourseNumberAndSpecialtyAndActiveTrue(int courseNumber, Specialty specialty);
 

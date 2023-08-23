@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 
 @Getter
 @Setter
@@ -14,5 +16,6 @@ public class StudentCourseResponse {
 
     private String publicId;
     private int courseNumber;
-    private SpecialtyResponse specialty;
+    private List<StudentGroupResponse> studentGroups;
+    private String specialtyPublicId;
 }

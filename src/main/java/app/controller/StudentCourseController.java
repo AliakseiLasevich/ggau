@@ -2,7 +2,7 @@ package app.controller;
 
 import app.model.dto.request.StudentCourseRequest;
 import app.model.dto.response.StudentCourseResponse;
-import app.service.interfaces.StudentCourseService;
+import app.service.StudentCourseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -51,6 +51,12 @@ public class StudentCourseController {
     @ResponseStatus(HttpStatus.OK)
     public List<StudentCourseResponse> getStudentsCoursesByFaculty(@PathVariable(required = true) String facultyId) {
         return studentCourseService.getStudentsCoursesByFaculty(facultyId);
+    }
+
+    @GetMapping(value = "/specialties/{specialtyId}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<StudentCourseResponse> getStudentsCoursesBySpecialty(@PathVariable(required = true) String specialtyId) {
+        return studentCourseService.getStudentsCoursesBySpecialty(specialtyId);
     }
 
     @GetMapping(value = "/{publicId}")

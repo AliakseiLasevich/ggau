@@ -14,6 +14,6 @@ public class SpecialtyResponse {
     private String publicId;
     private String name;
     private String code;
-    private FacultyResponse faculty;
+    private String facultyId;
 
 }

@@ -1,14 +1,15 @@
 package app.model.mapper;
 
+import app.model.dto.request.StudentCourseRequest;
 import app.model.dto.response.StudentCourseResponse;
 import app.model.entity.StudentCourse;
 import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
+import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring")
-public interface StudentCourseMapper {
+@Mapper(componentModel = "spring", uses = StudentCourse.class)
+public interface StudentCourseMapper extends AbstractMapper<StudentCourse, StudentCourseRequest, StudentCourseResponse> {
 
-    StudentCourseMapper INSTANCE = Mappers.getMapper(StudentCourseMapper.class);
-
-    StudentCourseResponse entityToResponse(StudentCourse studentCourse);
+    @Override
+    @Mapping(source = "specialty.publicId", target = "specialtyPublicId")
+    StudentCourseResponse entityToResponse(StudentCourse entity);
 }

@@ -2,7 +2,7 @@ package app.controller;
 
 import app.model.dto.request.SpecialtyRequest;
 import app.model.dto.response.SpecialtyResponse;
-import app.service.interfaces.SpecialtyService;
+import app.service.SpecialtyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

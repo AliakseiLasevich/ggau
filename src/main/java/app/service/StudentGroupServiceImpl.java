@@ -8,7 +8,6 @@ import app.model.dto.response.StudentGroupResponse;
 import app.model.entity.StudentCourse;
 import app.model.entity.StudentGroup;
 import app.model.mapper.StudentGroupMapper;
-import app.service.interfaces.StudentCourseService;
 import app.service.interfaces.StudentGroupService;
 import org.springframework.stereotype.Service;
 
