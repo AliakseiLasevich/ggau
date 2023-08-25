@@ -2,7 +2,7 @@ package app.controller;
 
 import app.model.dto.request.StudentGroupRequest;
 import app.model.dto.response.StudentGroupResponse;
-import app.service.interfaces.StudentGroupService;
+import app.service.StudentGroupService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

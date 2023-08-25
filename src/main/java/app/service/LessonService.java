@@ -100,7 +100,7 @@ public class LessonService {
 
     public List<LessonResponse> getLessonsBetweenDates(LocalDate firstDate, LocalDate lastDate) {
         List<Lesson> lessons = lessonRepository.findAllLessonsBetweenDates(firstDate, lastDate);
-        return lessons.stream().map(LessonMapper.INSTANCE::entityToResponse).toList();
+        return lessons.stream().map(lessonMapper::entityToResponse).toList();
     }
 
     List<Lesson> findLessonsByParams(List<String> studentSubgroupIds, int orderNumber, LocalDate date) {

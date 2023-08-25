@@ -35,15 +35,16 @@ public class LessonController {
     }
 
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
-    public List<LessonResponse> getLessonsBetweenDates(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate firstDate,
-                                                       @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate lastDate) {
-        validateDates(firstDate, lastDate);
-        return lessonService.getLessonsBetweenDates(firstDate, lastDate);
+    @ResponseStatus(code = HttpStatus.OK)
+    public List<LessonResponse> getLessonsBetweenDates(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFrom,
+                                                       @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateTo) {
+        validateDates(dateFrom, dateTo);
+        return lessonService.getLessonsBetweenDates(dateFrom, dateTo);
     }
 
     private void validateDates(LocalDate firstDate, LocalDate lastDate) {
         if (firstDate.getDayOfWeek() != DayOfWeek.MONDAY || lastDate.getDayOfWeek() != DayOfWeek.SUNDAY) {
-            throw new LessonException("FirstDay дожен быть Понедельник, lastDay - воскресенье");
+            throw new LessonException("dateFrom дожен быть Понедельник, dateTo - воскресенье");
         }
         if (firstDate.plusDays(6).compareTo(lastDate) != 0) {
             throw new LessonException("Выбранные дни должны быть в рамках одной недели");

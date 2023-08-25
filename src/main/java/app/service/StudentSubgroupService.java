@@ -8,7 +8,7 @@ import app.model.dto.response.StudentSubgroupResponse;
 import app.model.entity.StudentGroup;
 import app.model.entity.StudentSubgroup;
 import app.model.mapper.StudentSubgroupMapper;
-import app.service.interfaces.StudentGroupService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,16 +18,12 @@ import java.util.UUID;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class StudentSubgroupService {
 
     private final StudentSubgroupRepository studentSubgroupRepository;
     private final StudentGroupService studentGroupService;
-
-    @Autowired
-    public StudentSubgroupService(StudentSubgroupRepository studentSubgroupRepository, StudentGroupService studentGroupService) {
-        this.studentSubgroupRepository = studentSubgroupRepository;
-        this.studentGroupService = studentGroupService;
-    }
+    private final StudentSubgroupMapper studentSubgroupMapper;
 
     List<StudentSubgroup> findEntitiesByPublicIds(List<String> publicIds) {
         return studentSubgroupRepository.findByPublicIdsAndActiveTrue(publicIds);
@@ -35,7 +31,7 @@ public class StudentSubgroupService {
 
     public StudentSubgroupResponse findByPublicId(String publicId) {
         StudentSubgroup studentSubgroup = getStudentSubgroup(publicId);
-        return StudentSubgroupMapper.INSTANCE.entityToResponse(studentSubgroup);
+        return studentSubgroupMapper.entityToResponse(studentSubgroup);
     }
 
     private StudentSubgroup getStudentSubgroup(String publicId) {
@@ -52,11 +48,11 @@ public class StudentSubgroupService {
         if (studentSubgroup != null) {
             throw new StudentSubgroupException(ErrorMessages.RECORD_ALREADY_EXISTS.getErrorMessage());
         }
-        studentSubgroup = StudentSubgroupMapper.INSTANCE.requestToEntity(studentSubgroupRequest);
+        studentSubgroup = studentSubgroupMapper.requestToEntity(studentSubgroupRequest);
         studentSubgroup.setStudentGroup(studentGroup);
         studentSubgroup.setPublicId(UUID.randomUUID().toString());
         studentSubgroupRepository.save(studentSubgroup);
-        return StudentSubgroupMapper.INSTANCE.entityToResponse(studentSubgroup);
+        return studentSubgroupMapper.entityToResponse(studentSubgroup);
     }
 
     public StudentSubgroupResponse updateStudentsSubgroup(StudentSubgroupRequest studentSubgroupRequest, String publicId) {
@@ -66,7 +62,7 @@ public class StudentSubgroupService {
         StudentGroup studentGroup = studentGroupService.findEntityByPublicId(studentSubgroupRequest.getStudentGroupId());
         studentSubgroup.setStudentGroup(studentGroup);
         studentSubgroupRepository.save(studentSubgroup);
-        return StudentSubgroupMapper.INSTANCE.entityToResponse(studentSubgroup);
+        return studentSubgroupMapper.entityToResponse(studentSubgroup);
     }
 
     public void deleteStudentSubgroup(String publicId) {
@@ -79,7 +75,7 @@ public class StudentSubgroupService {
         StudentGroup studentGroup = studentGroupService.findEntityByPublicId(publicId);
         List<StudentSubgroup> studentSubgroups = studentSubgroupRepository.findAllByStudentGroupAndActiveTrue(studentGroup);
         return studentSubgroups.stream()
-                .map(StudentSubgroupMapper.INSTANCE::entityToResponse)
+                .map(studentSubgroupMapper::entityToResponse)
                 .toList();
     }
 }
