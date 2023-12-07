@@ -376,6 +376,8 @@
             <column name="type" type="VARCHAR(100)">
                 <constraints nullable="false"/>
             </column>
+            <column name="note" type="VARCHAR(300)">
+            </column>
             <column name="order_number" type="INT(2)">
                 <constraints nullable="false"/>
             </column>

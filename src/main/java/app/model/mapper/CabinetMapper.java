@@ -9,9 +9,9 @@ import org.mapstruct.Mapping;
 @Mapper(uses = CabinetMapper.class, componentModel = "spring")
 public interface CabinetMapper extends AbstractMapper<Cabinet, CabinetRequest, CabinetResponse> {
 
-    @Override
-    @Mapping(source = "building.publicId", target = "buildingId")
-    @Mapping(source = "building.name", target = "buildingName")
-    CabinetResponse entityToResponse(Cabinet cabinet);
+//    @Override
+//    @Mapping(source = "building.publicId", target = "buildingId")
+//    @Mapping(source = "building.name", target = "buildingName")
+//    CabinetResponse entityToResponse(Cabinet cabinet);
 
 }

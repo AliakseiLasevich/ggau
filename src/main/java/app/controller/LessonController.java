@@ -43,10 +43,10 @@ public class LessonController {
     }
 
     private void validateDates(LocalDate firstDate, LocalDate lastDate) {
-        if (firstDate.getDayOfWeek() != DayOfWeek.MONDAY || lastDate.getDayOfWeek() != DayOfWeek.SUNDAY) {
+        if (firstDate.getDayOfWeek() != DayOfWeek.MONDAY || lastDate.getDayOfWeek() != DayOfWeek.SATURDAY) {
             throw new LessonException("dateFrom дожен быть Понедельник, dateTo - воскресенье");
         }
-        if (firstDate.plusDays(6).compareTo(lastDate) != 0) {
+        if (firstDate.plusDays(5).compareTo(lastDate) != 0) {
             throw new LessonException("Выбранные дни должны быть в рамках одной недели");
         }
     }

@@ -1,6 +1,6 @@
 package app.model.dto.request;
 
-import app.model.entity.LessonType;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -17,6 +17,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+//@JsonIgnoreProperties(ignoreUnknown = true)
 public class LessonRequest {
 
     @NotBlank
@@ -25,8 +26,8 @@ public class LessonRequest {
     @NotNull
     private LocalDate date;
 
-    @NotNull
-    private LessonType type;
+    @NotBlank
+    private String lessonType;
 
     @NotBlank
     private String disciplineId;
@@ -40,4 +41,5 @@ public class LessonRequest {
     @NotEmpty
     private List<String> studentSubgroupIds;
 
+    private String note;
 }

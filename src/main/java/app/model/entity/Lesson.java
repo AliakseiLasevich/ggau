@@ -60,6 +60,9 @@ public class Lesson extends PublicEntity {
             inverseJoinColumns = @JoinColumn(name = "students_subgroup_id"))
     private List<StudentSubgroup> studentSubgroups;
 
+    @Column(name = "note")
+    private String note;
+
     @PrePersist
     public void setDefaultActiveValue() {
         active = true;

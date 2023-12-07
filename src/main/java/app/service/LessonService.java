@@ -8,6 +8,7 @@ import app.model.dto.response.LessonResponse;
 import app.model.entity.Cabinet;
 import app.model.entity.Discipline;
 import app.model.entity.Lesson;
+import app.model.entity.LessonType;
 import app.model.entity.StudentSubgroup;
 import app.model.entity.Teacher;
 import app.model.mapper.LessonMapper;
@@ -51,21 +52,23 @@ public class LessonService {
         List<StudentSubgroup> studentSubgroups = getStudentSubgroups(lessonRequest, lessonRequestOrderNumber, date, errorMessages);
         Discipline discipline = disciplineService.findEntityByPublicId(lessonRequest.getDisciplineId());
 
+        if (!errorMessages.isEmpty()) {
+            throw new LessonException(errorMessages);
+        }
+
         Lesson lesson = Lesson.builder()
                 .cabinet(cabinet)
                 .teacher(teacher)
                 .discipline(discipline)
                 .orderNumber(lessonRequestOrderNumber)
                 .date(date)
-                .type(lessonRequest.getType())
+                .type(LessonType.fromValue(lessonRequest.getLessonType()))
                 .studentSubgroups(studentSubgroups)
                 .active(true)
                 .publicId(PublicIdGenerator.generatePublicId())
+                .note(lessonRequest.getNote())
                 .build();
 
-        if (!errorMessages.isEmpty()) {
-            throw new LessonException(objectMapper.writeValueAsString(errorMessages));
-        }
         lessonRepository.save(lesson);
         return lessonMapper.entityToResponse(lesson);
     }

@@ -26,39 +26,39 @@ import java.util.List;
 public class BuildingController {
     private final BuildingService buildingService;
 
-    @PreAuthorize("""
-            hasRole('USER')
-            || hasRole('ADMIN')
-            """)
+//    @PreAuthorize("""
+//            hasRole('USER')
+//            || hasRole('ADMIN')
+//            """)
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseStatus(HttpStatus.OK)
     public List<BuildingResponse> getAll() {
         return buildingService.getAll();
     }
 
-    @PreAuthorize("""
-            hasRole('USER')
-            || hasRole('ADMIN')
-            """)
+//    @PreAuthorize("""
+//            hasRole('USER')
+//            || hasRole('ADMIN')
+//            """)
     @GetMapping(value = "/{publicId}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public BuildingResponse getBuildingById(@PathVariable("publicId") String publicId) {
         return buildingService.getById(publicId);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+//    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseStatus(HttpStatus.CREATED)
     public BuildingResponse postBuilding(@RequestBody @Valid BuildingRequest buildingRequest) {
         return buildingService.createBuilding(buildingRequest);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+//    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping(value = "/{publicId}", consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
     public BuildingResponse putBuilding(@RequestBody @Valid BuildingRequest buildingRequest, @PathVariable String publicId) {
         return buildingService.updateBuilding(buildingRequest, publicId);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+//    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping(value = "/{publicId}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteBuilding(@PathVariable String publicId) {

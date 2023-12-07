@@ -20,4 +20,5 @@ public class LessonResponse {
     private TeacherResponse teacher;
     private CabinetResponse cabinet;
     private List<StudentSubgroupResponse> studentSubgroups;
+    private String note;
 }

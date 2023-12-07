@@ -15,7 +15,7 @@ public class CabinetResponse {
     private String number;
     private String type;
     private int maxStudents;
-    private String buildingId;
-    private String buildingName;
+//    private String buildingId;
+//    private String buildingName;
 
 }

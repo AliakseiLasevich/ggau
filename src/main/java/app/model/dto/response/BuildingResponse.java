@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @Builder
@@ -15,4 +17,5 @@ public class BuildingResponse {
 
     private String publicId;
     private String name;
+    private List<CabinetResponse> cabinets;
 }
